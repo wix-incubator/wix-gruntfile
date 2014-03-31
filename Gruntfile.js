@@ -18,7 +18,7 @@ module.exports = function (grunt, options) {
     unitTestFiles: []
   }, options);
 
-  options.unitTestFiles.concat([
+  options.unitTestFiles = options.unitTestFiles.concat([
     '{app,.tmp}/*.js',
     '{app,.tmp}/scripts/*.js',
     '{app,.tmp}/scripts/**/*.js',
@@ -427,40 +427,45 @@ module.exports = function (grunt, options) {
 
     // Test settings
     karma: {
+      options: {
+        basePath: process.cwd()
+      },
       teamcity: {
-        configFile: path.join(__dirname, 'karma.conf.js'),
-        basePath: process.cwd(),
-        files: options.unitTestFiles,
-        reporters: ['teamcity', 'coverage'],
-        coverageReporter: {
-          type : 'teamcity'
+        options: {
+          configFile: path.join(__dirname, 'karma.conf.js'),
+          files: options.unitTestFiles,
+          reporters: ['teamcity', 'coverage'],
+          coverageReporter: { type : 'teamcity' }
         }
       },
       single: {
-        configFile: path.join(__dirname, 'karma.conf.js'),
-        basePath: process.cwd(),
-        files: options.unitTestFiles,
+        options: {
+          configFile: path.join(__dirname, 'karma.conf.js'),
+          files: options.unitTestFiles
+        }
       },
       e2e: {
-        configFile: path.join(__dirname, 'karma-e2e.conf.js'),
-        basePath: process.cwd(),
-        proxies: {'/': 'http://localhost:<%= connect.test.options.port %>/'},
-        browsers: ['Chrome']
+        options: {
+          configFile: path.join(__dirname, 'karma-e2e.conf.js'),
+          proxies: {'/': 'http://localhost:<%= connect.test.options.port %>/'},
+          browsers: ['Chrome']
+        }
       },
       e2eTeamcity: {
-        configFile: path.join(__dirname, 'karma-e2e.conf.js'),
-        basePath: process.cwd(),
-        proxies: {'/': 'http://localhost:<%= connect.test.options.port %>/'},
-        transports: ['xhr-polling'],
-        reporters: ['dots', 'teamcity', 'saucelabs']
+        options: {
+          configFile: path.join(__dirname, 'karma-e2e.conf.js'),
+          proxies: {'/': 'http://localhost:<%= connect.test.options.port %>/'},
+          transports: ['xhr-polling'],
+          reporters: ['dots', 'teamcity', 'saucelabs']
+        }
       },
       unit: {
-        configFile: path.join(__dirname, 'karma.conf.js'),
-        basePath: process.cwd(),
-        files: options.unitTestFiles,
-        singleRun: false,
-        autoWatch: false,
-        background: true
+        options: {
+          configFile: path.join(__dirname, 'karma.conf.js'),
+          files: options.unitTestFiles,
+          singleRun: false,
+          background: true
+        }
       }
     },
 
