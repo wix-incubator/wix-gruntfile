@@ -22,7 +22,8 @@ module.exports = function (grunt, options) {
     '{app,.tmp}/*.js',
     '{app,.tmp}/scripts/*.js',
     '{app,.tmp}/scripts/**/*.js',
-    '{,.tmp/}test/**/*.js'
+    '{,.tmp/}test/**/*.js',
+    '{app,.tmp}/views/*.html'
   ]);
 
   // Load grunt tasks automatically
@@ -428,7 +429,11 @@ module.exports = function (grunt, options) {
     // Test settings
     karma: {
       options: {
-        basePath: process.cwd()
+        basePath: process.cwd(),
+        ngHtml2JsPreprocessor: {
+          stripPrefix: '(app|.tmp)',
+          moduleName: options.module
+        }
       },
       teamcity: {
         options: {
