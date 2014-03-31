@@ -18,7 +18,7 @@ module.exports = function (config) {
     // coverage instrumentation - uncomment this if you need to debug
     preprocessors: {
       '{.tmp,app}/scripts/{,!(lib)/**/}*.js': 'coverage',
-      '{app,.tmp}/views/*.html': 'ng-html2js'
+      '{app,.tmp}/views/*.preload.html': 'ng-html2js'
     },
 
     // list of files / patterns to exclude

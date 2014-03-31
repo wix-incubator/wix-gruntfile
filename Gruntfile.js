@@ -23,7 +23,7 @@ module.exports = function (grunt, options) {
     '{app,.tmp}/scripts/*.js',
     '{app,.tmp}/scripts/**/*.js',
     '{,.tmp/}test/**/*.js',
-    '{app,.tmp}/views/*.html'
+    '{app,.tmp}/views/*.preload.html'
   ]);
 
   // Load grunt tasks automatically
