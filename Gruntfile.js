@@ -355,7 +355,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app',
-          src: ['*.vm', '*.html', 'views/*.html'],
+          src: ['*.vm', 'scripts/locale/*.js', '*.html', 'views/*.html'],
           dest: 'dist'
         }, {
           expand: true,
