@@ -14,17 +14,20 @@ module.exports = function (grunt, options) {
     protocol: 'http',
     staging: 'pizza',
     port: 9000,
-    preloadModule: 'wixAppPreload',
     translationsModule: 'wixAppTranslations',
     unitTestFiles: []
   }, options);
+
+  if (!options.preloadModule) {
+    options.preloadModule = options.translationsModule || 'wixAppPreload';
+  }
 
   options.unitTestFiles = options.unitTestFiles.concat([
     '{app,.tmp}/*.js',
     '{app,.tmp}/scripts/*.js',
     '{app,.tmp}/scripts/**/*.js',
     '{,.tmp/}test/**/*.js',
-    '{app,.tmp}/views/*.preload.html'
+    '{app,.tmp}/views/*.html'
   ]);
 
   // Load grunt tasks automatically
@@ -302,7 +305,7 @@ module.exports = function (grunt, options) {
     ngtemplates:  {
       app:        {
         cwd: '.tmp',
-        src: 'views/**/*.html',
+        src: 'views/**/*.preload.html',
         dest: '.tmp/templates.js',
         options: {
           module: options.preloadModule,
@@ -493,7 +496,8 @@ module.exports = function (grunt, options) {
           cwd: 'app',
           src: '{,views/}*.haml',
           dest: '.tmp',
-          ext: '.html'
+          ext: '.html',
+          extDot: 'last'
         }]
       }
     },

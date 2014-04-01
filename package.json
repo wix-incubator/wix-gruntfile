@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "main": "./Gruntfile.js",
   "dependencies": {
     "proxy-middleware": "~0.5.0",
