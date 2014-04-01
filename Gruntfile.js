@@ -14,7 +14,8 @@ module.exports = function (grunt, options) {
     protocol: 'http',
     staging: 'pizza',
     port: 9000,
-    module: 'wixApp',
+    preloadModule: 'wixAppPreload',
+    translationsModule: 'wixAppTranslations',
     unitTestFiles: []
   }, options);
 
@@ -304,7 +305,7 @@ module.exports = function (grunt, options) {
         src: 'views/**/*.html',
         dest: '.tmp/templates.js',
         options: {
-          module: options.module,
+          module: options.preloadModule,
           usemin: 'scripts/scripts.js'
         }
       }
@@ -336,7 +337,7 @@ module.exports = function (grunt, options) {
     jsonAngularTranslate: {
       server: {
         options: {
-          moduleName: options.module,
+          moduleName: options.translationsModule,
           hasPreferredLanguage: false /* temporary until we move to angular-translate 2.0 */
         },
         files: [{
@@ -432,7 +433,7 @@ module.exports = function (grunt, options) {
         basePath: process.cwd(),
         ngHtml2JsPreprocessor: {
           stripPrefix: '(app|.tmp)',
-          moduleName: options.module
+          moduleName: options.preloadModule
         }
       },
       teamcity: {
@@ -533,7 +534,7 @@ module.exports = function (grunt, options) {
 
     grunt.task.run([
       'karma:unit',
-      'pre-build',
+      'test',
       'connect:livereload',
       'watch'
     ]);
