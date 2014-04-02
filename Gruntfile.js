@@ -171,7 +171,7 @@ module.exports = function (grunt, options) {
           src: [
             'Gruntfile.js',
             'app/scripts/{,*/}*.js',
-            '!app/scripts/locale/*.js'
+            '!app/scripts/{locale,lib}/*.js'
           ]
         }
       },
