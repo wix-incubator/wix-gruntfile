@@ -10,25 +10,37 @@ module.exports = function (grunt, options) {
 
   var extend = require('util')._extend;
 
+  Array.prototype.replace = function (j, k) {
+    this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
+    return this;
+  };
+
   options = extend({
     protocol: 'http',
     staging: 'pizza',
     port: 9000,
     translationsModule: 'wixAppTranslations',
-    unitTestFiles: []
+    unitTestFiles: [],
+    appFirst: true
   }, options);
 
   if (!options.preloadModule) {
     options.preloadModule = options.translationsModule || 'wixAppPreload';
   }
 
-  options.unitTestFiles = options.unitTestFiles.concat([
+  var unitTestWildCards = [
     '{app,.tmp}/*.js',
-    '{app,.tmp}/scripts/*.js',
-    '{app,.tmp}/scripts/**/*.js',
+    '{app,.tmp}/scripts/*.js', //do not move - position 1
+    '{app,.tmp}/scripts/*/**/*.js', //do not move - position 2
     '{,.tmp/}test/**/*.js',
     '{app,.tmp}/views/*.html'
-  ]);
+  ];
+
+  if (!options.appFirst) {
+    unitTestWildCards.replace(1, 2);
+  }
+
+  options.unitTestFiles = options.unitTestFiles.concat(unitTestWildCards);
 
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt, {config: require('./package.json')});
