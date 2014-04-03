@@ -21,7 +21,8 @@ module.exports = function (grunt, options) {
     port: 9000,
     translationsModule: 'wixAppTranslations',
     unitTestFiles: [],
-    appFirst: true
+    appFirst: true,
+    page: ''
   }, options);
 
   if (!options.preloadModule) {
@@ -69,7 +70,7 @@ module.exports = function (grunt, options) {
     yeoman: {
       api: 'http://www.' + options.staging + '.wixpress.com/_api/',
       partials: 'http://www.' + options.staging + '.wixpress.com/_partials/',
-      local: options.protocol + '://local.' + options.staging + '.wixpress.com:<%= connect.options.port %>'
+      local: options.protocol + '://local.' + options.staging + '.wixpress.com:<%= connect.options.port %>/' + options.page
     },
 
     // Watches files for changes and runs tasks based on the changed files
