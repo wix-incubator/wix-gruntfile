@@ -4,7 +4,7 @@
 
 module.exports = function (config) {
   config.set({
-    plugins: ['karma-jasmine', 'karma-coverage', 'karma-phantomjs-launcher', 'karma-growl-reporter', 'karma-teamcity-reporter-shahata', 'karma-ng-html2js-preprocessor'],
+    plugins: ['karma-jasmine', 'karma-coverage', 'karma-phantomjs-launcher', 'karma-growl-reporter', 'karma-teamcity-reporter', 'karma-ng-html2js-preprocessor'],
 
     // base path, that will be used to resolve files and exclude
     basePath: '',
@@ -14,12 +14,6 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [ ],
-
-    // coverage instrumentation - uncomment this if you need to debug
-    preprocessors: {
-      '{.tmp,app}/scripts/{,!(lib)/**/}*.js': 'coverage',
-      '{app,.tmp}/views/*.html': 'ng-html2js'
-    },
 
     // list of files / patterns to exclude
     exclude: [

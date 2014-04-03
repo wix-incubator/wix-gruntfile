@@ -4,7 +4,7 @@
 
 module.exports = function (config) {
   config.set({
-    plugins: ['karma-chrome-launcher', 'karma-teamcity-reporter-shahata', 'karma-sauce-launcher-shahata', 'karma-ng-scenario'],
+    plugins: ['karma-chrome-launcher', 'karma-teamcity-reporter', 'karma-sauce-launcher', 'karma-ng-scenario'],
 
     // base path, that will be used to resolve files and exclude
     basePath: '',

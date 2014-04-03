@@ -446,6 +446,10 @@ module.exports = function (grunt, options) {
     karma: {
       options: {
         basePath: process.cwd(),
+        preprocessors: {
+          '{.tmp,app}/scripts/{,!(lib)/**/}*.js': 'coverage',
+          '{app,.tmp}/views/*.html': 'ng-html2js'
+        },
         ngHtml2JsPreprocessor: {
           stripPrefix: '(app|.tmp)',
           moduleName: options.preloadModule
@@ -484,6 +488,9 @@ module.exports = function (grunt, options) {
         options: {
           configFile: path.join(__dirname, 'karma.conf.js'),
           files: options.unitTestFiles,
+          preprocessors: {
+            '{app,.tmp}/views/*.html': 'ng-html2js'
+          },
           singleRun: false,
           background: true
         }
@@ -546,6 +553,12 @@ module.exports = function (grunt, options) {
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['connect:dist:keepalive']);
+    }
+
+    if (target === 'coverage') {
+      var karma = grunt.config('karma');
+      delete karma.unit.options.preprocessors;
+      grunt.config('karma', karma);
     }
 
     grunt.task.run([
