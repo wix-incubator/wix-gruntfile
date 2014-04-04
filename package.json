@@ -1,7 +1,15 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.14",
-  "main": "./Gruntfile.js",
+  "version": "0.1.15",
+  "description": "Wix Gruntfile.",
+  "homepage": "https://github.com/wix/wix-gruntfile",
+  "bugs": "https://github.com/wix/wix-gruntfile/issues",
+  "author": "Shahar Talmi",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wix/wix-gruntfile.git"
+  },
   "dependencies": {
     "proxy-middleware": "~0.5.0",
     "jshint-stylish": "~0.1.3",

@@ -1,5 +1,39 @@
 ### wix-gruntfile
 
+## Installation
+
+`npm install --save-dev wix-gruntfile`
+
+Create your own `Gruntfile.js` which uses `wix-gruntfile`:
+
+```js
+'use strict';
+
+module.exports = function (grunt) {
+  require('wix-gruntfile')(grunt, {
+    staging: 'pizza',
+    port: 9000,
+    preloadModule: 'newsFeedCommon',
+    translationsModule: 'wixNewsFeedTranslations',
+    unitTestFiles: [
+      'app/bower_components/jquery/jquery.js',
+      'app/bower_components/angular/angular.js',
+      'app/bower_components/angular-mocks/angular-mocks.js',
+      'app/bower_components/angular-translate/angular-translate.js',
+      'app/bower_components/es5-shim/es5-shim.js',
+      ...
+    ]
+  });
+
+  // optionally add custom configurations using:
+  // grunt.loadNpmTasks(), grunt.config(), grunt.registerTask()
+
+  // optionally hook into existing tasks using:
+  // grunt.renameTask('existing', 'hooked');
+  // grunt.registerTask('exisitng', ['new', 'hooked']);
+};
+```
+
 ## Run project
 
 `grunt serve` will watch your files and automatically compile, lint, unit test and display in browser
