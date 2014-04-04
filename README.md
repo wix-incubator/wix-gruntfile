@@ -1,4 +1,4 @@
-### wix-gruntfile
+# wix-gruntfile
 
 ## Installation
 
