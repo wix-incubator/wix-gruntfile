@@ -18,7 +18,7 @@ module.exports = function (config) {
     // list of files / patterns to exclude
     exclude: [
       '{,.tmp/}test/spec/e2e/*.js',
-      'app/scripts/locale/*_!(en).js'
+      '{app,.tmp}/scripts/locale/*_!(en).js'
     ],
 
     // test results reporter to use
