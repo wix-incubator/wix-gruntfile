@@ -34,7 +34,7 @@ module.exports = function (grunt, options) {
     '{app,.tmp}/scripts/*.js', //do not move - position 1
     '{app,.tmp}/scripts/*/**/*.js', //do not move - position 2
     '{,.tmp/}test/**/*.js',
-    '{app,.tmp}/views/*.html'
+    '{app,.tmp}/views/**/*.html'
   ];
 
   if (!options.appFirst) {
@@ -80,7 +80,7 @@ module.exports = function (grunt, options) {
         nospawn: true
       },
       haml: {
-        files: ['app/{,views/}*.haml'],
+        files: ['app/{,views/**/}*.haml'],
         tasks: ['haml']
       },
       replace: {
@@ -372,12 +372,12 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app',
-          src: ['*.vm', 'scripts/locale/*.js', '*.html', 'views/*.html'],
+          src: ['*.vm', 'scripts/locale/*.js', '*.html', 'views/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
           cwd: '.tmp',
-          src: ['*.js', 'scripts/locale/*.js', '*.html', 'views/*.html'],
+          src: ['*.js', 'scripts/locale/*.js', '*.html', 'views/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
@@ -449,7 +449,7 @@ module.exports = function (grunt, options) {
         basePath: process.cwd(),
         preprocessors: {
           '{.tmp,app}/scripts/{,!(lib)/**/}*.js': 'coverage',
-          '{app,.tmp}/views/*.html': 'ng-html2js'
+          '{app,.tmp}/views/**/*.html': 'ng-html2js'
         },
         ngHtml2JsPreprocessor: {
           stripPrefix: '(app|.tmp)',
@@ -490,7 +490,7 @@ module.exports = function (grunt, options) {
           configFile: path.join(__dirname, 'karma.conf.js'),
           files: options.unitTestFiles,
           preprocessors: {
-            '{app,.tmp}/views/*.html': 'ng-html2js'
+            '{app,.tmp}/views/**/*.html': 'ng-html2js'
           },
           singleRun: false,
           background: true
@@ -514,7 +514,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app',
-          src: '{,views/}*.haml',
+          src: '{,views/**/}*.haml',
           dest: '.tmp',
           ext: '.html',
           extDot: 'last'
