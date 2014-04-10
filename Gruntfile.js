@@ -174,7 +174,7 @@ module.exports = function (grunt, options) {
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
-        force: true,
+        force: false,
         reporter: require('jshint-stylish')
       },
       scripts: {
@@ -553,6 +553,10 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('serve', function (target) {
+    var jshint = grunt.config('jshint');
+    jshint.options.force = true;
+    grunt.config('jshint', jshint);
+
     if (target === 'dist') {
       return grunt.task.run(['connect:dist:keepalive']);
     }
@@ -581,10 +585,6 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('build', function (target) {
     if (target === 'ci') {
-      var jshint = grunt.config('jshint');
-      jshint.options.force = false;
-      grunt.config('jshint', jshint);
-
       grunt.task.run([
         'clean:dist',
         'pre-build',
