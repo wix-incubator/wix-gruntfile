@@ -570,6 +570,7 @@ module.exports = function (grunt, options) {
     grunt.task.run([
       'karma:unit',
       'pre-build',
+      'karma:unit:run',
       'connect:livereload',
       'watch'
     ]);
