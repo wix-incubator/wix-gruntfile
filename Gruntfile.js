@@ -63,6 +63,31 @@ module.exports = function (grunt, options) {
     return connect.static(require('path').resolve(grunt.template.process(dir)), { maxAge: maxage || 0 });
   };
 
+  function arrayToObj(arr) {
+    return typeof(arr.reduce) === 'function' ? arr.reduce(function (obj, replace) {
+      obj[replace.from] = replace.to;
+      return obj;
+    }, {}) : arr;
+  }
+
+  function objToArray(obj) {
+    var arr = [];
+    for (var key in obj) {
+      arr.push({from: key, to: obj[key]});
+    }
+    return arr;
+  }
+
+  function loadReplacements() {
+    var replacements = arrayToObj(require(process.cwd() + '/replace.conf.js'));
+    try {
+      extend(replacements, arrayToObj(require(process.cwd() + '/replace.private.conf.js')));
+    } catch (e) {
+
+    }
+    return objToArray(replacements);
+  }
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -86,6 +111,11 @@ module.exports = function (grunt, options) {
       replace: {
         files: ['app/*.vm'],
         tasks: ['replace', 'copy:vm']
+      },
+      replaceConf: {
+        files: ['replace.conf.js', 'replace.private.conf.js'],
+        tasks: ['replace', 'copy:vm'],
+        options: {reload: true}
       },
       locale: {
         files: ['app/scripts/locale/*'],
@@ -503,7 +533,7 @@ module.exports = function (grunt, options) {
       dist: {
         src: ['app/*.vm'],
         dest: '.tmp/',
-        replacements: require(process.cwd() + '/replace.conf.js')
+        replacements: loadReplacements()
       }
     },
 
