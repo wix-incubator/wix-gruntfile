@@ -483,7 +483,7 @@ module.exports = function (grunt, options) {
           '{app,.tmp}/views/**/*.html': 'ng-html2js'
         },
         ngHtml2JsPreprocessor: {
-          stripPrefix: '(app|.tmp)',
+          stripPrefix: '(app|.tmp)/',
           moduleName: options.preloadModule
         }
       },
