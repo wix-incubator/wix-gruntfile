@@ -6,6 +6,11 @@ module.exports = function (config) {
   config.set({
     plugins: ['karma-jasmine', 'karma-coverage', 'karma-phantomjs-launcher', 'karma-growl-reporter', 'karma-teamcity-reporter', 'karma-ng-html2js-preprocessor'],
 
+    preprocessors: {
+      '{.tmp,app}/scripts/{,!(lib)/**/}*.js': 'coverage',
+      '{app,.tmp}/views/**/*.html': 'ng-html2js'
+    },
+
     // base path, that will be used to resolve files and exclude
     basePath: '',
 

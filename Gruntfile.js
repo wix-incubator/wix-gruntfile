@@ -321,7 +321,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
+          src: '{,*/**/}*.{png,jpg,jpeg,gif}',
           dest: 'dist/images'
         }]
       },
@@ -478,10 +478,6 @@ module.exports = function (grunt, options) {
     karma: {
       options: {
         basePath: process.cwd(),
-        preprocessors: {
-          '{.tmp,app}/scripts/{,!(lib)/**/}*.js': 'coverage',
-          '{app,.tmp}/views/**/*.html': 'ng-html2js'
-        },
         ngHtml2JsPreprocessor: {
           stripPrefix: '(app|.tmp)/',
           moduleName: options.preloadModule
@@ -561,78 +557,89 @@ module.exports = function (grunt, options) {
     }
   });
 
-  grunt.registerTask('pre-build', [
-    'clean:server',
-    'jshint',
-    'concurrent:server',
-    'autoprefixer',
-    'copy:vm'
-  ]);
-
-  grunt.registerTask('package', [
-    'useminPrepare',
-    'ngtemplates',
-    'concat',
-    'cssmin',
-    'ngmin',
-    'uglify',
-    'concurrent:dist',
-    'cdnify',
-    'usemin',
-    'velocityDebug'
-  ]);
-
-  grunt.registerTask('serve', function (target) {
+  grunt.registerTask('forceJshint', function () {
     var jshint = grunt.config('jshint');
     jshint.options.force = true;
     grunt.config('jshint', jshint);
+  });
 
-    if (target === 'dist') {
-      return grunt.task.run(['connect:dist:keepalive']);
-    }
+  grunt.registerTask('enableCoverage', function () {
+    var karma = grunt.config('karma');
+    delete karma.unit.options.preprocessors;
+    grunt.config('karma', karma);
+  });
 
-    if (target === 'coverage') {
-      var karma = grunt.config('karma');
-      delete karma.unit.options.preprocessors;
-      grunt.config('karma', karma);
-    }
-
+  grunt.registerTask('pre-build', function () {
     grunt.task.run([
-      'karma:unit',
-      'pre-build',
-      'karma:unit:run',
-      'connect:livereload',
-      'watch'
+      'clean:server',
+      'jshint',
+      'concurrent:server',
+      'autoprefixer',
+      'copy:vm'
     ]);
   });
 
-  grunt.registerTask('test', function (target) {
-    if (target === 'ci') {
-      grunt.task.run(['connect:test', 'karma:e2eTeamcity']);
-    } else {
-      grunt.task.run(['pre-build', 'karma:single']);
-    }
+  grunt.registerTask('package', function () {
+    grunt.task.run([
+      'useminPrepare',
+      'ngtemplates',
+      'concat',
+      'cssmin',
+      'ngmin',
+      'uglify',
+      'concurrent:dist',
+      'cdnify',
+      'usemin',
+      'velocityDebug'
+    ]);
   });
 
-  grunt.registerTask('build', function (target) {
-    if (target === 'ci') {
-      grunt.task.run([
-        'clean:dist',
-        'pre-build',
-        'karma:teamcity',
-        'package'
-      ]);
-    } else {
-      grunt.task.run([
-        'clean:dist',
-        'test',
-        'package',
-        'connect:test',
-        'karma:e2e'
-      ]);
-    }
-  });
+  grunt.registerTask('serve', [
+    'forceJshint',
+    'karma:unit',
+    'pre-build',
+    'karma:unit:run',
+    'connect:livereload',
+    'watch'
+  ]);
 
-  grunt.registerTask('default', ['build']);
+  grunt.registerTask('serve:dist', [
+    'forceJshint',
+    'connect:dist:keepalive'
+  ]);
+
+  grunt.registerTask('serve:coverage', [
+    'enableCoverage',
+    'serve'
+  ]);
+
+  grunt.registerTask('test', [
+    'pre-build',
+    'karma:single'
+  ]);
+
+  grunt.registerTask('test:ci', [
+    'connect:test',
+    'karma:e2eTeamcity'
+  ]);
+
+  grunt.registerTask('build', [
+    'clean:dist',
+    'test',
+    'package',
+    'connect:test',
+    'karma:e2e'
+  ]);
+
+  grunt.registerTask('build:ci', [
+    'clean:dist',
+    'pre-build',
+    'karma:teamcity',
+    'package'
+  ]);
+
+  grunt.registerTask('default', function () {
+    grunt.task.run(['build']);
+  });
 
 };
