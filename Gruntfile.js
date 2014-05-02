@@ -21,6 +21,7 @@ module.exports = function (grunt, options) {
     port: 9000,
     translationsModule: 'wixAppTranslations',
     unitTestFiles: [],
+    karmaTestFiles: null,
     appFirst: true,
     page: ''
   }, options);
@@ -41,7 +42,7 @@ module.exports = function (grunt, options) {
     unitTestWildCards.replace(1, 2);
   }
 
-  options.unitTestFiles = options.unitTestFiles.concat(unitTestWildCards);
+  options.unitTestFiles = options.karmaTestFiles || options.unitTestFiles.concat(unitTestWildCards);
 
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt, {config: require('./package.json')});
@@ -106,7 +107,11 @@ module.exports = function (grunt, options) {
       },
       haml: {
         files: ['app/{,views/**/}*.haml'],
-        tasks: ['haml']
+        tasks: ['haml', 'karma:unit:run']
+      },
+      html: {
+        files: ['app/{,views/**/}*.html'],
+        tasks: ['karma:unit:run']
       },
       replace: {
         files: ['app/*.vm'],
