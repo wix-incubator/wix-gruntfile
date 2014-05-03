@@ -1,8 +1,12 @@
 # wix-gruntfile
 
+Customizable Gruntfile built to work with wix-angular projects
+
 ## Installation
 
-`npm install --save-dev wix-gruntfile`
+No installtion needed in case you scaffold using `yo wix-angular`
+
+Otherwise - `npm install --save-dev wix-gruntfile`
 
 Create your own `Gruntfile.js` which uses `wix-gruntfile`:
 
