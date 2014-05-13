@@ -9,6 +9,7 @@
 module.exports = function (grunt, options) {
 
   var extend = require('util')._extend;
+  var protractorUtil = require('./grunt-protractor');
 
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
@@ -23,7 +24,8 @@ module.exports = function (grunt, options) {
     unitTestFiles: [],
     karmaTestFiles: null,
     appFirst: true,
-    page: ''
+    page: '',
+    protractor: false
   }, options);
 
   if (!options.preloadModule) {
@@ -574,6 +576,23 @@ module.exports = function (grunt, options) {
     grunt.config('karma', karma);
   });
 
+  grunt.registerTask('webdriver', 'Update webdriver', function () {
+    protractorUtil.updateWebdriver.call(protractorUtil, this.async());
+  });
+
+  if (options.protractor) {
+    grunt.config('protractor', {
+      normal: 'protractor-conf.js',
+      teamcity: path.join(__dirname, 'protractor-teamcity-conf.js')
+    });
+    grunt.registerMultiTask('protractor', 'Run Protractor integration tests', function () {
+      protractorUtil.startProtractor.call(protractorUtil, this.data, this.async());
+    });
+  } else {
+    grunt.registerTask('protractor:normal', ['karma:e2e']);
+    grunt.registerTask('protractor:teamcity', ['karma:e2eTeamcity']);
+  }
+
   grunt.registerTask('pre-build', function () {
     grunt.task.run([
       'clean:server',
@@ -625,7 +644,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('test:ci', [
     'connect:test',
-    'karma:e2eTeamcity'
+    'protractor:teamcity'
   ]);
 
   grunt.registerTask('build', [
@@ -633,7 +652,7 @@ module.exports = function (grunt, options) {
     'test',
     'package',
     'connect:test',
-    'karma:e2e'
+    'protractor:normal'
   ]);
 
   grunt.registerTask('build:ci', [
