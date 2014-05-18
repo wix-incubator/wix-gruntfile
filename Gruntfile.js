@@ -135,6 +135,16 @@ module.exports = function (grunt, options) {
         ],
         tasks: ['jshint', 'karma:unit:run']
       },
+      test_ts: {
+        files: [
+          'app/scripts/{,*/}*.ts'
+        ],
+        tasks: ['ts:build', 'jshint', 'karma:unit:run']
+      },
+      ts: {
+        files: ['app/scripts/**/{,*/}*.{ts,tpl.html}'],
+        tasks: ['ts']
+      },
       compass: {
         files: ['app/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer']
@@ -151,6 +161,20 @@ module.exports = function (grunt, options) {
           'app/{,*/}*.html',
           'app/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      }
+    },
+
+    ts: {
+      build: {
+        src: ['app/scripts/**/*.ts'],
+        outDir: '.tmp/scripts/',
+        reference: 'app/scripts/reference.ts',
+        options: {
+          target: 'es5',
+          sourceMap: false,
+          declaration: false,
+          removeComments: true
+        }
       }
     },
 
@@ -600,6 +624,7 @@ module.exports = function (grunt, options) {
   grunt.registerTask('pre-build', function () {
     grunt.task.run([
       'clean:server',
+      'ts:build',
       'jshint',
       'concurrent:server',
       'autoprefixer',
