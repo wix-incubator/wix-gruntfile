@@ -82,8 +82,9 @@ module.exports = function (grunt, options) {
   }
 
   function loadReplacements() {
-    var replacements = arrayToObj(require(process.cwd() + '/replace.conf.js'));
+    var replacements = {};
     try {
+      extend(replacements, arrayToObj(require(process.cwd() + '/replace.conf.js')));
       extend(replacements, arrayToObj(require(process.cwd() + '/replace.private.conf.js')));
     } catch (e) {
 
