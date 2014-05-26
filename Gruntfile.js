@@ -188,6 +188,7 @@ module.exports = function (grunt, options) {
         options: {
           middleware: function (connect) {
             return [
+              connect.compress(),
               mountFolder(connect, 'test', 86400000),
               mountFolder(connect, 'dist', 86400000)
             ];
