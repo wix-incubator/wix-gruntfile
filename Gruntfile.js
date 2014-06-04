@@ -131,17 +131,17 @@ module.exports = function (grunt, options) {
       },
       test: {
         files: [
-          'app/scripts/{,*/}*.js',
+          'app/scripts/**/*.js',
           'test/**/*.js'
         ],
         tasks: ['jshint', 'karma:unit:run']
       },
       compass: {
-        files: ['app/styles/{,*/}*.{scss,sass}'],
+        files: ['app/styles/**/*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer']
       },
       styles: {
-        files: ['app/styles/{,*/}*.css'],
+        files: ['app/styles/**/*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },
       gruntfile: {
@@ -149,8 +149,8 @@ module.exports = function (grunt, options) {
       },
       livereload: {
         files: [
-          'app/{,*/}*.html',
-          'app/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          'app/**/*.html',
+          'app/images/**/*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
@@ -223,8 +223,8 @@ module.exports = function (grunt, options) {
         files: {
           src: [
             'Gruntfile.js',
-            'app/scripts/{,*/}*.js',
-            '!app/scripts/{locale,lib}/*.js'
+            'app/scripts/**/*.js',
+            '!app/scripts/{locale,lib}/**/*.js'
           ]
         }
       },
@@ -233,7 +233,7 @@ module.exports = function (grunt, options) {
           jshintrc: 'test/.jshintrc'
         },
         files: {
-          src: ['test/{spec,mock}/{,*/}*.js']
+          src: ['test/{spec,mock}/**/*.js']
         }
       }
     },
@@ -260,7 +260,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: '.tmp/styles/',
-          src: '{,*/}*.css',
+          src: '**/*.css',
           dest: '.tmp/styles/'
         }]
       }
@@ -349,7 +349,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app/images',
-          src: '{,*/}*.svg',
+          src: '**/*.svg',
           dest: 'dist/images'
         }]
       }
@@ -428,7 +428,7 @@ module.exports = function (grunt, options) {
             '*.{ico,txt}',
             '.htaccess',
             'bower_components/**/*',
-            'images/{,*/}*.{webp}',
+            'images/**/*.{webp}',
             'fonts/*'
           ]
         }]
@@ -437,7 +437,7 @@ module.exports = function (grunt, options) {
         expand: true,
         cwd: 'app/styles',
         dest: '.tmp/styles/',
-        src: '{,*/}*.css'
+        src: '**/*.css'
       },
       vm: {
         files: [{
