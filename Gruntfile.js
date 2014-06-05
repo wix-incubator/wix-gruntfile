@@ -20,6 +20,7 @@ module.exports = function (grunt, options) {
     protocol: 'http',
     staging: 'pizza',
     port: 9000,
+    livereload: 35729,
     translationsModule: 'wixAppTranslations',
     unitTestFiles: [],
     karmaTestFiles: null,
@@ -105,7 +106,7 @@ module.exports = function (grunt, options) {
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       options: {
-        livereload: 35729,
+        livereload: options.livereload,
         nospawn: true
       },
       haml: {
