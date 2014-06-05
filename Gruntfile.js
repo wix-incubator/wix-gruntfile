@@ -187,6 +187,7 @@ module.exports = function (grunt, options) {
       },
       test: {
         options: {
+          port: 9000,
           middleware: function (connect) {
             return [
               connect.compress(),
