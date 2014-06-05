@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.36",
+  "version": "0.1.37",
   "description": "Wix Gruntfile.",
   "homepage": "https://github.com/wix/wix-gruntfile",
   "bugs": "https://github.com/wix/wix-gruntfile/issues",
@@ -28,7 +28,7 @@
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-contrib-compass": "~0.7.2",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-connect": "~0.7.1",
+    "grunt-contrib-connect": "~0.5.0",
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-cssmin": "~0.9.0",
     "grunt-contrib-haml": "~0.1.1",
