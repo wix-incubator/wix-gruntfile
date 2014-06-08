@@ -26,7 +26,8 @@ module.exports = function (grunt, options) {
     karmaTestFiles: null,
     appFirst: true,
     page: '',
-    protractor: false
+    protractor: false,
+    proxies: {}
   }, options);
 
   if (!options.preloadModule) {
@@ -57,15 +58,23 @@ module.exports = function (grunt, options) {
   var path = require('path');
   var proxyMiddleware = require('proxy-middleware');
 
-  var proxyFolder = function (src, dest) {
+  function proxyFolder(src, dest) {
     var proxyOptions = url.parse(grunt.template.process(dest));
     proxyOptions.route = src;
     return proxyMiddleware(proxyOptions);
-  };
+  }
 
-  var mountFolder = function (connect, dir, maxage) {
+  function getProxies() {
+    var arr = [];
+    for (var key in options.proxies) {
+      arr.push(proxyFolder(key, options.proxies[key]));
+    }
+    return arr;
+  }
+
+  function mountFolder(connect, dir, maxage) {
     return connect.static(require('path').resolve(grunt.template.process(dir)), { maxAge: maxage || 0 });
-  };
+  }
 
   function arrayToObj(arr) {
     return typeof(arr.reduce) === 'function' ? arr.reduce(function (obj, replace) {
@@ -181,7 +190,7 @@ module.exports = function (grunt, options) {
               proxyFolder('/_api/', '<%= yeoman.api %>'),
               proxyFolder('/_partials/', '<%= yeoman.partials %>'),
               proxyFolder('/_livereload/', 'http://localhost:<%= watch.options.livereload %>/')
-            ];
+            ].concat(getProxies());
           }
         }
       },
@@ -193,7 +202,7 @@ module.exports = function (grunt, options) {
               connect.compress(),
               mountFolder(connect, 'test', 86400000),
               mountFolder(connect, 'dist', 86400000)
-            ];
+            ].concat(getProxies());
           }
         }
       },
@@ -206,7 +215,7 @@ module.exports = function (grunt, options) {
               mountFolder(connect, 'dist'),
               proxyFolder('/_api/', '<%= yeoman.api %>'),
               proxyFolder('/_partials/', '<%= yeoman.partials %>')
-            ];
+            ].concat(getProxies());
           }
         }
       }
