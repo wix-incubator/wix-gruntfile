@@ -341,7 +341,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app/images',
-          src: '{,*/**/}*.{png,jpg,jpeg,gif,ico}',
+          src: '{,*/**/}*.{png,jpg,jpeg,gif}',
           dest: 'dist/images'
         }]
       },
@@ -439,7 +439,7 @@ module.exports = function (grunt, options) {
             '*.{ico,txt}',
             '.htaccess',
             'bower_components/**/*',
-            'images/**/*.{webp}',
+            'images/**/*.{webp,ico}',
             'fonts/*'
           ]
         }]
