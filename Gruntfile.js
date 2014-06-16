@@ -67,7 +67,15 @@ module.exports = function (grunt, options) {
   function getProxies() {
     var arr = [];
     for (var key in options.proxies) {
-      arr.push(proxyFolder(key, options.proxies[key]));
+      if (typeof(options.proxies[key]) === 'string') {
+        arr.push(proxyFolder(key, options.proxies[key]));
+      } else {
+        if (key[0] === '_') {
+          arr.unshift(options.proxies[key]);
+        } else {
+          arr.push(options.proxies[key]);
+        }
+      }
     }
     return arr;
   }
@@ -78,15 +86,21 @@ module.exports = function (grunt, options) {
 
   function arrayToObj(arr) {
     return typeof(arr.reduce) === 'function' ? arr.reduce(function (obj, replace) {
-      obj[replace.from] = replace.to;
+      if (typeof(replace.from) === 'string') {
+        obj[replace.from] = replace.to;
+      } else {
+        obj.$$preserve.push(replace);
+      }
       return obj;
-    }, {}) : arr;
+    }, {$$preserve: []}) : arr;
   }
 
   function objToArray(obj) {
-    var arr = [];
+    var arr = obj.$$preserve || [];
     for (var key in obj) {
-      arr.push({from: key, to: obj[key]});
+      if (key !== '$$preserve') {
+        arr.push({from: key, to: obj[key]});
+      }
     }
     return arr;
   }
@@ -127,7 +141,7 @@ module.exports = function (grunt, options) {
         tasks: ['karma:unit:run']
       },
       replace: {
-        files: ['app/*.vm'],
+        files: ['app/**/*.vm'],
         tasks: ['replace', 'copy:vm']
       },
       replaceConf: {
@@ -189,7 +203,8 @@ module.exports = function (grunt, options) {
               proxyFolder('/wcservices/', '<%= yeoman.api %>'.replace('_api', 'wcservices')),
               proxyFolder('/_api/', '<%= yeoman.api %>'),
               proxyFolder('/_partials/', '<%= yeoman.partials %>'),
-              proxyFolder('/_livereload/', 'http://localhost:<%= watch.options.livereload %>/')
+              proxyFolder('/_livereload/', 'http://localhost:<%= watch.options.livereload %>/'),
+              connect.urlencoded()
             ].concat(getProxies());
           }
         }
@@ -201,7 +216,8 @@ module.exports = function (grunt, options) {
             return [
               connect.compress(),
               mountFolder(connect, 'test', 86400000),
-              mountFolder(connect, 'dist', 86400000)
+              mountFolder(connect, 'dist', 86400000),
+              connect.urlencoded()
             ].concat(getProxies());
           }
         }
@@ -214,7 +230,8 @@ module.exports = function (grunt, options) {
               mountFolder(connect, 'test'),
               mountFolder(connect, 'dist'),
               proxyFolder('/_api/', '<%= yeoman.api %>'),
-              proxyFolder('/_partials/', '<%= yeoman.partials %>')
+              proxyFolder('/_partials/', '<%= yeoman.partials %>'),
+              connect.urlencoded()
             ].concat(getProxies());
           }
         }
@@ -329,7 +346,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'dist',
-          src: '*.vm',
+          src: '**/*.vm',
           dest: 'dist',
         }]
       }
@@ -397,7 +414,7 @@ module.exports = function (grunt, options) {
         cdn: require('wix-cdn-data')[options.protocol]()
       },
       dist: {
-        html: ['dist/*.html', 'dist/*.vm']
+        html: ['dist/*.html', 'dist/**/*.vm']
       }
     },
 
@@ -423,7 +440,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app',
-          src: ['*.vm', 'scripts/locale/*.js', '*.html', 'views/**/*.html'],
+          src: ['**/*.vm', 'scripts/locale/*.js', '*.html', 'views/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
@@ -461,7 +478,7 @@ module.exports = function (grunt, options) {
           expand: true,
           cwd: '.tmp',
           dest: '.tmp',
-          src: '*.vm',
+          src: '**/*.vm',
           ext: '.html'
         }]
       }
@@ -478,7 +495,7 @@ module.exports = function (grunt, options) {
       ],
       dist: [
         'imagemin',
-        'svgmin',
+        //'svgmin',
         'copy:dist'
       ]
     },
@@ -537,7 +554,8 @@ module.exports = function (grunt, options) {
           configFile: path.join(__dirname, 'karma.conf.js'),
           files: options.unitTestFiles,
           preprocessors: {
-            '{app,.tmp}/views/**/*.html': 'ng-html2js'
+            '{app,.tmp}/**/*.html': 'ng-html2js',
+            '{app,.tmp}/images/**/*.svg': 'ng-html2js'
           },
           singleRun: false,
           background: true
@@ -552,7 +570,7 @@ module.exports = function (grunt, options) {
 
     replace: {
       dist: {
-        src: ['app/*.vm'],
+        src: ['app/**/*.vm'],
         dest: '.tmp/',
         replacements: loadReplacements()
       }
@@ -612,7 +630,6 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('pre-build', function () {
     grunt.task.run([
-      'clean:server',
       'jshint',
       'concurrent:server',
       'autoprefixer',
@@ -638,6 +655,7 @@ module.exports = function (grunt, options) {
   grunt.registerTask('serve', [
     'forceJshint',
     'karma:unit',
+    'clean:server',
     'pre-build',
     'karma:unit:run',
     'connect:livereload',
@@ -655,6 +673,7 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('test', [
+    'clean:server',
     'pre-build',
     'karma:single'
   ]);

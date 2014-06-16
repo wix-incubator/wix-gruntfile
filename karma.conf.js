@@ -7,8 +7,9 @@ module.exports = function (config) {
     plugins: ['karma-jasmine', 'karma-coverage', 'karma-phantomjs-launcher', 'karma-growl-reporter', 'karma-teamcity-reporter', 'karma-ng-html2js-preprocessor'],
 
     preprocessors: {
-      '{.tmp,app}/scripts/{,!(lib)/**/}*.js': 'coverage',
-      '{app,.tmp}/views/**/*.html': 'ng-html2js'
+      '{app,.tmp}/scripts/{,!(lib)/**/}*.js': 'coverage',
+      '{app,.tmp}/**/*.html': 'ng-html2js',
+      '{app,.tmp}/images/**/*.svg': 'ng-html2js'
     },
 
     // base path, that will be used to resolve files and exclude
@@ -22,7 +23,8 @@ module.exports = function (config) {
 
     // list of files / patterns to exclude
     exclude: [
-      '{,.tmp/}test/spec/e2e/*.js',
+      '{,.tmp/}test/spec/e2e/**/*.js',
+      '{,.tmp/}test/e2e/**/*.js',
       '{app,.tmp}/scripts/locale/*_!(en).js'
     ],
 
