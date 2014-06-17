@@ -456,7 +456,7 @@ module.exports = function (grunt, options) {
             '*.{ico,txt}',
             '.htaccess',
             'bower_components/**/*',
-            'images/**/*.{webp,ico}',
+            'images/**/*.{webp,ico,svg}',
             'fonts/*'
           ]
         }]
