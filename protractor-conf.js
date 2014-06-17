@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports.config = {
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 60000,
 
   baseUrl: 'http://localhost:9000/',
 
