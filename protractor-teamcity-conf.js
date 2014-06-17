@@ -16,11 +16,11 @@ config.sauceKey = process.env.SAUCE_ACCESS_KEY;
 var sauceLabsBrowsers = {
   Chrome: {
     browserName: 'chrome',
-    platform: 'OS X 10.9'
+    platform: 'Windows 8'
   },
   FF: {
     browserName: 'firefox',
-    platform: 'OS X 10.9'
+    platform: 'Windows 8'
   },
   IE11: {
     browserName: 'internet explorer',
