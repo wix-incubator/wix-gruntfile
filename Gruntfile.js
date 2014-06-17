@@ -461,6 +461,12 @@ module.exports = function (grunt, options) {
           ]
         }]
       },
+      svg: {
+        expand: true,
+        cwd: 'app/images',
+        src: '{,*/}*.svg',
+        dest: 'dist/images'
+      },
       styles: {
         expand: true,
         cwd: 'app/styles',
@@ -496,6 +502,7 @@ module.exports = function (grunt, options) {
       dist: [
         'imagemin',
         //'svgmin',
+        'copy:svg',
         'copy:dist'
       ]
     },
