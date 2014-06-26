@@ -27,7 +27,8 @@ module.exports = function (grunt, options) {
     appFirst: true,
     page: '',
     protractor: false,
-    proxies: {}
+    proxies: {},
+    bowerComponent: false
   }, options);
 
   if (!options.preloadModule) {
@@ -508,6 +509,11 @@ module.exports = function (grunt, options) {
     },
 
     uglify: {
+      options: {
+        mangle: !options.bowerComponent,
+        compress: !options.bowerComponent,
+        beautify: options.bowerComponent
+      },
       locale: {
         files: [{
           expand: true,
