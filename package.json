@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.53",
+  "version": "0.1.54",
   "description": "Wix Gruntfile.",
   "homepage": "https://github.com/wix/wix-gruntfile",
   "bugs": "https://github.com/wix/wix-gruntfile/issues",
@@ -51,6 +51,7 @@
     "karma-chrome-launcher": "~0.1.0",
     "karma-coverage": "~0.2.1",
     "karma-growl-reporter": "~0.1.1",
+    "karma-osx-reporter": "^0.1.0",
     "karma-jasmine": "~0.1.3",
     "karma-ng-html2js-preprocessor": "~0.1.0",
     "karma-ng-scenario": "~0.1.0",
