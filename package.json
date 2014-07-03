@@ -47,6 +47,7 @@
     "grunt-usemin": "~2.1.0",
     "grunt-velocity-debug": "~0.1.0",
     "grunt-karma": "~0.6.2",
+    "grunt-ts": "~1.11.2",
     "karma": "~0.10.2",
     "karma-chrome-launcher": "~0.1.0",
     "karma-coverage": "~0.2.1",
