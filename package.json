@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.55",
+  "version": "0.1.56",
   "description": "Wix Gruntfile.",
   "homepage": "https://github.com/wix/wix-gruntfile",
   "bugs": "https://github.com/wix/wix-gruntfile/issues",
@@ -40,7 +40,7 @@
     "grunt-google-cdn-shahata": "~0.2.0",
     "grunt-json-angular-translate": "~0.1.0",
     "grunt-newer": "~0.7.0",
-    "grunt-ngmin": "~0.0.2",
+    "grunt-ng-annotate": "~0.2.2",
     "grunt-release": "~0.6.0",
     "grunt-svgmin": "~0.4.0",
     "grunt-text-replace": "~0.3.7",
