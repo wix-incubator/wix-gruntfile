@@ -46,6 +46,12 @@ While `grunt serve` is running, debug unit tests at http://localhost:8880/ and d
 
 When working on coverage improvements run `grunt serve:coverage` (unit tests are difficult to debug in this mode)
 
+### Run e2e tests
+
+Open terminal and run `sudo webdriver-manager start` (move to background and leave running). This will start up the Selenium server.
+
+Launch e2e test by `protractor protractor-conf.js`. Make sure that `grunt serve` is running.
+
 ### Build the project locally (rarely needed):
 
 `grunt build` will run the complete build process including e2e tests (only on chrome)
