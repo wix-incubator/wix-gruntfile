@@ -153,7 +153,7 @@ module.exports = function (grunt, options) {
         options: {reload: true}
       },
       locale: {
-        files: ['app/scripts/locale/**/*.*'],
+        files: ['app/scripts/**/locale/**/*.*'],
         tasks: ['jsonAngularTranslate', 'jshint', 'karma:unit:run']
       },
       test: {
@@ -284,7 +284,7 @@ module.exports = function (grunt, options) {
           src: [
             'Gruntfile.js',
             'app/scripts/**/*.js',
-            '!app/scripts/{locale,lib}/**/*.js'
+            '!app/scripts/lib/**/*.js'
           ]
         }
       },
@@ -416,14 +416,24 @@ module.exports = function (grunt, options) {
     },
 
     ngtemplates:  {
-      app:        {
-        cwd: '.tmp',
-        src: 'views/**/*.preload.html',
-        dest: '.tmp/templates.js',
-        options: {
-          module: options.preloadModule,
-          usemin: 'scripts/scripts.js'
-        }
+      app: {
+        files : [{
+          cwd: '.tmp',
+          src: 'views/**/*.preload.html',
+          dest: '.tmp/templates.js',
+          options: {
+            module: options.preloadModule,
+            usemin: 'scripts/scripts.js'
+          }
+        }, {
+          cwd: 'app',
+          src: 'views/**/*.preload.html',
+          dest: '.tmp/templates.js',
+          options: {
+            module: options.preloadModule,
+            usemin: 'scripts/scripts.js'
+          }
+        }]
       }
     },
 
@@ -469,6 +479,12 @@ module.exports = function (grunt, options) {
           src: '*.{json,new_json}',
           dest: '.tmp/scripts/locale',
           ext: '.js'
+        }, {
+          expand: true,
+          cwd: 'app/scripts',
+          src: '*/**/locale/*.{json,new_json}',
+          dest: '.tmp/scripts',
+          ext: '.js'
         }]
       }
     },
@@ -479,12 +495,12 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app',
-          src: ['**/*.vm', 'scripts/locale/**/*.js', '*.html', 'views/**/*.html'],
+          src: ['**/*.vm', 'scripts/**/locale/**/*.js', '*.html', 'views/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
           cwd: '.tmp',
-          src: ['*.js', 'scripts/locale/**/*.js', '*.html', 'views/**/*.html'],
+          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', 'views/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
@@ -549,7 +565,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'dist/scripts',
-          src: 'locale/**/*.js',
+          src: '**/locale/**/*.js',
           dest: 'dist/scripts'
         }]
       }
