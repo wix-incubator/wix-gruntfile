@@ -153,7 +153,7 @@ module.exports = function (grunt, options) {
         options: {reload: true}
       },
       locale: {
-        files: ['app/scripts/locale/*'],
+        files: ['app/scripts/locale/**/*.*'],
         tasks: ['jsonAngularTranslate', 'jshint', 'karma:unit:run']
       },
       test: {
@@ -479,12 +479,12 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app',
-          src: ['**/*.vm', 'scripts/locale/*.js', '*.html', 'views/**/*.html'],
+          src: ['**/*.vm', 'scripts/locale/**/*.js', '*.html', 'views/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
           cwd: '.tmp',
-          src: ['*.js', 'scripts/locale/*.js', '*.html', 'views/**/*.html'],
+          src: ['*.js', 'scripts/locale/**/*.js', '*.html', 'views/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
@@ -549,7 +549,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'dist/scripts',
-          src: 'locale/*.js',
+          src: 'locale/**/*.js',
           dest: 'dist/scripts'
         }]
       }
