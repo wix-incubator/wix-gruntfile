@@ -379,7 +379,20 @@ module.exports = function (grunt, options) {
           expand: true,
           cwd: 'dist',
           src: '**/*.vm',
-          dest: 'dist',
+          dest: 'dist'
+        }]
+      }
+    },
+
+    processTags: {
+      dist: {
+        options: {
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist',
+          src: '**/*.vm',
+          dest: 'dist'
         }]
       }
     },
@@ -709,7 +722,8 @@ module.exports = function (grunt, options) {
       'concurrent:dist',
       'cdnify',
       'usemin',
-      'velocityDebug'
+      'velocityDebug',
+      'processTags'
     ]);
   });
 
