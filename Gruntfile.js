@@ -28,6 +28,7 @@ module.exports = function (grunt, options) {
     page: '',
     protractor: false,
     proxies: {},
+    beforeProxies: {},
     bowerComponent: false
   }, options);
 
@@ -65,16 +66,16 @@ module.exports = function (grunt, options) {
     return proxyMiddleware(proxyOptions);
   }
 
-  function getProxies() {
+  function getProxies(proxyType) {
     var arr = [];
-    for (var key in options.proxies) {
-      if (typeof(options.proxies[key]) === 'string') {
-        arr.push(proxyFolder(key, options.proxies[key]));
+    for (var key in options[proxyType]) {
+      if (typeof(options[proxyType][key]) === 'string') {
+        arr.push(proxyFolder(key, options[proxyType][key]));
       } else {
         if (key[0] === '_') {
-          arr.unshift(options.proxies[key]);
+          arr.unshift(options[proxyType][key]);
         } else {
-          arr.push(options.proxies[key]);
+          arr.push(options[proxyType][key]);
         }
       }
     }
@@ -228,7 +229,7 @@ module.exports = function (grunt, options) {
           passphrase: 'grunt',
           open: '<%= yeoman.local %>',
           middleware: function (connect) {
-            return [
+            return getProxies('beforeProxies').concat([
               mountFolder(connect, '.tmp'),
               mountFolder(connect, 'test'),
               mountFolder(connect, 'app'),
@@ -237,7 +238,7 @@ module.exports = function (grunt, options) {
               proxyFolder('/_partials/', '<%= yeoman.partials %>'),
               proxyFolder('/_livereload/', 'http://localhost:<%= watch.options.livereload %>/'),
               connect.urlencoded()
-            ].concat(getProxies());
+            ]).concat(getProxies('proxies'));
           }
         }
       },
@@ -245,12 +246,12 @@ module.exports = function (grunt, options) {
         options: {
           port: 9000,
           middleware: function (connect) {
-            return [
+            return getProxies('beforeProxies').concat([
               connect.compress(),
               mountFolder(connect, 'test', 86400000),
               mountFolder(connect, 'dist', 86400000),
               connect.urlencoded()
-            ].concat(getProxies());
+            ]).concat(getProxies('proxies'));
           }
         }
       },
@@ -258,13 +259,13 @@ module.exports = function (grunt, options) {
         options: {
           open: '<%= yeoman.local %>',
           middleware: function (connect) {
-            return [
+            return getProxies('beforeProxies').concat([
               mountFolder(connect, 'test'),
               mountFolder(connect, 'dist'),
               proxyFolder('/_api/', '<%= yeoman.api %>'),
               proxyFolder('/_partials/', '<%= yeoman.partials %>'),
               connect.urlencoded()
-            ].concat(getProxies());
+            ]).concat(getProxies('proxies'));
           }
         }
       }
