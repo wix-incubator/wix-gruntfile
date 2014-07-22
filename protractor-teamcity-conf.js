@@ -3,12 +3,14 @@
 
 var config = require('./protractor-conf').config;
 
-var onPrepare = config.onPrepare || function () {};
-config.onPrepare = function () {
-  require('jasmine-reporters');
-  jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
-  onPrepare.apply(this, arguments);
-};
+if (process.env.BUILD_NUMBER !== '12345') {
+  var onPrepare = config.onPrepare || function () {};
+  config.onPrepare = function () {
+    require('jasmine-reporters');
+    jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
+    onPrepare.apply(this, arguments);
+  };
+}
 
 config.sauceUser = process.env.SAUCE_USERNAME;
 config.sauceKey = process.env.SAUCE_ACCESS_KEY;
