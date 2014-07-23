@@ -435,10 +435,8 @@ module.exports = function (grunt, options) {
           module: options.preloadModule,
           usemin: 'scripts/scripts.js'
         },
-        files : {
-          src: '{.tmp,app}/views/**/*.preload.html',
-          dest: '.tmp/templates.js'
-        }
+        src: '{.tmp,app}/views/**/*.preload.html',
+        dest: '.tmp/templates.js'
       }
     },
 
