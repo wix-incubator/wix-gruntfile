@@ -431,23 +431,14 @@ module.exports = function (grunt, options) {
 
     ngtemplates:  {
       app: {
-        files : [{
-          cwd: '.tmp',
-          src: 'views/{**/,}*.preload.html',
-          dest: '.tmp/templates.js',
-          options: {
-            module: options.preloadModule,
-            usemin: 'scripts/scripts.js'
-          }
-        }, {
-          cwd: 'app',
-          src: 'views/{**/,}*.preload.html',
-          dest: '.tmp/templates.js',
-          options: {
-            module: options.preloadModule,
-            usemin: 'scripts/scripts.js'
-          }
-        }]
+        options: {
+          module: options.preloadModule,
+          usemin: 'scripts/scripts.js'
+        },
+        files : {
+          src: '{.tmp,app}/views/**/*.preload.html',
+          dest: '.tmp/templates.js'
+        }
       }
     },
 
