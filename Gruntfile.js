@@ -433,7 +433,7 @@ module.exports = function (grunt, options) {
       app: {
         files : [{
           cwd: '.tmp',
-          src: 'views/**/*.preload.html',
+          src: 'views/{**/,}*.preload.html',
           dest: '.tmp/templates.js',
           options: {
             module: options.preloadModule,
@@ -441,7 +441,7 @@ module.exports = function (grunt, options) {
           }
         }, {
           cwd: 'app',
-          src: 'views/**/*.preload.html',
+          src: 'views/{**/,}*.preload.html',
           dest: '.tmp/templates.js',
           options: {
             module: options.preloadModule,
