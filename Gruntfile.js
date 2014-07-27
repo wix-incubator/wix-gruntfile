@@ -582,6 +582,12 @@ module.exports = function (grunt, options) {
       }
     },
 
+    cssmin: {
+      options: {
+        processImport: false
+      }
+    },
+
     // Test settings
     karma: {
       options: {
