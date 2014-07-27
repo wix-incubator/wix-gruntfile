@@ -160,7 +160,8 @@ module.exports = function (grunt, options) {
       test: {
         files: [
           'app/scripts/**/*.js',
-          'test/**/*.js'
+          'test/**/*.js',
+          '!test/spec/e2e/**/*.js'
         ],
         tasks: ['jshint', 'karma:unit:run']
       },
