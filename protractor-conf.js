@@ -7,7 +7,8 @@ module.exports.config = {
   baseUrl: 'http://localhost:9000/',
 
   specs: [
-    process.cwd() + '/test/spec/e2e/**/*.js'
+    process.cwd() + '/test/spec/e2e/scenarios.js',
+    process.cwd() + '/test/e2e/spec/**/*.js'
   ],
 
   framework: 'jasmine',

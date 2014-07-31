@@ -58,6 +58,8 @@ config.multiCapabilities = testBrowsers.map(function (key) {
   browser.name = 'e2e tests';
   browser['tunnel-identifier'] = process.env.BUILD_NUMBER;
   browser.build = process.env.BUILD_NUMBER;
+  browser.shardTestFiles = true;
+  browser.maxInstances = 3;
   return sauceLabsBrowsers[key];
 });
 
