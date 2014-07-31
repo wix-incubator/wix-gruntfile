@@ -17,6 +17,7 @@ module.exports = function (grunt, options) {
   };
 
   options = extend({
+    cdnify: 'http',
     protocol: 'http',
     staging: 'pizza',
     port: 9000,
@@ -464,7 +465,7 @@ module.exports = function (grunt, options) {
     // Replace Google CDN references
     cdnify: {
       options: {
-        cdn: require('wix-cdn-data')[options.protocol]()
+        cdn: require('wix-cdn-data')[options.cdnify]()
       },
       dist: {
         html: ['dist/*.html', 'dist/**/*.vm']
