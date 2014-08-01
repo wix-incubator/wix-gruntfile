@@ -390,6 +390,20 @@ module.exports = function (grunt, options) {
     processTags: {
       dist: {
         options: {
+          processors: {
+            prefix: function (prefix) {
+              return function (string) {
+                string = string + '';
+                if (string.indexOf(prefix) === 0 || string[0] === '$') {
+                  return string;
+                }
+                if (url.parse(string).protocol) {
+                  return string;
+                }
+                return prefix + string;
+              };
+            }
+          }
         },
         files: [{
           expand: true,
@@ -468,7 +482,7 @@ module.exports = function (grunt, options) {
         cdn: require('wix-cdn-data')[options.cdnify]()
       },
       dist: {
-        html: ['dist/*.html', 'dist/**/*.vm']
+        html: ['dist/**/*.vm']
       }
     },
 
