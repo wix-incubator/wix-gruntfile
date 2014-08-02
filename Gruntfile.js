@@ -8,6 +8,7 @@
 
 module.exports = function (grunt, options) {
 
+  var fs = require('fs');
   var extend = require('util')._extend;
   var protractorUtil = require('./grunt-protractor');
 
@@ -156,7 +157,7 @@ module.exports = function (grunt, options) {
       },
       locale: {
         files: ['app/scripts/**/locale/**/*.*'],
-        tasks: ['jsonAngularTranslate', 'jshint', 'jscs', 'karma:unit:run']
+        tasks: ['jsonAngularTranslate', 'jsstyle', 'karma:unit:run']
       },
       test: {
         files: [
@@ -164,11 +165,11 @@ module.exports = function (grunt, options) {
           'test/**/*.js',
           '!test/spec/e2e/**/*.js'
         ],
-        tasks: ['jshint', 'jscs', 'karma:unit:run']
+        tasks: ['jsstyle', 'karma:unit:run']
       },
       ts: {
         files: ['{test,app/scripts}/**/*.ts'],
-        tasks: ['ts', 'jshint', 'jscs', 'karma:unit:run']
+        tasks: ['ts', 'jsstyle', 'karma:unit:run']
       },
       compass: {
         files: ['app/styles/**/*.{scss,sass}'],
@@ -736,11 +737,17 @@ module.exports = function (grunt, options) {
     grunt.registerTask('e2e:teamcity', ['karma:e2eTeamcity']);
   }
 
+  grunt.registerTask('jsstyle', function () {
+    grunt.task.run('jshint');
+    if (fs.existsSync(process.cwd() + '/.jscsrc')) {
+      grunt.task.run('jscs');
+    }
+  });
+
   grunt.registerTask('pre-build', function () {
     grunt.task.run([
       'ts',
-      'jshint',
-      'jscs',
+      'jsstyle',
       'concurrent:server',
       'autoprefixer',
       'copy:vm'
