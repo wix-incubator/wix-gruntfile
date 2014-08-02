@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.72",
+  "version": "0.1.73",
   "description": "Wix Gruntfile.",
   "homepage": "https://github.com/wix/wix-gruntfile",
   "bugs": "https://github.com/wix/wix-gruntfile/issues",
@@ -21,6 +21,7 @@
     "bower": "~1.3.1",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.13",
+    "grunt-jscs": "^0.6.2",
     "grunt-angular-templates": "~0.5.1",
     "grunt-autoprefixer": "~0.7.2",
     "grunt-concurrent": "~0.5.0",
@@ -67,4 +68,3 @@
     "node": ">=0.8.0"
   }
 }
-

@@ -156,7 +156,7 @@ module.exports = function (grunt, options) {
       },
       locale: {
         files: ['app/scripts/**/locale/**/*.*'],
-        tasks: ['jsonAngularTranslate', 'jshint', 'karma:unit:run']
+        tasks: ['jsonAngularTranslate', 'jshint', 'jscs', 'karma:unit:run']
       },
       test: {
         files: [
@@ -164,11 +164,11 @@ module.exports = function (grunt, options) {
           'test/**/*.js',
           '!test/spec/e2e/**/*.js'
         ],
-        tasks: ['jshint', 'karma:unit:run']
+        tasks: ['jshint', 'jscs', 'karma:unit:run']
       },
       ts: {
         files: ['{test,app/scripts}/**/*.ts'],
-        tasks: ['ts', 'jshint', 'karma:unit:run']
+        tasks: ['ts', 'jshint', 'jscs', 'karma:unit:run']
       },
       compass: {
         files: ['app/styles/**/*.{scss,sass}'],
@@ -296,8 +296,21 @@ module.exports = function (grunt, options) {
           jshintrc: 'test/.jshintrc'
         },
         files: {
-          src: ['test/{spec,mock}/**/*.js']
+          src: ['test/{spec,mock,e2e}/**/*.js']
         }
+      }
+    },
+    jscs: {
+      options: {
+        config: '.jscsrc'
+      },
+      files: {
+        src: [
+          'Gruntfile.js',
+          'app/scripts/**/*.js',
+          '!app/scripts/lib/**/*.js',
+          'test/{spec,mock,e2e}/**/*.js'
+        ]
       }
     },
 
@@ -696,6 +709,9 @@ module.exports = function (grunt, options) {
     var jshint = grunt.config('jshint');
     jshint.options.force = true;
     grunt.config('jshint', jshint);
+    var jscs = grunt.config('jscs');
+    jscs.options.force = true;
+    grunt.config('jscs', jscs);
   });
 
   grunt.registerTask('enableCoverage', function () {
@@ -724,6 +740,7 @@ module.exports = function (grunt, options) {
     grunt.task.run([
       'ts',
       'jshint',
+      'jscs',
       'concurrent:server',
       'autoprefixer',
       'copy:vm'
