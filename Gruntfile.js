@@ -163,7 +163,8 @@ module.exports = function (grunt, options) {
         files: [
           'app/scripts/**/*.js',
           'test/**/*.js',
-          '!test/spec/e2e/**/*.js'
+          '!test/spec/e2e/**/*.js',
+          '!test/e2e/**/*.js'
         ],
         tasks: ['jsstyle', 'karma:unit:run']
       },
