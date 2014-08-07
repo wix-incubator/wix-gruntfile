@@ -29,12 +29,7 @@ module.exports = function (grunt) {
     ]
   });
 
-  // optionally add custom configurations using:
-  // grunt.loadNpmTasks(), grunt.config(), grunt.registerTask()
-
-  // optionally hook into existing tasks using:
-  // grunt.renameTask('existing', 'hooked');
-  // grunt.registerTask('exisitng', ['new', 'hooked']);
+  // keep reading for instructions on how to add custom stuff to your grunt
 };
 ```
 
@@ -89,4 +84,31 @@ Here is a list of available options:
   protractor: true, //whether to use protractor or fallback to angular scenario
   proxies: {} //add more proxies to your connect server: `{'/_test/': 'http://www.wix.com/', ...}`
 }
+```
+
+## Modifying existing config
+
+Sometimes you will want to modify the configuration of a specific section in the external Gruntfile.
+
+```js
+//this is a recursive modification, meaning it overrides only properties that are not objects
+grunt.modifyTask('task-name', {options: {someOptionObj: {someOptionProperty: 'someValue'}}});
+
+//this does the same as the modification above, but obviously is can do a lot more
+grunt.modifyTask('task-name', function () {
+  this.options = this.options || {};
+  this.someOptionObj = this.someOptionObj || {};
+  this.someOptionObj.someOptionProperty = 'someValue';
+});
+```
+
+Or maybe even add your own configuration section to the build process
+
+```js
+grunt.loadNpmTasks('some-new-grunt-plugin');
+grunt.config('some-new-grunt-plugin', {whatever: 'whatever'});
+//insert your task after an existing task
+grunt.hookTask('existing-task').push('some-new-grunt-plugin');
+//or insert it before the existing task
+grunt.hookTask('existing-task').unshift('some-new-grunt-plugin');
 ```
