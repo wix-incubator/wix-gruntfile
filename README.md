@@ -49,9 +49,9 @@ Launch e2e test by `protractor protractor-conf.js`. Make sure that `grunt serve`
 
 ### Run e2e tests from IDE
 
-You can run and debug protractor tests directly from your IDE (Intellij/Webstorm). 
+You can run and debug protractor tests directly from your IDE (Intellij/Webstorm).
 
-To set the configuration, follow the [instructions from protractor docs](https://github.com/angular/protractor/blob/master/docs/debugging.md#setting-up-webstorm-for-debugging).  
+To set the configuration, follow the [instructions from protractor docs](https://github.com/angular/protractor/blob/master/docs/debugging.md#setting-up-webstorm-for-debugging).
 
 ### Build the project locally (rarely needed):
 
@@ -74,6 +74,7 @@ Here is a list of available options:
   protocol: 'http', //the protocol used for working locally (http/https)
   staging: 'pizza', //the staging environment used locally (local.pizza.wixpress.com)
                     //don't forget to add it to your hosts file
+  subdomain: 'www', //subdomain used for api calls to staging (www.pizza.wixpress.com/_api)
   port: 9000, //port used for local server
   livereload: 35729, //port used for livereload server (important for when running multiple grunts)
   translationsModule: 'wixAppTranslations', //module name used for translations
@@ -82,9 +83,12 @@ Here is a list of available options:
   karmaTestFiles: null, //roll your own unit test file list (wix-gruntfile will not add anything)
   page: '', //name of page to open: http://local.{staging}.wixpress.com:{port}/{page}
   protractor: true, //whether to use protractor or fallback to angular scenario
-  proxies: {} //add more proxies to your connect server: `{'/_test/': 'http://www.wix.com/', ...}`
+  proxies: {}, //add more proxies to your connect server: `{'/_test/': 'http://www.wix.com/', ...}`
+  beforeProxies: {} //same as above, only it insert the proxy at the beginning of the list
 }
 ```
+
+Note: you can add your own connect plugins by passing function value in the proxy maps.
 
 ## Modifying existing config
 
@@ -111,4 +115,21 @@ grunt.config('some-new-grunt-plugin', {whatever: 'whatever'});
 grunt.hookTask('existing-task').push('some-new-grunt-plugin');
 //or insert it before the existing task
 grunt.hookTask('existing-task').unshift('some-new-grunt-plugin');
+```
+
+## Common overrides
+
+Do not fail build in case jshint/jscs is failing. This should be used only in rare cases when refactoring old code!
+```js
+grunt.hookTask('pre-build').unshift('force-jshint');
+```
+
+Override the url that opens in the dashboard when you run `grunt serve`:
+```js
+grunt.modifyTask('yeoman', {local: 'http://localhost:9000/'});
+```
+
+Override the proxied url for api calls:
+```js
+grunt.modifyTask('yeoman', {api: 'http://www.wix.com/_api/'});
 ```

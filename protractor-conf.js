@@ -1,18 +1,6 @@
 /* global browser, angular */
 'use strict';
 
-var SELENIUM_FOLDER_PATH = '/usr/local/lib/node_modules/protractor/selenium/';
-
-var fs = require('fs');
-
-function getPath(targetFileName) {
-  return SELENIUM_FOLDER_PATH + fs
-    .readdirSync(SELENIUM_FOLDER_PATH)
-    .filter(function (fileName) {
-      return fileName.indexOf(targetFileName) !== -1;
-    })[0];
-}
-
 module.exports.config = {
   allScriptsTimeout: 120000,
 
@@ -28,10 +16,6 @@ module.exports.config = {
   capabilities: {
     browserName: 'chrome'
   },
-
-  chromeDriver: getPath('chromedriver'),
-
-  seleniumServerJar: getPath('selenium-server-standalone'),
 
   onPrepare: function () {
     // Disable animations so e2e tests run more quickly

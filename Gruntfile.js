@@ -21,6 +21,7 @@ module.exports = function (grunt, options) {
     cdnify: 'http',
     protocol: 'http',
     staging: 'pizza',
+    subdomain: 'www',
     port: 9000,
     livereload: 35729,
     translationsModule: 'wixAppTranslations',
@@ -127,8 +128,8 @@ module.exports = function (grunt, options) {
 
     // Project settings
     yeoman: {
-      api: 'http://www.' + options.staging + '.wixpress.com/_api/',
-      partials: 'http://www.' + options.staging + '.wixpress.com/_partials/',
+      api: 'http://' + options.subdomain + '.' + options.staging + '.wixpress.com/_api/',
+      partials: 'http://' + options.subdomain + '.' + options.staging + '.wixpress.com/_partials/',
       local: options.protocol + '://local.' + options.staging + '.wixpress.com:<%= connect.options.port %>/' + options.page
     },
 
