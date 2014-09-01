@@ -32,7 +32,8 @@ module.exports = function (grunt, options) {
     protractor: false,
     proxies: {},
     beforeProxies: {},
-    bowerComponent: false
+    bowerComponent: false,
+    compass: {}
   }, options);
 
   if (!options.preloadModule) {
@@ -359,7 +360,8 @@ module.exports = function (grunt, options) {
         httpImagesPath: '../images',
         httpGeneratedImagesPath: '../images/generated',
         httpFontsPath: 'fonts',
-        relativeAssets: false
+        relativeAssets: false,
+        require: options.compass.require
       },
       dist: {},
       server: {
