@@ -316,6 +316,17 @@ module.exports = function (grunt, options) {
         ]
       }
     },
+    scsslint: {
+      styles: [
+        'app/styles/**/*.scss'
+      ],
+      options: {
+        bundleExec: true,
+        config: '.scss-lint.yml',
+        compact: true,
+        colorizeOutput: true
+      }
+    },
 
     // Empties folders to start fresh
     clean: {
@@ -746,10 +757,17 @@ module.exports = function (grunt, options) {
     }
   });
 
+  grunt.registerTask('scssstyle', function () {
+    if (fs.existsSync(process.cwd() + '/.scss-lint.yml')) {
+      grunt.task.run('scsslint');
+    }
+  });
+
   grunt.registerTask('pre-build', function () {
     grunt.task.run([
       'ts',
       'jsstyle',
+      'scssstyle',
       'concurrent:server',
       'autoprefixer',
       'copy:vm'

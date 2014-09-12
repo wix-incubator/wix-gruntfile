@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.81",
+  "version": "0.1.82",
   "description": "Wix Gruntfile.",
   "homepage": "https://github.com/wix/wix-gruntfile",
   "bugs": "https://github.com/wix/wix-gruntfile/issues",
@@ -44,6 +44,7 @@
     "grunt-ng-annotate": "~0.3.2",
     "grunt-process-tags": "~0.0.1",
     "grunt-release": "~0.6.0",
+    "grunt-scss-lint": "^0.3.3",
     "grunt-svgmin": "~0.4.0",
     "grunt-text-replace": "~0.3.7",
     "grunt-usemin": "~2.1.0",
