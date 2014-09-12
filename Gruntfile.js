@@ -175,7 +175,7 @@ module.exports = function (grunt, options) {
       },
       compass: {
         files: ['app/styles/**/*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+        tasks: ['scsslint', 'compass:server', 'autoprefixer']
       },
       styles: {
         files: ['app/styles/**/*.css'],
