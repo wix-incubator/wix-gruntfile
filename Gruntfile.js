@@ -720,12 +720,11 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('force-jshint', function () {
-    var jshint = grunt.config('jshint');
-    jshint.options.force = true;
-    grunt.config('jshint', jshint);
-    var jscs = grunt.config('jscs');
-    jscs.options.force = true;
-    grunt.config('jscs', jscs);
+    ['jshint', 'jscs', 'scsslint'].forEach(function (section) {
+      var config = grunt.config(section);
+      config.options.force = true;
+      grunt.config(section, config);
+    });
   });
 
   grunt.registerTask('enableCoverage', function () {
