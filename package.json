@@ -44,6 +44,7 @@
     "grunt-ng-annotate": "~0.3.2",
     "grunt-process-tags": "~0.0.1",
     "grunt-release": "~0.6.0",
+    "grunt-scss-lint": "^0.3.3",
     "grunt-svgmin": "~0.4.0",
     "grunt-text-replace": "~0.3.7",
     "grunt-usemin": "~2.1.0",
