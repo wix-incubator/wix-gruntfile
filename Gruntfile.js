@@ -32,7 +32,8 @@ module.exports = function (grunt, options) {
     protractor: false,
     proxies: {},
     beforeProxies: {},
-    bowerComponent: false
+    bowerComponent: false,
+    useModulesStructure: false
   }, options);
 
   if (!options.preloadModule) {
@@ -41,10 +42,10 @@ module.exports = function (grunt, options) {
 
   var unitTestWildCards = [
     '{app,.tmp}/*.js',
-    '{app,.tmp}/scripts/*.js', //do not move - position 1
-    '{app,.tmp}/scripts/*/**/*.js', //do not move - position 2
+    '{app,.tmp}/{scripts,modules}/*.js', //do not move - position 1
+    '{app,.tmp}/{scripts,modules}/*/**/*.js', //do not move - position 2
     '{,.tmp/}test/**/*.js',
-    '{app,.tmp}/views/**/*.html'
+    '{app,.tmp}/{views,modules}/**/*.html'
   ];
 
   if (!options.appFirst) {
@@ -140,11 +141,11 @@ module.exports = function (grunt, options) {
         nospawn: true
       },
       haml: {
-        files: ['app/{,views/**/}*.haml'],
+        files: ['app/{views,modules}/**/*.haml'],
         tasks: ['haml', 'karma:unit:run']
       },
       html: {
-        files: ['app/{,views/**/}*.html'],
+        files: ['app/{views,modules}/**/*.html'],
         tasks: ['karma:unit:run']
       },
       replace: {
@@ -162,23 +163,24 @@ module.exports = function (grunt, options) {
       },
       test: {
         files: [
-          'app/scripts/**/*.js',
+          'app/{scripts,modules}/**/*.js',
           'test/**/*.js',
+          'karma.conf.js',
           '!test/spec/e2e/**/*.js',
           '!test/e2e/**/*.js'
         ],
         tasks: ['jsstyle', 'karma:unit:run']
       },
       ts: {
-        files: ['{test,app/scripts}/**/*.ts'],
+        files: ['{test,app/scripts,app/modules}/**/*.ts'],
         tasks: ['ts', 'jsstyle', 'karma:unit:run']
       },
       compass: {
-        files: ['app/styles/**/*.{scss,sass}'],
+        files: ['app/{styles,modules}/**/*.{scss,sass}'],
         tasks: ['scsslint', 'compass:server', 'autoprefixer']
       },
       styles: {
-        files: ['app/styles/**/*.css'],
+        files: ['app/{styles,modules}/**/*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },
       gruntfile: {
@@ -194,8 +196,8 @@ module.exports = function (grunt, options) {
 
     ts: {
       build: {
-        src: ['app/scripts/**/*.ts'],
-        outDir: '.tmp/scripts/',
+        src: ['app/' + (options.useModulesStructure ? 'modules' : 'scripts') + '/**/*.ts', '!app/modules/**/*.test.ts'],
+        outDir: '.tmp/' + (options.useModulesStructure ? 'modules' : 'scripts'),
         reference: 'app/scripts/reference.ts',
         options: {
           target: 'es5',
@@ -205,7 +207,7 @@ module.exports = function (grunt, options) {
         }
       },
       test: {
-        src: ['test/**/*.ts'],
+        src: [options.useModulesStructure ? 'app/modules/**/*.test.ts' : 'test/**/*.ts'],
         outDir: '.tmp/test/',
         reference: 'test/reference.ts',
         options: {
@@ -289,7 +291,8 @@ module.exports = function (grunt, options) {
         files: {
           src: [
             'Gruntfile.js',
-            'app/scripts/**/*.js',
+            'app/{scripts,modules}/**/*.js',
+            '!app/modules/**/*.test.js',
             '!app/scripts/lib/**/*.js'
           ]
         }
@@ -299,7 +302,7 @@ module.exports = function (grunt, options) {
           jshintrc: 'test/.jshintrc'
         },
         files: {
-          src: ['test/{spec,mock,e2e}/**/*.js']
+          src: ['test/{spec,mock,e2e}/**/*.js', 'app/modules/**/*.test.js']
         }
       }
     },
@@ -310,7 +313,7 @@ module.exports = function (grunt, options) {
       files: {
         src: [
           'Gruntfile.js',
-          'app/scripts/**/*.js',
+          'app/{scripts,modules}/**/*.js',
           '!app/scripts/lib/**/*.js',
           'test/{spec,mock,e2e}/**/*.js'
         ]
@@ -318,7 +321,7 @@ module.exports = function (grunt, options) {
     },
     scsslint: {
       styles: [
-        'app/styles/**/*.scss'
+        'app/{styles,modules}/**/*.scss'
       ],
       options: {
         bundleExec: true,
@@ -349,9 +352,9 @@ module.exports = function (grunt, options) {
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp/styles/',
-          src: '**/*.css',
-          dest: '.tmp/styles/'
+          cwd: '.tmp',
+          src: '{styles,modules}/**/*.css',
+          dest: '.tmp'
         }]
       }
     },
@@ -360,8 +363,8 @@ module.exports = function (grunt, options) {
     compass: {
       options: {
         bundleExec: true,
-        sassDir: 'app/styles',
-        cssDir: '.tmp/styles',
+        sassDir: 'app/' + (options.useModulesStructure ? 'modules' : 'styles'),
+        cssDir: '.tmp/' + (options.useModulesStructure ? 'modules' : 'styles'),
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: 'app/images',
         javascriptsDir: 'app/scripts',
@@ -472,7 +475,7 @@ module.exports = function (grunt, options) {
       }
     },
 
-    ngtemplates:  {
+    ngtemplates: {
       app: {
         options: {
           module: options.preloadModule,
@@ -480,11 +483,11 @@ module.exports = function (grunt, options) {
         },
         files: [{
           cwd: '.tmp',
-          src: 'views/**/*.preload.html',
+          src: '{views,modules}/**/*.preload.html',
           dest: '.tmp/templates.tmp.js'
         }, {
           cwd: 'app',
-          src: 'views/**/*.preload.html',
+          src: '{views,modules}/**/*.preload.html',
           dest: '.tmp/templates.app.js'
         }]
       }
@@ -548,12 +551,12 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app',
-          src: ['**/*.vm', 'scripts/**/locale/**/*.js', '*.html', 'views/**/*.html'],
+          src: ['**/*.vm', 'scripts/**/locale/**/*.js', '*.html', '{views,modules}/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
           cwd: '.tmp',
-          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', 'views/**/*.html'],
+          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', '{views,modules}/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
@@ -571,9 +574,9 @@ module.exports = function (grunt, options) {
       },
       styles: {
         expand: true,
-        cwd: 'app/styles',
-        dest: '.tmp/styles/',
-        src: '**/*.css'
+        cwd: 'app',
+        dest: '.tmp',
+        src: '{styles,modules}/**/*.css'
       },
       vm: {
         files: [{
@@ -644,7 +647,7 @@ module.exports = function (grunt, options) {
           configFile: path.join(__dirname, 'karma.conf.js'),
           files: options.unitTestFiles,
           reporters: ['teamcity', 'coverage'],
-          coverageReporter: { type : 'teamcity' }
+          coverageReporter: { type: 'teamcity' }
         }
       },
       single: {
@@ -703,7 +706,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app',
-          src: '{,views/**/}*.haml',
+          src: '{views,modules}/**/*.haml',
           dest: '.tmp',
           ext: '.html',
           extDot: 'last'
