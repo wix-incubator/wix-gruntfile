@@ -371,7 +371,7 @@ module.exports = function (grunt, options) {
       options: {
         bundleExec: true,
         sassDir: options.useModulesStructure ? modulesPathApp : 'app/styles',
-        cssDir: '.tmp/styles',
+        cssDir: options.useModulesStructure ? modulesPathTemp : '.tmp/styles',
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: 'app/images',
         javascriptsDir: 'app/scripts',
@@ -490,11 +490,11 @@ module.exports = function (grunt, options) {
         },
         files: [{
           cwd: '.tmp',
-          src: options.useModulesStructure ? '**.*.preload.html' : 'views/**/*.preload.html',
+          src: options.useModulesStructure ? '**/*.preload.html' : 'views/**/*.preload.html',
           dest: '.tmp/templates.tmp.js'
         }, {
           cwd: 'app',
-          src: options.useModulesStructure ? '**.*.preload.html' : 'views/**/*.preload.html',
+          src: options.useModulesStructure ? '**/*.preload.html' : 'views/**/*.preload.html',
           dest: '.tmp/templates.app.js'
         }]
       }
@@ -558,12 +558,12 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app',
-          src: ['**/*.vm', 'scripts/**/locale/**/*.js', '*.html', 'views/**/*.html'],
+          src: ['**/*.vm', 'scripts/**/locale/**/*.js', '*.html', options.useModulesStructure ? 'modules/**/*.html' : 'views/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
           cwd: '.tmp',
-          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', 'views/**/*.html'],
+          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', options.useModulesStructure ? 'modules/**/*.html' : 'views/**/*.html'],
           dest: 'dist'
         }, {
           expand: true,
@@ -582,7 +582,7 @@ module.exports = function (grunt, options) {
       styles: {
         expand: true,
         cwd: options.useModulesStructure ? modulesPathApp : 'app/styles',
-        dest: '.tmp/styles/',
+        dest: options.useModulesStructure ? modulesPathTemp : '.tmp/styles/',
         src: '**/*.css'
       },
       vm: {
