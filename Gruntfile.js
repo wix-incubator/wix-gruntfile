@@ -320,7 +320,7 @@ module.exports = function (grunt, options) {
       files: {
         src: [
           'Gruntfile.js',
-          'app/scripts/**/*.js',
+          options.useModulesStructure ? modulesPathApp + '**/*.js':'app/scripts/**/*.js',
           '!app/scripts/lib/**/*.js',
           'test/{spec,mock,e2e}/**/*.js'
         ]
