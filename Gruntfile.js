@@ -12,6 +12,7 @@ module.exports = function (grunt, options) {
   var extend = require('util')._extend;
   var protractorUtil = require('./grunt-protractor');
   var modulesPath = '{app,.tmp}/modules/'; //for the 'useModulesStructure' option
+  var modulesPathStrict = 'app/modules/'; //for the 'useModulesStructure' option
 
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
@@ -178,7 +179,7 @@ module.exports = function (grunt, options) {
         tasks: ['jsstyle', 'karma:unit:run']
       },
       ts: {
-        files: ['{test,app/scripts}/**/*.ts'],
+        files: [options.useModulesStructure ? modulesPath + '**/*.ts' : '{test,app/scripts}/**/*.ts'],
         tasks: ['ts', 'jsstyle', 'karma:unit:run']
       },
       compass: {
@@ -186,7 +187,7 @@ module.exports = function (grunt, options) {
         tasks: ['scsslint', 'compass:server', 'autoprefixer']
       },
       styles: {
-        files: ['app/styles/**/*.css'],
+        files: [options.useModulesStructure ? modulesPath + '**/*.css' : 'app/styles/**/*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },
       gruntfile: {
@@ -202,7 +203,7 @@ module.exports = function (grunt, options) {
 
     ts: {
       build: {
-        src: ['app/scripts/**/*.ts'],
+        src: [options.useModulesStructure ? modulesPath + '**/*.ts' : 'app/scripts/**/*.ts', modulesPath + '!**/*.test.ts'],
         outDir: '.tmp/scripts/',
         reference: 'app/scripts/reference.ts',
         options: {
@@ -213,7 +214,7 @@ module.exports = function (grunt, options) {
         }
       },
       test: {
-        src: ['test/**/*.ts'],
+        src: [options.useModulesStructure ? '**/*.test.ts' : 'test/**/*.ts'],
         outDir: '.tmp/test/',
         reference: 'test/reference.ts',
         options: {
@@ -372,7 +373,7 @@ module.exports = function (grunt, options) {
     compass: {
       options: {
         bundleExec: true,
-        sassDir: options.useModulesStructure ? modulesPath : 'app/styles',
+        sassDir: options.useModulesStructure ? modulesPathStrict : 'app/styles', //we can't use {app,.tmp} syntax here, so regular modules path cannot be used
         cssDir: '.tmp/styles',
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: 'app/images',
@@ -503,12 +504,12 @@ module.exports = function (grunt, options) {
         files: [
           {
             cwd: '.tmp',
-            src: 'views/**/*.preload.html',
+            src: options.useModulesStructure ? '**.*.preload.html' : 'views/**/*.preload.html',
             dest: '.tmp/templates.tmp.js'
           },
           {
             cwd: 'app',
-            src: 'views/**/*.preload.html',
+            src: options.useModulesStructure ? '**.*.preload.html' : 'views/**/*.preload.html',
             dest: '.tmp/templates.app.js'
           }
         ]
