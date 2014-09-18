@@ -11,7 +11,7 @@ module.exports = function (grunt, options) {
   var fs = require('fs');
   var extend = require('util')._extend;
   var protractorUtil = require('./grunt-protractor');
-  var modulesPath = 'app/modules/'; //for the 'useModulesStructure' option
+  var modulesPath = '{app,.tmp}/modules/'; //for the 'useModulesStructure' option
 
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
@@ -54,7 +54,8 @@ module.exports = function (grunt, options) {
   }
 
   if (options.useModulesStructure) {
-    unitTestWildCards.push(modulesPath + '/**/*.js');
+    unitTestWildCards.push(modulesPath + '**/*.js');
+    unitTestWildCards.push(modulesPath + '**/*.html');
   }
 
   options.unitTestFiles = options.karmaTestFiles || options.unitTestFiles.concat(unitTestWildCards);
@@ -296,7 +297,7 @@ module.exports = function (grunt, options) {
         files: {
           src: [
             'Gruntfile.js',
-            options.useModulesStructure ? modulesPath + '/**/*.js' : 'app/scripts/**/*.js',
+            options.useModulesStructure ? modulesPath + '**/*.js' : 'app/scripts/**/*.js',
             '!app/scripts/lib/**/*.js'
           ]
         }
