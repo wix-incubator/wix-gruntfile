@@ -745,7 +745,7 @@ module.exports = function (grunt, options) {
           {
             expand: true,
             cwd: 'app',
-            src: '{,views/**/}*.haml',
+            src: options.useModulesStructure ? modulesPath + '**/*.haml' : '{,views/**/}*.haml',
             dest: '.tmp',
             ext: '.html',
             extDot: 'last'
