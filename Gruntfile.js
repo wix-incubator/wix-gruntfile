@@ -359,9 +359,9 @@ module.exports = function (grunt, options) {
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp/styles/',
+          cwd: options.useModulesStructure ? modulesPathTemp : '.tmp/styles/',
           src: '**/*.css',
-          dest: '.tmp/styles/'
+          dest: options.useModulesStructure ? modulesPathTemp : '.tmp/styles/'
         }]
       }
     },
