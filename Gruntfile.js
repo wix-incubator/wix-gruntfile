@@ -12,7 +12,8 @@ module.exports = function (grunt, options) {
   var extend = require('util')._extend;
   var protractorUtil = require('./grunt-protractor');
   var modulesPath = '{app,.tmp}/modules/'; //for the 'useModulesStructure' option
-  var modulesPathStrict = 'app/modules/'; //for the 'useModulesStructure' option
+  var modulesPathStrict = 'app/modules'; //for the 'useModulesStructure' option
+  var modulesPathStrictTemp = '.tmp/modules'; //for the 'useModulesStructure' option
 
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
@@ -204,7 +205,7 @@ module.exports = function (grunt, options) {
     ts: {
       build: {
         src: [options.useModulesStructure ? modulesPath + '**/*.ts' : 'app/scripts/**/*.ts', modulesPath + '!**/*.test.ts'],
-        outDir: '.tmp/scripts/',
+        outDir: options.useModulesStructure ? modulesPathStrictTemp : '.tmp/scripts/',
         reference: 'app/scripts/reference.ts',
         options: {
           target: 'es5',
@@ -607,7 +608,7 @@ module.exports = function (grunt, options) {
       },
       styles: {
         expand: true,
-        cwd: 'app/styles',
+        cwd: options.useModulesStructure ? modulesPathStrict : 'app/styles',
         dest: '.tmp/styles/',
         src: '**/*.css'
       },
@@ -745,7 +746,7 @@ module.exports = function (grunt, options) {
           {
             expand: true,
             cwd: 'app',
-            src: options.useModulesStructure ? modulesPath + '**/*.haml' : '{,views/**/}*.haml',
+            src: '**/*.haml',
             dest: '.tmp',
             ext: '.html',
             extDot: 'last'
