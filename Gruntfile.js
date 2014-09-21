@@ -689,7 +689,7 @@ module.exports = function (grunt, options) {
 
     replace: {
       dist: {
-        src: ['app/**/*.vm'],
+        src: ['app/*.vm'],
         dest: '.tmp/',
         replacements: loadReplacements()
       }
