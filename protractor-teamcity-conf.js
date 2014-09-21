@@ -22,7 +22,7 @@ var sauceLabsBrowsers = {
   },
   FF: {
     browserName: 'firefox',
-    platform: 'Windows 8'
+    platform: 'Windows 7'
   },
   IE11: {
     browserName: 'internet explorer',
