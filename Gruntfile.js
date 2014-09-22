@@ -11,6 +11,9 @@ module.exports = function (grunt, options) {
   var fs = require('fs');
   var extend = require('util')._extend;
   var protractorUtil = require('./grunt-protractor');
+  var modulesPath = '{app,.tmp}/modules/'; //for the 'useModulesStructure' option
+  var modulesPathApp = 'app/modules';
+  var modulesPathTemp = '.tmp/modules';
 
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
@@ -32,7 +35,8 @@ module.exports = function (grunt, options) {
     protractor: false,
     proxies: {},
     beforeProxies: {},
-    bowerComponent: false
+    bowerComponent: false,
+    useModulesStructure: false
   }, options);
 
   if (!options.preloadModule) {
@@ -49,6 +53,11 @@ module.exports = function (grunt, options) {
 
   if (!options.appFirst) {
     unitTestWildCards.replace(1, 2);
+  }
+
+  if (options.useModulesStructure) {
+    unitTestWildCards.push(modulesPath + '**/*.js');
+    unitTestWildCards.push(modulesPath + '**/*.html');
   }
 
   options.unitTestFiles = options.karmaTestFiles || options.unitTestFiles.concat(unitTestWildCards);
@@ -71,7 +80,7 @@ module.exports = function (grunt, options) {
 
   function getProxies(proxyType) {
     var arr = [];
-    for (var key in options[proxyType]) {
+    for ( var key in options[proxyType] ) {
       if (typeof(options[proxyType][key]) === 'string') {
         arr.push(proxyFolder(key, options[proxyType][key]));
       } else {
@@ -102,7 +111,7 @@ module.exports = function (grunt, options) {
 
   function objToArray(obj) {
     var arr = obj.$$preserve || [];
-    for (var key in obj) {
+    for ( var key in obj ) {
       if (key !== '$$preserve') {
         arr.push({from: key, to: obj[key]});
       }
@@ -140,11 +149,11 @@ module.exports = function (grunt, options) {
         nospawn: true
       },
       haml: {
-        files: ['app/{,views/**/}*.haml'],
+        files: [options.useModulesStructure ? modulesPath + '**/*.haml' : 'app/{,views/**/}*.haml'],
         tasks: ['haml', 'karma:unit:run']
       },
       html: {
-        files: ['app/{,views/**/}*.html'],
+        files: [options.useModulesStructure ? modulesPath + '**/*.html' : 'app/{,views/**/}*.html'],
         tasks: ['karma:unit:run']
       },
       replace: {
@@ -162,23 +171,24 @@ module.exports = function (grunt, options) {
       },
       test: {
         files: [
-          'app/scripts/**/*.js',
+          options.useModulesStructure ? modulesPath + '**/*.js' : 'app/scripts/**/*.js',
           'test/**/*.js',
+          'karma.conf.js',
           '!test/spec/e2e/**/*.js',
           '!test/e2e/**/*.js'
         ],
         tasks: ['jsstyle', 'karma:unit:run']
       },
       ts: {
-        files: ['{test,app/scripts}/**/*.ts'],
+        files: [options.useModulesStructure ? modulesPath + '**/*.ts' : '{test,app/scripts}/**/*.ts'],
         tasks: ['ts', 'jsstyle', 'karma:unit:run']
       },
       compass: {
-        files: ['app/styles/**/*.{scss,sass}'],
+        files: [options.useModulesStructure ? modulesPath + '**/*.scss' : 'app/styles/**/*.{scss,sass}'],
         tasks: ['scsslint', 'compass:server', 'autoprefixer']
       },
       styles: {
-        files: ['app/styles/**/*.css'],
+        files: [options.useModulesStructure ? modulesPath + '**/*.css' : 'app/styles/**/*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },
       gruntfile: {
@@ -194,8 +204,8 @@ module.exports = function (grunt, options) {
 
     ts: {
       build: {
-        src: ['app/scripts/**/*.ts'],
-        outDir: '.tmp/scripts/',
+        src: [options.useModulesStructure ? modulesPath + '**/*.ts' : 'app/scripts/**/*.ts', modulesPath + '!**/*.test.ts'],
+        outDir: options.useModulesStructure ? modulesPathTemp : '.tmp/scripts/',
         reference: 'app/scripts/reference.ts',
         options: {
           target: 'es5',
@@ -205,7 +215,7 @@ module.exports = function (grunt, options) {
         }
       },
       test: {
-        src: ['test/**/*.ts'],
+        src: [options.useModulesStructure ? '**/*.test.ts' : 'test/**/*.ts'],
         outDir: '.tmp/test/',
         reference: 'test/reference.ts',
         options: {
@@ -289,7 +299,8 @@ module.exports = function (grunt, options) {
         files: {
           src: [
             'Gruntfile.js',
-            'app/scripts/**/*.js',
+            options.useModulesStructure ? modulesPath + '**/*.js' : 'app/scripts/**/*.js',
+            '!app/modules/**/*.test.js',
             '!app/scripts/lib/**/*.js'
           ]
         }
@@ -299,7 +310,7 @@ module.exports = function (grunt, options) {
           jshintrc: 'test/.jshintrc'
         },
         files: {
-          src: ['test/{spec,mock,e2e}/**/*.js']
+          src: ['test/{spec,mock,e2e}/**/*.js', modulesPath + '**/*.test.js']
         }
       }
     },
@@ -310,7 +321,7 @@ module.exports = function (grunt, options) {
       files: {
         src: [
           'Gruntfile.js',
-          'app/scripts/**/*.js',
+          options.useModulesStructure ? modulesPathApp + '**/*.js' : 'app/scripts/**/*.js',
           '!app/scripts/lib/**/*.js',
           'test/{spec,mock,e2e}/**/*.js'
         ]
@@ -318,7 +329,7 @@ module.exports = function (grunt, options) {
     },
     scsslint: {
       styles: [
-        'app/styles/**/*.scss'
+        (options.useModulesStructure ? modulesPath + '**/*.scss' : 'app/styles/**/*.scss')
       ],
       options: {
         bundleExec: true,
@@ -331,14 +342,16 @@ module.exports = function (grunt, options) {
     // Empties folders to start fresh
     clean: {
       dist: {
-        files: [{
-          dot: true,
-          src: [
-            '.tmp',
-            'dist/*',
-            '!dist/.git*'
-          ]
-        }]
+        files: [
+          {
+            dot: true,
+            src: [
+              '.tmp',
+              'dist/*',
+              '!dist/.git*'
+            ]
+          }
+        ]
       },
       server: '.tmp'
     },
@@ -347,12 +360,14 @@ module.exports = function (grunt, options) {
     autoprefixer: {
       options: ['last 1 version'],
       dist: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/styles/',
-          src: '**/*.css',
-          dest: '.tmp/styles/'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: options.useModulesStructure ? modulesPathTemp : '.tmp/styles/',
+            src: '**/*.css',
+            dest: options.useModulesStructure ? modulesPathTemp : '.tmp/styles/'
+          }
+        ]
       }
     },
 
@@ -360,8 +375,8 @@ module.exports = function (grunt, options) {
     compass: {
       options: {
         bundleExec: true,
-        sassDir: 'app/styles',
-        cssDir: '.tmp/styles',
+        sassDir: options.useModulesStructure ? modulesPathApp : 'app/styles',
+        cssDir: options.useModulesStructure ? modulesPathTemp : '.tmp/styles',
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: 'app/images',
         javascriptsDir: 'app/scripts',
@@ -405,12 +420,14 @@ module.exports = function (grunt, options) {
           debug: 'dist/concat',
           prefix: 'concat'
         },
-        files: [{
-          expand: true,
-          cwd: 'dist',
-          src: '**/*.vm',
-          dest: 'dist'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: 'dist',
+            src: '**/*.vm',
+            dest: 'dist'
+          }
+        ]
       }
     },
 
@@ -432,61 +449,72 @@ module.exports = function (grunt, options) {
             }
           }
         },
-        files: [{
-          expand: true,
-          cwd: 'dist',
-          src: '**/*.vm',
-          dest: 'dist'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: 'dist',
+            src: '**/*.vm',
+            dest: 'dist'
+          }
+        ]
       }
     },
 
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
       dist: {
-        files: [{
-          expand: true,
-          cwd: 'app/images',
-          src: '{,*/**/}*.{png,jpg,jpeg,gif}',
-          dest: 'dist/images'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: 'app/images',
+            src: '{,*/**/}*.{png,jpg,jpeg,gif}',
+            dest: 'dist/images'
+          }
+        ]
       },
       generated: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/images',
-          src: '{,*/**/}*.{png,jpg,jpeg}',
-          dest: 'dist/images'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: '.tmp/images',
+            src: '{,*/**/}*.{png,jpg,jpeg}',
+            dest: 'dist/images'
+          }
+        ]
       }
     },
 
     svgmin: {
       dist: {
-        files: [{
-          expand: true,
-          cwd: 'app/images',
-          src: '**/*.svg',
-          dest: 'dist/images'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: 'app/images',
+            src: '**/*.svg',
+            dest: 'dist/images'
+          }
+        ]
       }
     },
 
-    ngtemplates:  {
+    ngtemplates: {
       app: {
         options: {
           module: options.preloadModule,
           usemin: 'scripts/scripts.js'
         },
-        files: [{
-          cwd: '.tmp',
-          src: 'views/**/*.preload.html',
-          dest: '.tmp/templates.tmp.js'
-        }, {
-          cwd: 'app',
-          src: 'views/**/*.preload.html',
-          dest: '.tmp/templates.app.js'
-        }]
+        files: [
+          {
+            cwd: '.tmp',
+            src: options.useModulesStructure ? '**/*.preload.html' : 'views/**/*.preload.html',
+            dest: '.tmp/templates.tmp.js'
+          },
+          {
+            cwd: 'app',
+            src: options.useModulesStructure ? '**/*.preload.html' : 'views/**/*.preload.html',
+            dest: '.tmp/templates.app.js'
+          }
+        ]
       }
     },
 
@@ -494,12 +522,14 @@ module.exports = function (grunt, options) {
     // minsafe compatible so Uglify does not destroy the ng references
     ngAnnotate: {
       dist: {
-        files: [{
-          expand: true,
-          cwd: 'dist/concat',
-          src: '**/*.js',
-          dest: 'dist/concat'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: 'dist/concat',
+            src: '**/*.js',
+            dest: 'dist/concat'
+          }
+        ]
       }
     },
 
@@ -519,76 +549,87 @@ module.exports = function (grunt, options) {
           moduleName: options.translationsModule,
           hasPreferredLanguage: false /* temporary until we move to angular-translate 2.0 */
         },
-        files: [{
-          expand: true,
-          cwd: 'app/scripts/locale',
-          src: '*/*.{json,new_json}',
-          flatten: true,
-          dest: '.tmp/scripts/locale',
-          ext: '.js'
-        }, {
-          expand: true,
-          cwd: 'app/scripts/locale',
-          src: '*.{json,new_json}',
-          dest: '.tmp/scripts/locale',
-          ext: '.js'
-        }, {
-          expand: true,
-          cwd: 'app/scripts',
-          src: '*/**/locale/*.{json,new_json}',
-          dest: '.tmp/scripts',
-          ext: '.js'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: 'app/scripts/locale',
+            src: '*/*.{json,new_json}',
+            flatten: true,
+            dest: '.tmp/scripts/locale',
+            ext: '.js'
+          },
+          {
+            expand: true,
+            cwd: 'app/scripts/locale',
+            src: '*.{json,new_json}',
+            dest: '.tmp/scripts/locale',
+            ext: '.js'
+          },
+          {
+            expand: true,
+            cwd: 'app/scripts',
+            src: '*/**/locale/*.{json,new_json}',
+            dest: '.tmp/scripts',
+            ext: '.js'
+          }
+        ]
       }
     },
 
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
-        files: [{
-          expand: true,
-          cwd: 'app',
-          src: ['**/*.vm', 'scripts/**/locale/**/*.js', '*.html', 'views/**/*.html'],
-          dest: 'dist'
-        }, {
-          expand: true,
-          cwd: '.tmp',
-          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', 'views/**/*.html'],
-          dest: 'dist'
-        }, {
-          expand: true,
-          dot: true,
-          cwd: 'app',
-          dest: 'dist',
-          src: [
-            '*.{ico,txt}',
-            '.htaccess',
-            'bower_components/**/*',
-            'images/**/*.{webp,ico,svg}',
-            'fonts/*'
-          ]
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: 'app',
+            src: ['**/*.vm', 'scripts/**/locale/**/*.js', '*.html', options.useModulesStructure ? 'modules/**/*.html' : 'views/**/*.html'],
+            dest: 'dist'
+          },
+          {
+            expand: true,
+            cwd: '.tmp',
+            src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', options.useModulesStructure ? 'modules/**/*.html' : 'views/**/*.html'],
+            dest: 'dist'
+          },
+          {
+            expand: true,
+            dot: true,
+            cwd: 'app',
+            dest: 'dist',
+            src: [
+              '*.{ico,txt}',
+              '.htaccess',
+              'bower_components/**/*',
+              'images/**/*.{webp,ico,svg}',
+              'fonts/*'
+            ]
+          }
+        ]
       },
       styles: {
         expand: true,
-        cwd: 'app/styles',
-        dest: '.tmp/styles/',
+        cwd: options.useModulesStructure ? modulesPathApp : 'app/styles',
+        dest: options.useModulesStructure ? modulesPathTemp : '.tmp/styles/',
         src: '**/*.css'
       },
       vm: {
-        files: [{
-          expand: true,
-          cwd: '.tmp',
-          dest: '.tmp',
-          src: '*.js.vm',
-          ext: '.js'
-        }, {
-          expand: true,
-          cwd: '.tmp',
-          dest: '.tmp',
-          src: '**/*.vm',
-          ext: '.html'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: '.tmp',
+            dest: '.tmp',
+            src: '*.js.vm',
+            ext: '.js'
+          },
+          {
+            expand: true,
+            cwd: '.tmp',
+            dest: '.tmp',
+            src: '**/*.vm',
+            ext: '.html'
+          }
+        ]
       }
     },
 
@@ -615,12 +656,14 @@ module.exports = function (grunt, options) {
         beautify: options.bowerComponent
       },
       locale: {
-        files: [{
-          expand: true,
-          cwd: 'dist/scripts',
-          src: '**/locale/**/*.js',
-          dest: 'dist/scripts'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: 'dist/scripts',
+            src: '**/locale/**/*.js',
+            dest: 'dist/scripts'
+          }
+        ]
       }
     },
 
@@ -644,7 +687,7 @@ module.exports = function (grunt, options) {
           configFile: path.join(__dirname, 'karma.conf.js'),
           files: options.unitTestFiles,
           reporters: ['teamcity', 'coverage'],
-          coverageReporter: { type : 'teamcity' }
+          coverageReporter: { type: 'teamcity' }
         }
       },
       single: {
@@ -700,14 +743,16 @@ module.exports = function (grunt, options) {
         options: {
           bundleExec: true
         },
-        files: [{
-          expand: true,
-          cwd: 'app',
-          src: '{,views/**/}*.haml',
-          dest: '.tmp',
-          ext: '.html',
-          extDot: 'last'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: 'app',
+            src: '**/*.haml',
+            dest: '.tmp',
+            ext: '.html',
+            extDot: 'last'
+          }
+        ]
       }
     },
 
@@ -852,7 +897,7 @@ module.exports = function (grunt, options) {
   }
 
   function applyModifications(conf, partial) {
-    for (var k in partial) {
+    for ( var k in partial ) {
       if (partial.hasOwnProperty(k)) {
         if (isObject(partial[k])) {
           conf[k] = conf[k] || {};
