@@ -309,7 +309,7 @@ module.exports = function (grunt, options) {
           jshintrc: 'test/.jshintrc'
         },
         files: {
-          src: ['test/{spec,mock,e2e}/**/*.js']
+          src: ['test/{spec,mock,e2e}/**/*.js', modulesPath + '**/*.test.js']
         }
       }
     },
