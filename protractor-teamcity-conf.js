@@ -60,7 +60,7 @@ config.multiCapabilities = testBrowsers.map(function (key) {
   browser['screen-resolution'] = '1280x1024';
   browser.build = process.env.BUILD_NUMBER;
   browser.shardTestFiles = true;
-  browser.maxInstances = 3;
+  browser.maxInstances = 10;
   return sauceLabsBrowsers[key];
 });
 
