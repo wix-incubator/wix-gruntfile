@@ -20,9 +20,17 @@ var sauceLabsBrowsers = {
     browserName: 'chrome',
     platform: 'Windows 8'
   },
+  ChromeOSX: {
+    browserName: 'chrome',
+    platform: 'OS X 10.9'
+  },
   FF: {
     browserName: 'firefox',
     platform: 'Windows 7'
+  },
+  FFOSX: {
+    browserName: 'firefox',
+    platform: 'OS X 10.9'
   },
   IE11: {
     browserName: 'internet explorer',
