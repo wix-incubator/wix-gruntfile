@@ -765,16 +765,14 @@ module.exports = function (grunt, options) {
     }
   });
 
-  grunt.registerTask('pre-build', function () {
-    grunt.task.run([
-      'ts',
-      'jsstyle',
-      'scssstyle',
-      'concurrent:server',
-      'autoprefixer',
-      'copy:vm'
-    ]);
-  });
+  grunt.registerTask('pre-build', [
+    'ts',
+    'jsstyle',
+    'scssstyle',
+    'concurrent:server',
+    'autoprefixer',
+    'copy:vm'
+  ]);
 
   grunt.registerTask('package', function () {
     grunt.task.run([
