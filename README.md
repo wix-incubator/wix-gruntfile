@@ -119,9 +119,9 @@ grunt.hookTask('existing-task').unshift('some-new-grunt-plugin');
 
 ## Common overrides
 
-Do not fail build in case jshint/jscs is failing. This should be used only in rare cases when refactoring old code!
+Do not fail build in case jshint/jscs/scsslint is failing. This should be used only in rare cases when refactoring old code!
 ```js
-grunt.hookTask('pre-build').unshift('force-jshint');
+grunt.hookTask('pre-build').unshift('ignore-code-style-checks');
 ```
 
 Override the url that opens in the dashboard when you run `grunt serve`:

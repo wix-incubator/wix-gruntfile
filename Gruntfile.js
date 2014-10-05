@@ -723,6 +723,10 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('force-jshint', function () {
+    grunt.task.run('ignore-code-style-checks');
+  });
+
+  grunt.registerTask('ignore-code-style-checks', function () {
     ['jshint', 'jscs', 'scsslint'].forEach(function (section) {
       var config = grunt.config(section);
       config.options.force = true;
@@ -791,7 +795,7 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('serve', [
-    'force-jshint',
+    'ignore-code-style-checks',
     'karma:unit',
     'clean:server',
     'pre-build',
@@ -801,7 +805,7 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('serve:dist', [
-    'force-jshint',
+    'ignore-code-style-checks',
     'connect:dist:keepalive'
   ]);
 
