@@ -84,11 +84,18 @@ Here is a list of available options:
   page: '', //name of page to open: http://local.{staging}.wixpress.com:{port}/{page}
   protractor: true, //whether to use protractor or fallback to angular scenario
   proxies: {}, //add more proxies to your connect server: `{'/_test/': 'http://www.wix.com/', ...}`
-  beforeProxies: {} //same as above, only it insert the proxy at the beginning of the list
+  beforeProxies: {}, //same as above, only it insert the proxy at the beginning of the list
+  useModulesStructure: false // if true, will assume project uses a modular file structure (see below for an elaboration)
 }
 ```
 
 Note: you can add your own connect plugins by passing function value in the proxy maps.
+
+##Modular file structure
+The basic configuration assumes you are using a traditional file structure, where all the controllers are stored in the "controllers" directory, services are in "services" directory and so on.
+If you wish to use a modular file structure, storing each module's scripts, styles and views in the same folder, you can do so by passing 'useModulesStructure: true' to the configuration object.
+
+A further explanation can be found [here](MODULES.md)
 
 ## Modifying existing config
 
