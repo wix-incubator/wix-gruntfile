@@ -8,7 +8,7 @@ When using this folder structure, it is very handy to give an extra suffix to yo
 
 The traditional file structure, used by most Wix projects looks like the following:
 
-```js
+```
 app
 ├── index.html
 ├── scripts
@@ -38,7 +38,7 @@ app
 ```
 
 A modular file structure looks like this:
-```js
+```
 app
 ├── index.html
 ├── bower_components
