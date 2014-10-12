@@ -83,5 +83,5 @@ Once a module is no longer needed (or depended on), removing the module is as ea
 
 ## References
 [http://cliffmeyers.com/blog/2013/4/21/code-organization-angularjs-javascript](http://cliffmeyers.com/blog/2013/4/21/code-organization-angularjs-javascript)
-[https://docs.google.com/presentation/d/1CITTvkEaR7gZTtrL8202_iP8jWVzn7--Er615lnOJic/edit - slide #16 & #25](https://docs.google.com/presentation/d/1CITTvkEaR7gZTtrL8202_iP8jWVzn7--Er615lnOJic/edit)
+[https://docs.google.com/presentation/d/1CITTvkEaR7gZTtrL8202_iP8jWVzn7--Er615lnOJic/edit - slide #16 & #25](https://docs.google.com/presentation/d/1CITTvkEaR7gZTtrL8202_iP8jWVzn7--Er615lnOJic/view)
 
