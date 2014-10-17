@@ -65,7 +65,7 @@ config.multiCapabilities = testBrowsers.map(function (key) {
   var browser = sauceLabsBrowsers[key];
   browser.name = 'e2e tests';
   browser['tunnel-identifier'] = process.env.BUILD_NUMBER;
-  if (browser.platform !=== 'OS X 10.9') {
+  if (browser.platform !== 'OS X 10.9') {
     browser['screen-resolution'] = '1280x1024';
   }
   browser.build = process.env.BUILD_NUMBER;
