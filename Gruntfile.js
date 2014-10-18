@@ -10,7 +10,12 @@ module.exports = function (grunt, options) {
 
   var fs = require('fs');
   var extend = require('util')._extend;
+  var shell = require('shelljs');
   var protractorUtil = require('./grunt-protractor');
+
+  if (!process.env.BUILD_NUMBER && process.env.BUILD_NUMBER === '12345') {
+    shell.exec('npm install; bower install; bundle install', {silent: true});
+  }
 
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);

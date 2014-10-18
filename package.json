@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.89",
+  "version": "0.1.90",
   "description": "Wix Gruntfile.",
   "homepage": "https://github.com/wix/wix-gruntfile",
   "bugs": "https://github.com/wix/wix-gruntfile/issues",
@@ -11,9 +11,10 @@
     "url": "git://github.com/wix/wix-gruntfile.git"
   },
   "dependencies": {
-    "proxy-middleware": "~0.5.0",
     "jshint-stylish": "~0.1.3",
     "load-grunt-tasks": "~0.4.0",
+    "proxy-middleware": "~0.5.0",
+    "shelljs": "^0.3.0",
     "time-grunt": "~0.3.1",
     "wix-cdn-data": "~0.1.0"
   },
