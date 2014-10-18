@@ -13,7 +13,7 @@ module.exports = function (grunt, options) {
   var shell = require('shelljs');
   var protractorUtil = require('./grunt-protractor');
 
-  if (!process.env.BUILD_NUMBER && process.env.BUILD_NUMBER === '12345') {
+  if (!process.env.BUILD_NUMBER || process.env.BUILD_NUMBER === '12345') {
     shell.exec('npm install; bower install; bundle install', {silent: true});
   }
 
