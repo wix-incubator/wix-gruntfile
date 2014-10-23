@@ -208,7 +208,8 @@ module.exports = function (grunt, options) {
           target: 'es5',
           sourceMap: false,
           declaration: false,
-          removeComments: true
+          removeComments: true,
+          module: 'commonjs'
         }
       },
       test: {
@@ -219,7 +220,8 @@ module.exports = function (grunt, options) {
           target: 'es5',
           sourceMap: false,
           declaration: false,
-          removeComments: true
+          removeComments: true,
+          module: 'commonjs'
         }
       }
     },
