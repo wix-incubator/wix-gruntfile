@@ -180,6 +180,10 @@ module.exports = function (grunt, options) {
         files: ['{test,app/scripts,app/modules}/**/*.ts'],
         tasks: ['ts', 'jsstyle', 'karma:unit:run']
       },
+      es6: {
+        files: ['{test,app/scripts,app/modules}/**/*.es6'],
+        tasks: ['traceur', 'jsstyle', 'karma:unit:run']
+      },
       compass: {
         files: ['app/{styles,modules}/**/*.{scss,sass}'],
         tasks: ['scsslint', 'compass:server', 'autoprefixer']
@@ -196,6 +200,28 @@ module.exports = function (grunt, options) {
           'app/**/*.html',
           'app/images/**/*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      }
+    },
+
+    traceur: {
+      options: {
+        experimental: true
+      },
+      build: {
+        files: [{
+          expand: true,
+          cwd: 'app',
+          src: ['{modules,scripts}/**/*.es6', '!modules/**/*.test.es6'],
+          dest: '.tmp'
+        }]
+      },
+      test: {
+        files: [{
+          expand: true,
+          cwd: 'test',
+          src: ['**/*.es6'],
+          dest: '.tmp/test'
+        }]
       }
     },
 
@@ -778,6 +804,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('pre-build', [
     'ts',
+    'traceur',
     'jsstyle',
     'scssstyle',
     'concurrent:server',
