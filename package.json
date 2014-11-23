@@ -11,6 +11,7 @@
     "url": "git://github.com/wix/wix-gruntfile.git"
   },
   "dependencies": {
+    "compression": "^1.2.0",
     "grunt": "^0.4.5",
     "jshint-stylish": "^1.0.0",
     "load-grunt-tasks": "^1.0.0",
