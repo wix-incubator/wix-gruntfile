@@ -11,7 +11,6 @@ module.exports = function (grunt, options) {
   var fs = require('fs');
   var extend = require('util')._extend;
   var shell = require('shelljs');
-  var compression = require('compression');
   var protractorUtil = require('./grunt-protractor');
 
   if (!process.env.BUILD_NUMBER || process.env.BUILD_NUMBER === '12345') {
@@ -288,7 +287,7 @@ module.exports = function (grunt, options) {
           port: 9000,
           middleware: function (connect) {
             return getProxies('beforeProxies').concat([
-              compression(),
+              //connect.compress(),
               mountFolder(connect, 'test', 86400000),
               mountFolder(connect, 'dist', 86400000),
               connect.urlencoded()
