@@ -38,7 +38,8 @@ module.exports = function (grunt, options) {
     proxies: {},
     beforeProxies: {},
     bowerComponent: false,
-    useModulesStructure: false
+    useModulesStructure: false,
+    svgFontName: null
   }, options);
 
   if (!options.preloadModule) {
@@ -148,6 +149,10 @@ module.exports = function (grunt, options) {
       haml: {
         files: ['app/{views,modules}/**/*.haml'],
         tasks: ['haml', 'karma:unit:run']
+      },
+      svgFont: {
+        files: ['app/images/svg-font-icons/*.*'],
+        tasks: ['webfont', 'compass:server', 'autoprefixer']
       },
       html: {
         files: ['app/{views,modules}/**/*.html'],
@@ -591,7 +596,7 @@ module.exports = function (grunt, options) {
         }, {
           expand: true,
           cwd: '.tmp',
-          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', '{views,modules}/**/*.html'],
+          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', '{views,modules}/**/*.html', 'styles/svg-font/*'],
           dest: 'dist'
         }, {
           expand: true,
@@ -754,8 +759,27 @@ module.exports = function (grunt, options) {
         file: 'bower.json',
         npm: false
       }
+    },
+    webfont: {
+      icons: {
+        src: 'app/images/svg-font-icons/*.svg',
+        dest: '.tmp/styles/svg-font',
+        destCss: '.tmp/styles',
+        options: {
+          htmlDemo: false,
+          stylesheet: 'scss',
+          engine: 'node',
+          font: options.svgFontName + '-svg-font-icons',
+          template: path.join(__dirname, 'webfont-css-generator-template.css'), /* Custom template is a copy-paste of 'bootstrap' template + including 'bem' general class so it will be easily used with @mixins */
+          templateOptions: {
+            baseClass: options.svgFontName + '-svg-font-icons',
+            classPrefix: options.svgFontName + '-svg-font-icons-'
+          }
+        }
+      }
     }
   });
+
 
   grunt.registerTask('force-jshint', function () {
     grunt.task.run('ignore-code-style-checks');
@@ -807,12 +831,14 @@ module.exports = function (grunt, options) {
   grunt.registerTask('pre-build', [
     'ts',
     'traceur',
-    'jsstyle',
+    'jsstyle'].concat(options.svgFontName ?
+    ['webfont'] : []).concat([
     'scssstyle',
     'concurrent:server',
     'autoprefixer',
     'copy:vm'
-  ]);
+  ]));
+
 
   grunt.registerTask('package', function () {
     grunt.task.run([
