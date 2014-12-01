@@ -13,7 +13,8 @@ module.exports = function (grunt, options) {
   var shell = require('shelljs');
   var protractorUtil = require('./grunt-protractor');
 
-  if (!process.env.BUILD_NUMBER || process.env.BUILD_NUMBER === '12345') {
+  if (!options.noWixInstall && (!process.env.BUILD_NUMBER || process.env.BUILD_NUMBER === '12345')) {
+    console.log('Running Wix-Install ...');
     shell.exec('npm install; bower install; bundle install', {silent: true});
   }
 
