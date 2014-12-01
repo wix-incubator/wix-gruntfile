@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.99",
+  "version": "0.1.100",
   "description": "Wix Gruntfile.",
   "homepage": "https://github.com/wix/wix-gruntfile",
   "bugs": "https://github.com/wix/wix-gruntfile/issues",
@@ -67,7 +67,8 @@
     "karma-sauce-launcher": "^0.2.10",
     "karma-teamcity-reporter": "^0.1.0",
     "jasmine-reporters": "^1.0.1",
-    "protractor": "^1.4.0"
+    "protractor": "^1.4.0",
+    "grunt-webfont": "^0.4.8"
   },
   "engines": {
     "node": ">=0.8.0"
