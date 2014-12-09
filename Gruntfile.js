@@ -12,7 +12,7 @@ module.exports = function (grunt, options) {
   var extend = require('util')._extend;
   var shell = require('shelljs');
   var protractorUtil = require('./grunt-protractor');
-
+  var tasksLists = {};
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
     return this;
@@ -86,6 +86,11 @@ module.exports = function (grunt, options) {
       }
     }
     return arr;
+  }
+
+  function registerTask(name, taskList) {
+    tasksLists[name] = taskList;
+    grunt.registerTask(name, taskList);
   }
 
   function mountFolder(connect, dir, maxage) {
@@ -810,11 +815,11 @@ module.exports = function (grunt, options) {
   });
 
   if (options.protractor) {
-    grunt.registerTask('e2e:normal', ['webdriver', 'protractor:normal']);
-    grunt.registerTask('e2e:teamcity', ['protractor:teamcity']);
+    registerTask('e2e:normal', ['webdriver', 'protractor:normal']);
+    registerTask('e2e:teamcity', ['protractor:teamcity']);
   } else {
-    grunt.registerTask('e2e:normal', ['karma:e2e']);
-    grunt.registerTask('e2e:teamcity', ['karma:e2eTeamcity']);
+    registerTask('e2e:normal', ['karma:e2e']);
+    registerTask('e2e:teamcity', ['karma:e2eTeamcity']);
   }
 
   grunt.registerTask('jsstyle', function () {
@@ -830,7 +835,7 @@ module.exports = function (grunt, options) {
     }
   });
 
-  grunt.registerTask('pre-build', [
+  registerTask('pre-build', [
     'ts',
     'traceur',
     'jsstyle'].concat(options.svgFontName ?
@@ -858,7 +863,7 @@ module.exports = function (grunt, options) {
     ]);
   });
 
-  grunt.registerTask('serve', [
+  registerTask('serve', [
     'wix-install',
     'ignore-code-style-checks',
     'karma:unit',
@@ -869,28 +874,28 @@ module.exports = function (grunt, options) {
     'watch'
   ]);
 
-  grunt.registerTask('serve:dist', [
+  registerTask('serve:dist', [
     'ignore-code-style-checks',
     'connect:dist:keepalive'
   ]);
 
-  grunt.registerTask('serve:coverage', [
+  registerTask('serve:coverage', [
     'enableCoverage',
     'serve'
   ]);
 
-  grunt.registerTask('test', [
+  registerTask('test', [
     'clean:server',
     'pre-build',
     'karma:single'
   ]);
 
-  grunt.registerTask('test:ci', [
+  registerTask('test:ci', [
     'connect:test',
     'e2e:teamcity'
   ]);
 
-  grunt.registerTask('build', [
+  registerTask('build', [
     'clean:dist',
     'test',
     'package',
@@ -898,7 +903,7 @@ module.exports = function (grunt, options) {
     'e2e:normal'
   ]);
 
-  grunt.registerTask('build:ci', [
+  registerTask('build:ci', [
     'clean:dist',
     'pre-build',
     'karma:teamcity',
@@ -914,7 +919,8 @@ module.exports = function (grunt, options) {
     var arr = [hooked];
     grunt.renameTask(name, hooked);
     grunt.registerTask(name, arr);
-    return arr;
+    return tasksLists[name] ? tasksLists[name] : arr;
+
   };
 
   function isObject(v) {
