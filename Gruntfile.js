@@ -13,10 +13,6 @@ module.exports = function (grunt, options) {
   var shell = require('shelljs');
   var protractorUtil = require('./grunt-protractor');
 
-  if (!process.env.BUILD_NUMBER || process.env.BUILD_NUMBER === '12345') {
-    shell.exec('npm install; bower install; bundle install', {silent: true});
-  }
-
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
     return this;
@@ -785,6 +781,12 @@ module.exports = function (grunt, options) {
     grunt.task.run('ignore-code-style-checks');
   });
 
+  grunt.registerTask('wix-install', function () {
+    if (!process.env.BUILD_NUMBER || process.env.BUILD_NUMBER === '12345') {
+      shell.exec('npm install; bower install; bundle install', {silent: true});
+    }
+  });
+
   grunt.registerTask('ignore-code-style-checks', function () {
     ['jshint', 'jscs', 'scsslint'].forEach(function (section) {
       var config = grunt.config(section);
@@ -857,6 +859,7 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('serve', [
+    'wix-install',
     'ignore-code-style-checks',
     'karma:unit',
     'clean:server',
