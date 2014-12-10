@@ -156,11 +156,11 @@ module.exports = function (grunt, options) {
       },
       replace: {
         files: ['app/**/*.vm'],
-        tasks: ['replace', 'copy:vm']
+        tasks: ['replace:dist', 'copy:vm']
       },
       replaceConf: {
         files: ['replace.conf.js', 'replace.private.conf.js'],
-        tasks: ['replace', 'copy:vm'],
+        tasks: ['replace:dist', 'copy:vm'],
         options: {reload: true}
       },
       locale: {
@@ -636,7 +636,7 @@ module.exports = function (grunt, options) {
       server: [
         'haml',
         'compass:dist',
-        'replace',
+        'replace:dist',
         'copy:styles',
         'jsonAngularTranslate'
       ],
