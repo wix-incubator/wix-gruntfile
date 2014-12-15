@@ -2,7 +2,7 @@
 
 module.exports = function (grunt, options) {
   grunt.registerTask('typescriptIfEnabled', function () {
-    if (grunt.file.isMatch('*.ts', process.cwd() + '/app/scripts/')) {
+    if (grunt.file.expand(process.cwd() + '/app/scripts/*.ts')) {
       grunt.task.run('ts');
     }
   });

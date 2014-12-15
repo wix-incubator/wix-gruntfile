@@ -38,7 +38,7 @@ module.exports = function (grunt) {
   }
 
   grunt.registerTask('hamlIfEnabled', function () {
-    if (grunt.file.isMatch('*.haml', process.cwd() + '/app/views/')) {
+    if (grunt.file.expand(process.cwd() + '/app/views/*.haml')) {
       grunt.task.run('haml');
     }
   });
