@@ -29,7 +29,7 @@ module.exports = function (grunt, options) {
     },
     locale: {
       files: ['app/scripts/**/locale/**/*.*'],
-      tasks: ['jsonAngularTranslate', 'jsstyle', 'karma:unit:run']
+      tasks: ['jsonAngularTranslate', 'jsstyleIfEnabled', 'karma:unit:run']
     },
     test: {
       files: [
@@ -39,19 +39,19 @@ module.exports = function (grunt, options) {
         '!test/spec/e2e/**/*.js',
         '!test/e2e/**/*.js'
       ],
-      tasks: ['jsstyle', 'karma:unit:run']
+      tasks: ['jsstyleIfEnabled', 'karma:unit:run']
     },
     ts: {
       files: ['{test,app/scripts,app/modules}/**/*.ts'],
-      tasks: ['ts', 'jsstyle', 'karma:unit:run']
+      tasks: ['ts', 'jsstyleIfEnabled', 'karma:unit:run']
     },
     es6: {
       files: ['{test,app/scripts,app/modules}/**/*.es6'],
-      tasks: ['traceur', 'jsstyle', 'karma:unit:run']
+      tasks: ['traceur', 'jsstyleIfEnabled', 'karma:unit:run']
     },
     compass: {
       files: ['app/{styles,modules}/**/*.{scss,sass}'],
-      tasks: ['scsslint', 'compass:server', 'autoprefixer']
+      tasks: ['scssstyleIfEnabled', 'compass:server', 'autoprefixer']
     },
     styles: {
       files: ['app/{styles,modules}/**/*.css'],
