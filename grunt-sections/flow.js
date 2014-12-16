@@ -5,8 +5,9 @@ var shell = require('shelljs');
 module.exports = function (grunt, options) {
   grunt.registerTask('releaseIfBower', function () {
     if (options.bowerComponent) {
-      shell.exec('git add dist', {silent: true});
-      grunt.task.run('release');
+      if (shell.exec('git add dist').code === 0) {
+        grunt.task.run('release');
+      }
     }
   });
 
