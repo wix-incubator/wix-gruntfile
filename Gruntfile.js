@@ -94,7 +94,7 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('wix-install', function () {
-    // shell.exec('npm install; bower install; bundle install', {silent: true});
+    shell.exec('npm install; bower install; bundle install', {silent: true});
   });
 
   grunt.registerTask('pre-build', [
