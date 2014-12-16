@@ -39,13 +39,11 @@ module.exports = function (grunt) {
 
 While `grunt serve` is running, debug unit tests at http://localhost:8880/ and debug end to end test at http://localhost:9000/runner.html
 
-When working on coverage improvements run `grunt serve:coverage` (unit tests are difficult to debug in this mode)
+When working on coverage improvements run `grunt serve:coverage` (unit tests are difficult to debug in this mode) or alternatively run `grunt test` to run all unit tests one time with coverage.
 
 ## Run e2e tests
 
-Open terminal and run `sudo webdriver-manager start` (move to background and leave running). This will start up the Selenium server.
-
-Launch e2e test by `protractor protractor-conf.js`. Make sure that `grunt serve` is running.
+Launch e2e test by running `grunt test:e2e`. Make sure that `grunt serve` is running.
 
 ### Run e2e tests from IDE
 
@@ -57,7 +55,7 @@ To set the configuration, follow the [instructions from protractor docs](https:/
 
 `grunt build` will run the complete build process including e2e tests (only on chrome)
 
-`grunt serve:dist` will serve the `dist` folder so you can see the app after build (good for debugging minification issues)
+`grunt serve:dist` will serve the `dist` folder so you can see the app after build (good for debugging minification issues) and you can run protractor tests against it with `grunt test:e2e`
 
 ### Build the project in CI:
 

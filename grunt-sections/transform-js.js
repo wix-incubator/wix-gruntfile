@@ -7,6 +7,12 @@ module.exports = function (grunt, options) {
     }
   });
 
+  grunt.registerTask('traceurIfEnabled', function () {
+    if (grunt.file.expand(process.cwd() + '/app/scripts/*.es6')) {
+      grunt.task.run('traceur');
+    }
+  });
+
   return {
     traceur: {
       options: {

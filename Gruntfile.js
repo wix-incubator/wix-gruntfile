@@ -99,7 +99,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('pre-build', [
     'typescriptIfEnabled',
-    'traceur',
+    'traceurIfEnabled',
     'jsstyleIfEnabled',
     'scssstyleIfEnabled',
     'webfontIfEnabled',
@@ -150,6 +150,11 @@ module.exports = function (grunt, options) {
     'pre-build',
     'karma:single'
   ]);
+
+  grunt.registerTask('test:e2e', function () {
+    grunt.task.run('webdriver');
+    grunt.task.run('protractor:normal');
+  });
 
   grunt.registerTask('test:ci', [
     'connect:test',

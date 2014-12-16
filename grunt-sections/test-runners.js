@@ -34,8 +34,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('e2eIfEnabled:normal', function () {
     if (options.protractor) {
-      grunt.task.run('webdriver');
-      grunt.task.run('protractor:normal');
+      grunt.task.run('test:e2e');
     }
   });
 
