@@ -2,13 +2,13 @@
 
 module.exports = function (grunt, options) {
   grunt.registerTask('typescriptIfEnabled', function () {
-    if (grunt.file.expand(process.cwd() + '/app/scripts/*.ts')) {
+    if (grunt.file.expand(process.cwd() + '/app/scripts/*.ts').length) {
       grunt.task.run('ts');
     }
   });
 
   grunt.registerTask('traceurIfEnabled', function () {
-    if (grunt.file.expand(process.cwd() + '/app/scripts/*.es6')) {
+    if (grunt.file.expand(process.cwd() + '/app/scripts/*.es6').length) {
       grunt.task.run('traceur');
     }
   });
