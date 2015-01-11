@@ -44,7 +44,7 @@ module.exports = function (grunt, options) {
           target: 'es5',
           sourceMap: false,
           declaration: false,
-          removeComments: true,
+          removeComments: false,
           module: 'commonjs'
         }
       },
@@ -56,7 +56,7 @@ module.exports = function (grunt, options) {
           target: 'es5',
           sourceMap: false,
           declaration: false,
-          removeComments: true,
+          removeComments: false,
           module: 'commonjs'
         }
       }
