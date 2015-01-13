@@ -9,6 +9,7 @@ module.exports = function (grunt, options) {
   function proxyFolder(src, dest) {
     var proxyOptions = url.parse(grunt.template.process(dest));
     proxyOptions.route = src;
+    proxyOptions.headers = {'accept-encoding': undefined};
     return proxyMiddleware(proxyOptions);
   }
 
