@@ -1,7 +1,5 @@
 'use strict';
 
-var url = require('url');
-
 module.exports = function (grunt, options) {
   return {
     ngtemplates: {
@@ -58,7 +56,7 @@ module.exports = function (grunt, options) {
                 if (string.indexOf(prefix) === 0 || string[0] === '$') {
                   return string;
                 }
-                if (url.parse(string).protocol) {
+                if (string.match(/^([a-z]*:)?\/\//)) {
                   return string;
                 }
                 return prefix + string;
