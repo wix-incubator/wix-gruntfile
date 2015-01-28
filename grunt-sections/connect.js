@@ -38,15 +38,15 @@ module.exports = function (grunt, options) {
       port: options.port,
       // Change this to 'localhost' to block access to the server from outside.
       hostname: '0.0.0.0',
+      protocol: options.protocol,
+      key: grunt.file.read(path.join(__dirname, '../server.key')).toString(),
+      cert: grunt.file.read(path.join(__dirname, '../server.crt')).toString(),
+      ca: grunt.file.read(path.join(__dirname, '../ca.crt')).toString(),
+      passphrase: 'grunt',
       livereload: options.livereload
     },
     livereload: {
       options: {
-        protocol: options.protocol,
-        key: grunt.file.read(path.join(__dirname, '../server.key')).toString(),
-        cert: grunt.file.read(path.join(__dirname, '../server.crt')).toString(),
-        ca: grunt.file.read(path.join(__dirname, '../ca.crt')).toString(),
-        passphrase: 'grunt',
         open: '<%= yeoman.local %>',
         middleware: function (connect) {
           return getProxies('beforeProxies').concat([
