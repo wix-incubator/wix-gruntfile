@@ -8,7 +8,7 @@ module.exports = function (grunt, options) {
     },
     haml: {
       files: ['app/{views,modules}/**/*.haml'],
-      tasks: ['haml', 'karma:unit:run']
+      tasks: ['newer:haml', 'karma:unit:run']
     },
     svgFont: {
       files: ['app/images/svg-font-icons/*.*'],
