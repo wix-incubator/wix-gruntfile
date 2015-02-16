@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.123",
+  "version": "0.1.124",
   "description": "Wix Gruntfile.",
   "homepage": "https://github.com/wix/wix-gruntfile",
   "bugs": "https://github.com/wix/wix-gruntfile/issues",
@@ -38,7 +38,7 @@
     "grunt-contrib-htmlmin": "^0.3.0",
     "grunt-contrib-imagemin": "^0.9.2",
     "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-uglify": "^0.7.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-google-cdn-shahata": "^0.2.0",
     "grunt-json-angular-translate": "^0.1.0",
