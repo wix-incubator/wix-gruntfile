@@ -43,7 +43,7 @@ module.exports = function (grunt, options) {
     uglify: {
       options: {
         mangle: !options.bowerComponent,
-        compress: !options.bowerComponent,
+        compress: options.bowerComponent ? false : {},
         beautify: options.bowerComponent
       },
       locale: {
