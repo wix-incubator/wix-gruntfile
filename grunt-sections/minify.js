@@ -57,7 +57,8 @@ module.exports = function (grunt, options) {
     },
     cssmin: {
       options: {
-        processImport: false
+        processImport: false,
+        rebase: false
       }
     }
   };
