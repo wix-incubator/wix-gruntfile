@@ -29,7 +29,29 @@ module.exports = function (grunt, options) {
     usemin: {
       html: ['dist/*.{html,vm}'],
       options: {
-        assetsDirs: ['dist']
+        assetsDirs: ['dist'],
+        blockReplacements: {
+          js: function (block) {
+            var defer = block.defer ? 'defer ' : '';
+            var async = block.async ? 'async ' : '';
+
+            var original = '';
+
+            for (var i = 0; i < block.src.length; i++) {
+              if (block.src[i].indexOf('scripts/') === 0) {
+                block.src[i] = block.src[i].replace('scripts/', '_debug/scripts/');
+              }
+
+              original += '<script ' + defer + async + 'src="' + block.src[i] + '"><\/script>' + '\n';
+            }
+
+            return '<!-- #if( !${debug} ) -->' + '\n' +
+              '<script ' + defer + async + 'src="' + block.dest + '"><\/script>' + '\n' +
+              '<!-- #else -->' + '\n' +
+              original +
+              '<!-- #end -->';
+          }
+        }
       }
     },
     velocityDebug: {

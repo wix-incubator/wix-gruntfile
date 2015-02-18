@@ -119,7 +119,6 @@ module.exports = function (grunt, options) {
       'concurrent:dist',
       'cdnify',
       'usemin',
-      'velocityDebug',
       'processTags'
     ]);
   });
