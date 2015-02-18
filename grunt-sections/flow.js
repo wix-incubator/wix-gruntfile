@@ -60,6 +60,16 @@ module.exports = function (grunt, options) {
             'images/**/*.{webp,ico,svg}',
             'fonts/*'
           ]
+        }, {
+          expand: true,
+          cwd: '.tmp/scripts/',
+          src: ['**/*.js'],
+          dest: 'dist/_debug/scripts'
+        }, {
+          expand: true,
+          cwd: 'app/scripts/',
+          src: ['**/*.js'],
+          dest: 'dist/_debug/scripts'
         }]
       },
       styles: {

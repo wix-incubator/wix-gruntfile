@@ -10,6 +10,8 @@ module.exports = function (grunt, options) {
     return this;
   };
 
+	console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+
   options = extend({
     cdnify: 'http',
     protocol: 'http',
@@ -119,7 +121,6 @@ module.exports = function (grunt, options) {
       'concurrent:dist',
       'cdnify',
       'usemin',
-      'velocityDebug',
       'processTags'
     ]);
   });
