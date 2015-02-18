@@ -10,8 +10,6 @@ module.exports = function (grunt, options) {
     return this;
   };
 
-	console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-
   options = extend({
     cdnify: 'http',
     protocol: 'http',
