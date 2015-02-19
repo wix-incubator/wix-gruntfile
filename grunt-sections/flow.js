@@ -1,13 +1,9 @@
 'use strict';
 
-var shell = require('shelljs');
-
 module.exports = function (grunt, options) {
-  grunt.registerTask('releaseIfBower', function () {
-    if (options.bowerComponent) {
-      if (shell.exec('git add dist').code === 0) {
-        grunt.task.run('release');
-      }
+  grunt.registerTask('checkIfBower', function () {
+    if (!options.bowerComponent) {
+      throw 'not bower component';
     }
   });
 
