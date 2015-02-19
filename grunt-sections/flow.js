@@ -3,7 +3,7 @@
 module.exports = function (grunt, options) {
   grunt.registerTask('checkIfBower', function () {
     if (!options.bowerComponent) {
-      throw 'not bower component';
+      grunt.fail.fatal('not bower component');
     }
   });
 
