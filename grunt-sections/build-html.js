@@ -23,7 +23,35 @@ module.exports = function (grunt, options) {
       html: 'app/*.{html,vm}',
       options: {
         staging: 'dist',
-        dest: 'dist'
+        dest: 'dist',
+        flow: {
+          steps: {
+            js: ['concat', 'uglifyjs'], //default
+            css: ['concat', 'cssmin'], //default
+            locale: [{ //Usage example: <!--build:locale({.tmp,app}) scripts/locale/messages_${locale}.js-->
+              name: 'concat',
+              createConfig: function (context, block) {
+                var path = require('path'), cfg = {files: []}, localeChains = {};
+                context.inFiles.forEach(function (pattern) {
+                  var expanded = grunt.file.expand(path.join(context.inDir, pattern.replace('${locale}', '*')));
+                  expanded.forEach(function (file) {
+                    var locale = file.match(pattern.replace('${locale}', '(.+)'))[1],
+                      destFile = block.dest.replace('${locale}', locale);
+                    localeChains[destFile] = localeChains[destFile] || [];
+                    localeChains[destFile].push(file);
+                  });
+                });
+
+                for (var destination in localeChains) {
+                  cfg.files.push({dest: path.join(context.outDir, destination), src: localeChains[destination]});
+                  context.outFiles.push(destination);
+                }
+                return cfg;
+              }
+            }]
+          },
+          post: {}
+        }
       }
     },
     usemin: {
@@ -50,6 +78,9 @@ module.exports = function (grunt, options) {
               '<!-- #else -->' + '\n' +
               original +
               '<!-- #end -->';
+          },
+          locale: function (block) {
+            return '<script src="' + block.dest + '"></script>';
           }
         }
       }
