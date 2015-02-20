@@ -110,13 +110,13 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('package', function () {
     grunt.task.run([
+      'concurrent:dist',
       'useminPrepare',
       'ngtemplates',
       'concat',
       'cssmin',
       'ngAnnotate',
       'uglify',
-      'concurrent:dist',
       'cdnify',
       'usemin',
       'processTags'
