@@ -75,7 +75,7 @@ module.exports = function (grunt, options) {
 
             return '<!-- #if( !${debug} ) -->' + '\n' +
               '<script ' + defer + async + 'src="' + block.dest + '"><\/script>' + '\n' +
-              '<!-- #else -->' + '\n' +
+              '<!-- #else -#if( false )#end->' + '\n' +
               original +
               '<!-- #end -->';
           },
