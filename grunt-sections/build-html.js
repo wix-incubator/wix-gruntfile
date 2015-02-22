@@ -1,6 +1,41 @@
 'use strict';
 
 module.exports = function (grunt, options) {
+  function makeScriptTag(defer, async, src) {
+    return '<script ' + defer + async + 'src="' + src + '"><\/script>';
+  }
+
+  function makeStyleTag(media, src) {
+    return '<link rel="stylesheet" href="' + src + '"' + media + '>';
+  }
+
+  function makeOriginalOrBlock(original, block) {
+    return '' +
+      '<!-- #if( !${debug} ) -->\n' +
+      block + '\n' +
+      '<!-- #else -#if( false )#end->\n' +
+      original +
+      '<!-- #end -->';
+  }
+
+  function originalTagsOnDebug(block, prefix, fn) {
+    var original = block.src.map(function (src) {
+      return fn(src.replace(new RegExp('^' + prefix + '/'), '_debug/' + prefix + '/'));
+    }).join('\n');
+    return makeOriginalOrBlock(original, fn(block.dest));
+  }
+
+  function originalScriptOnDebug(block) {
+    var defer = block.defer ? 'defer ' : '';
+    var async = block.async ? 'async ' : '';
+    return originalTagsOnDebug(block, 'scripts', makeScriptTag.bind(undefined, defer, async));
+  }
+
+  function originalCssOnDebug(block) {
+    var media = block.media ? ' media="' + block.media + '"' : '';
+    return originalTagsOnDebug(block, 'styles', makeStyleTag.bind(undefined, media));
+  }
+
   return {
     ngtemplates: {
       app: {
@@ -59,29 +94,9 @@ module.exports = function (grunt, options) {
       options: {
         assetsDirs: ['dist'],
         blockReplacements: {
-          js: function (block) {
-            var defer = block.defer ? 'defer ' : '';
-            var async = block.async ? 'async ' : '';
-
-            var original = '';
-
-            for (var i = 0; i < block.src.length; i++) {
-              if (block.src[i].indexOf('scripts/') === 0) {
-                block.src[i] = block.src[i].replace('scripts/', '_debug/scripts/');
-              }
-
-              original += '<script ' + defer + async + 'src="' + block.src[i] + '"><\/script>' + '\n';
-            }
-
-            return '<!-- #if( !${debug} ) -->' + '\n' +
-              '<script ' + defer + async + 'src="' + block.dest + '"><\/script>' + '\n' +
-              '<!-- #else -#if( false )#end->' + '\n' +
-              original +
-              '<!-- #end -->';
-          },
-          locale: function (block) {
-            return '<script src="' + block.dest + '"></script>';
-          }
+          js: originalScriptOnDebug,
+          css: originalCssOnDebug,
+          locale: originalScriptOnDebug
         }
       }
     },

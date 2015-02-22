@@ -66,6 +66,16 @@ module.exports = function (grunt, options) {
           cwd: 'app/scripts/',
           src: ['**/*.js'],
           dest: 'dist/_debug/scripts'
+        }, {
+          expand: true,
+          cwd: '.tmp/styles/',
+          src: ['**/*.css'],
+          dest: 'dist/_debug/styles'
+        }, {
+          expand: true,
+          cwd: 'app/styles/',
+          src: ['**/*.css'],
+          dest: 'dist/_debug/styles'
         }]
       },
       styles: {
