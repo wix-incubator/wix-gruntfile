@@ -14,7 +14,9 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('jsstyleIfEnabled', function () {
-    grunt.task.run('jshint');
+    if (grunt.file.exists(process.cwd() + '/.jshintrc')) {
+      grunt.task.run('jshint');
+    }
     if (grunt.file.exists(process.cwd() + '/.jscsrc')) {
       grunt.task.run('jscs');
     }
