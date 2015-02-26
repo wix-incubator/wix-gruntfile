@@ -47,6 +47,7 @@ module.exports = function (grunt, options) {
           htmlDemo: false,
           stylesheet: 'scss',
           engine: 'node',
+          hashes: false,
           font: options.svgFontName + '-svg-font-icons',
           template: path.join(__dirname, '../webfont-css-generator-template.css'), /* Custom template is a copy-paste of 'bootstrap' template + including 'bem' general class so it will be easily used with @mixins */
           templateOptions: {
