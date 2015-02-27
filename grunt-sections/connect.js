@@ -6,6 +6,14 @@ var path = require('path');
 module.exports = function (grunt, options) {
   var proxyMiddleware = require('proxy-middleware');
 
+  function readCertFile(name) {
+    try {
+      return grunt.file.read(name).toString();
+    } catch (e) {
+      return grunt.file.read(path.join(__dirname, '../' + name)).toString();
+    }
+  }
+
   function proxyFolder(src, dest) {
     var proxyOptions = url.parse(grunt.template.process(dest));
     proxyOptions.route = src;
@@ -43,9 +51,9 @@ module.exports = function (grunt, options) {
     livereload: {
       options: {
         protocol: options.protocol,
-        key: grunt.file.read(path.join(__dirname, '../server.key')).toString(),
-        cert: grunt.file.read(path.join(__dirname, '../server.crt')).toString(),
-        ca: grunt.file.read(path.join(__dirname, '../ca.crt')).toString(),
+        key: readCertFile('server.key'),
+        cert: readCertFile('server.crt'),
+        ca: readCertFile('ca.crt'),
         passphrase: 'grunt',
         open: '<%= yeoman.local %>',
         middleware: function (connect) {
