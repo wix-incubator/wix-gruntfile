@@ -96,7 +96,9 @@ module.exports = function (grunt, options) {
       }
     },
     protractor: {
-      normal: 'protractor-conf.js',
+      normal: {
+        configFile: 'protractor-conf.js'
+      },
       teamcity: path.join(__dirname, '../protractor-teamcity-conf.js')
     }
   };
