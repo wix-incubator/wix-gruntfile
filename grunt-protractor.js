@@ -17,39 +17,21 @@ module.exports = {
   },
 
   startProtractor: function (config, done) {
-    var sauceUser = grunt.option('sauceUser');
-    var sauceKey = grunt.option('sauceKey');
-    var tunnelIdentifier = grunt.option('capabilities.tunnel-identifier');
-    var sauceBuild = grunt.option('capabilities.build');
-    var browser = grunt.option('browser');
-    var specs = grunt.option('specs');
-    var args = ['node_modules/protractor/bin/protractor', config.configFile];
-    var overrideKeys = Object.keys(config).filter(function (key) {
-      return key !== 'configFile';
+    var allowedOptions = ['sauceUser', 'sauceKey', 'capabilities.tunnel-identifier',
+                          'capabilities.build', 'browser', 'specs'];
+    allowedOptions.forEach(function (option) {
+      var value = grunt.option(option);
+      if (value) {
+        config[option] = value;
+      }
     });
-    if (sauceUser) {
-      args.push('--sauceUser=' + sauceUser);
-    }
-    if (sauceKey) {
-      args.push('--sauceKey=' + sauceKey);
-    }
-    if (tunnelIdentifier) {
-      args.push('--capabilities.tunnel-identifier=' + tunnelIdentifier);
-    }
-    if (sauceBuild) {
-      args.push('--capabilities.build=' + sauceBuild);
-    }
-    if (specs) {
-      args.push('--specs=' + specs);
-    }
-    if (browser) {
-      args.push('--browser=' + browser);
-    }
-    if (overrideKeys.length) {
-      overrideKeys.forEach(function (key) {
-        args.push('--' + key + '=' + config[key]);
-      });
-    }
+
+    var args = ['node_modules/protractor/bin/protractor', config.configFile];
+    args = args.concat(Object.keys(config).filter(function (key) {
+      return key !== 'configFile';
+    }).map(function (key) {
+      return '--' + key + '=' + config[key];
+    }));
 
     var p = spawn('node', args);
     p.stdout.pipe(process.stdout);
