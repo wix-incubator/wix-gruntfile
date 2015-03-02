@@ -23,7 +23,10 @@ module.exports = {
     var sauceBuild = grunt.option('capabilities.build');
     var browser = grunt.option('browser');
     var specs = grunt.option('specs');
-    var args = ['node_modules/protractor/bin/protractor', config];
+    var args = ['node_modules/protractor/bin/protractor', config.configFile];
+    var overrideKeys = Object.keys(config).filter(function (key) {
+      return key !== 'configFile';
+    });
     if (sauceUser) {
       args.push('--sauceUser=' + sauceUser);
     }
@@ -42,7 +45,11 @@ module.exports = {
     if (browser) {
       args.push('--browser=' + browser);
     }
-
+    if (overrideKeys.length) {
+      overrideKeys.forEach(function (key) {
+        args.push('--' + key + '=' + config[key]);
+      });
+    }
 
     var p = spawn('node', args);
     p.stdout.pipe(process.stdout);
@@ -53,5 +60,5 @@ module.exports = {
       }
       done();
     });
-  },
+  }
 };
