@@ -26,7 +26,6 @@ var sauceLabsBrowsers = {
   },
   FF: {
     browserName: 'firefox',
-    version: '34',
     platform: 'Windows 7'
   },
   FFOSX: {
