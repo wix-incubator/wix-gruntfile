@@ -69,12 +69,12 @@ module.exports = function (grunt, options) {
         }, {
           expand: true,
           cwd: '.tmp/images/',
-          src: ['**/*.js'],
+          src: ['**/*.*'],
           dest: 'dist/_debug/images'
         }, {
           expand: true,
           cwd: 'app/images/',
-          src: ['**/*.js'],
+          src: ['**/*.*'],
           dest: 'dist/_debug/images'
         }, {
           expand: true,
