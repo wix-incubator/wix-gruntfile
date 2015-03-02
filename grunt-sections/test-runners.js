@@ -23,7 +23,7 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerMultiTask('protractor', 'Run Protractor integration tests', function () {
-    protractorUtil.startProtractor.call(protractorUtil, this.data, this.async());
+    protractorUtil.startProtractor.call(protractorUtil, this.options(), this.async());
   });
 
   grunt.registerTask('enableCoverage', function () {
@@ -97,10 +97,14 @@ module.exports = function (grunt, options) {
     },
     protractor: {
       normal: {
-        configFile: 'protractor-conf.js'
+        options: {
+          configFile: 'protractor-conf.js'
+        }
       },
       teamcity: {
-        configFile: path.join(__dirname, '../protractor-teamcity-conf.js')
+        options: {
+          configFile: path.join(__dirname, '../protractor-teamcity-conf.js')
+        }
       }
     }
   };
