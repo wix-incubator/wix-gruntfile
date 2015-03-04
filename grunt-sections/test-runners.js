@@ -23,7 +23,7 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerMultiTask('protractor', 'Run Protractor integration tests', function () {
-    protractorUtil.startProtractor.call(protractorUtil, this.options(), this.async());
+    protractorUtil.startProtractor.call(protractorUtil, this.options(), this.async(), options.sauceLabsConfig);
   });
 
   grunt.registerTask('enableCoverage', function () {
