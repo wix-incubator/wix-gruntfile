@@ -27,7 +27,8 @@ module.exports = function (grunt, options) {
     beforeProxies: {},
     bowerComponent: false,
     useModulesStructure: false,
-    svgFontName: null
+    svgFontName: null,
+    sauceLabsConfig: {}
   }, options);
 
   if (!options.preloadModule) {

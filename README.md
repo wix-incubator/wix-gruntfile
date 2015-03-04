@@ -83,7 +83,8 @@ Here is a list of available options:
   protractor: true, //whether to use protractor or fallback to angular scenario
   proxies: {}, //add more proxies to your connect server: `{'/_test/': 'http://www.wix.com/', ...}`
   beforeProxies: {}, //same as above, only it insert the proxy at the beginning of the list
-  useModulesStructure: false // if true, will assume project uses a modular file structure (see below for an elaboration)
+  useModulesStructure: false // if true, will assume project uses a modular file structure (see below for an elaboration),
+  sauceLabsConfig: {}, //override sauce labs env variables configuration (SAUCE_BROWSERS, SAUCE_USERNAME and SAUCE_ACCESS_KEY) 
 }
 ```
 

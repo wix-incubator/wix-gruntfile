@@ -16,9 +16,19 @@ module.exports = {
     });
   },
 
-  startProtractor: function (config, done) {
+  startProtractor: function (config, done, sauceLabsConfig) {
     var allowedOptions = ['sauceUser', 'sauceKey', 'capabilities.tunnel-identifier',
                           'capabilities.build', 'browser', 'specs'];
+
+    var allowedEnvOverrides = ['SAUCE_USERNAME', 'SAUCE_ACCESS_KEY', 'SAUCE_BROWSERS'];
+
+    allowedEnvOverrides.forEach(function (varName) {
+      var value = sauceLabsConfig[varName];
+      if (value) {
+        process.env[varName] = value;
+      }
+    });
+
     allowedOptions.forEach(function (option) {
       var value = grunt.option(option);
       if (value) {
