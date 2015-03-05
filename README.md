@@ -138,3 +138,10 @@ Override the proxied url for api calls:
 ```js
 grunt.modifyTask('yeoman', {api: 'http://www.wix.com/_api/'});
 ```
+
+Override sauce labs configuration:
+```js
+process.env.SAUCE_USERNAME = 'shahata';
+process.env.SAUCE_ACCESS_KEY = 'xxx';
+process.env.SAUCE_BROWSERS = 'Chrome FF IE10 IE11';
+```
