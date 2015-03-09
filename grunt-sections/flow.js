@@ -70,12 +70,12 @@ module.exports = function (grunt, options) {
         }, {
           expand: true,
           cwd: '.tmp/styles/',
-          src: ['**/*.css'],
+          src: ['**/*.css', 'svg-font/*'],
           dest: 'dist/_debug_styles'
         }, {
           expand: true,
           cwd: 'app/styles/',
-          src: ['**/*.css'],
+          src: ['**/*.css', 'svg-font/*'],
           dest: 'dist/_debug_styles'
         }]
       },
