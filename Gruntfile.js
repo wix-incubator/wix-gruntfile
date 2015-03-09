@@ -120,7 +120,7 @@ module.exports = function (grunt, options) {
       'cdnify',
       'usemin',
       'processTags',
-      'clean:server'
+      'clean:index'
     ]);
   });
 

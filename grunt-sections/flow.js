@@ -24,7 +24,8 @@ module.exports = function (grunt, options) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      index: '.tmp/*.{vm,html}'
     },
     release: {
       options: {
