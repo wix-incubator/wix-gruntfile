@@ -20,7 +20,7 @@ module.exports = function (grunt, options) {
 
   function originalTagsOnDebug(block, prefix, fn) {
     var original = block.src.map(function (src) {
-      return fn(src.replace(new RegExp('^' + prefix + '/'), '_debug/' + prefix + '/'));
+      return fn(src.replace(new RegExp('^' + prefix + '/'), '_debug_' + prefix + '/'));
     }).join('\n');
     return makeOriginalOrBlock(original, fn(block.dest));
   }

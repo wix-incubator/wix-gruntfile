@@ -61,32 +61,22 @@ module.exports = function (grunt, options) {
           expand: true,
           cwd: '.tmp/scripts/',
           src: ['**/*.js'],
-          dest: 'dist/_debug/scripts'
+          dest: 'dist/_debug_scripts'
         }, {
           expand: true,
           cwd: 'app/scripts/',
           src: ['**/*.js'],
-          dest: 'dist/_debug/scripts'
-        }, {
-          expand: true,
-          cwd: '.tmp/images/',
-          src: ['**/*.*'],
-          dest: 'dist/_debug/images'
-        }, {
-          expand: true,
-          cwd: 'app/images/',
-          src: ['**/*.*'],
-          dest: 'dist/_debug/images'
+          dest: 'dist/_debug_scripts'
         }, {
           expand: true,
           cwd: '.tmp/styles/',
           src: ['**/*.css'],
-          dest: 'dist/_debug/styles'
+          dest: 'dist/_debug_styles'
         }, {
           expand: true,
           cwd: 'app/styles/',
           src: ['**/*.css'],
-          dest: 'dist/_debug/styles'
+          dest: 'dist/_debug_styles'
         }]
       },
       styles: {
