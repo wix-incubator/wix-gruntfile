@@ -1,5 +1,7 @@
 'use strict';
 
+var featureDetector = require('../feature-detector');
+
 module.exports = function (grunt) {
   grunt.registerTask('force-jshint', function () {
     grunt.task.run('ignore-code-style-checks');
@@ -14,16 +16,16 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('jsstyleIfEnabled', function () {
-    if (grunt.file.exists(process.cwd() + '/.jshintrc')) {
+    if (featureDetector.isJshintEnabled()) {
       grunt.task.run('jshint');
     }
-    if (grunt.file.exists(process.cwd() + '/.jscsrc')) {
+    if (featureDetector.isJscsEnabled()) {
       grunt.task.run('jscs');
     }
   });
 
   grunt.registerTask('scssstyleIfEnabled', function () {
-    if (grunt.file.exists(process.cwd() + '/.scss-lint.yml')) {
+    if (featureDetector.isScssStyleEnabled()) {
       grunt.task.run('scsslint');
     }
   });

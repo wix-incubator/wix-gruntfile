@@ -1,14 +1,16 @@
 'use strict';
 
+var featureDetector = require('../feature-detector');
+
 module.exports = function (grunt, options) {
   grunt.registerTask('typescriptIfEnabled', function () {
-    if (grunt.file.expand(process.cwd() + '/app/scripts/*.ts').length) {
+    if (featureDetector.isTypescriptEnabled()) {
       grunt.task.run('ts');
     }
   });
 
   grunt.registerTask('traceurIfEnabled', function () {
-    if (grunt.file.expand(process.cwd() + '/app/scripts/*.es6').length) {
+    if (featureDetector.isTraceurEnabled()) {
       grunt.task.run('traceur');
     }
   });
@@ -23,7 +25,9 @@ module.exports = function (grunt, options) {
           expand: true,
           cwd: 'app',
           src: ['{modules,scripts}/**/*.es6', '!modules/**/*.test.es6'],
-          dest: '.tmp'
+          dest: '.tmp',
+          ext: '.js',
+          extDot: 'last'
         }]
       },
       test: {
@@ -31,7 +35,9 @@ module.exports = function (grunt, options) {
           expand: true,
           cwd: 'test',
           src: ['**/*.es6'],
-          dest: '.tmp/test'
+          dest: '.tmp/test',
+          ext: '.js',
+          extDot: 'last'
         }]
       }
     },
