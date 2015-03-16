@@ -8,10 +8,10 @@ function isFeaturePresent(pattern) {
 
 module.exports = {
   isTypescriptEnabled: function () {
-    return isFeaturePresent('/{app,test}/*.ts');
+    return isFeaturePresent('/app/scripts/*.ts');
   },
   isTraceurEnabled: function () {
-    return isFeaturePresent('/{app,test}/*.es6');
+    return isFeaturePresent('/app/scripts/*.es6');
   },
   isHamlEnabled: function () {
     return isFeaturePresent('/app/views/**/*.haml');
