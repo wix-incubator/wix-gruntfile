@@ -25,7 +25,9 @@ module.exports = function (grunt, options) {
           expand: true,
           cwd: 'app',
           src: ['{modules,scripts}/**/*.es6', '!modules/**/*.test.es6'],
-          dest: '.tmp'
+          dest: '.tmp',
+          ext: '.js',
+          extDot: 'last'
         }]
       },
       test: {
@@ -33,7 +35,9 @@ module.exports = function (grunt, options) {
           expand: true,
           cwd: 'test',
           src: ['**/*.es6'],
-          dest: '.tmp/test'
+          dest: '.tmp/test',
+          ext: '.js',
+          extDot: 'last'
         }]
       }
     },

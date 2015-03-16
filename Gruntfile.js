@@ -105,8 +105,7 @@ module.exports = function (grunt, options) {
     'webfontIfEnabled',
     'concurrent:server',
     'autoprefixer',
-    'copy:vm',
-    'copy:es6'
+    'copy:vm'
   ]);
 
   grunt.registerTask('package', function () {

@@ -99,17 +99,6 @@ module.exports = function (grunt, options) {
           src: '**/*.vm',
           ext: '.html'
         }]
-      },
-      es6: {
-        files: [{
-          expand: true,
-          cwd: '.tmp',
-          dest: '.tmp/',
-          src: '**/*.es6',
-          rename: function (dest, src) {
-            return dest + src.replace('.es6', '.js');
-          }
-        }]
       }
     }
   };
