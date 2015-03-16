@@ -1,14 +1,16 @@
 'use strict';
 
+var featureDetector = require('../feature-detector');
+
 module.exports = function (grunt, options) {
   grunt.registerTask('typescriptIfEnabled', function () {
-    if (grunt.file.expand(process.cwd() + '/app/scripts/*.ts').length) {
+    if (featureDetector.isTypescriptEnabled()) {
       grunt.task.run('ts');
     }
   });
 
   grunt.registerTask('traceurIfEnabled', function () {
-    if (grunt.file.expand(process.cwd() + '/app/scripts/*.es6').length) {
+    if (featureDetector.isTraceurEnabled()) {
       grunt.task.run('traceur');
     }
   });

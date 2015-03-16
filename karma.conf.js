@@ -2,11 +2,23 @@
 // http://karma-runner.github.io/0.10/config/configuration-file.html
 'use strict';
 
+var featureDetector = require('./feature-detector');
+
 module.exports = function (config) {
   var os = require('os');
   var isOsx = os.platform()  === 'darwin';
+  var isTraceurEnabled = featureDetector.isTraceurEnabled();
+  
   config.set({
-    plugins: ['karma-jasmine', 'karma-coverage', 'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-growl-reporter', 'karma-osx-reporter', 'karma-teamcity-reporter', 'karma-ng-html2js-preprocessor'],
+    plugins: [
+      'karma-jasmine',
+      'karma-coverage',
+      'karma-phantomjs-launcher',
+      'karma-growl-reporter',
+      'karma-osx-reporter',
+      'karma-teamcity-reporter',
+      'karma-ng-html2js-preprocessor'
+    ].concat(isTraceurEnabled ? ['karma-chrome-launcher']: []),
 
     preprocessors: {
       '{app,.tmp}/scripts/{,!(lib)/**/}*.js': 'coverage',
@@ -52,7 +64,7 @@ module.exports = function (config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['PhantomJS'],
+    browsers: [].concat(isTraceurEnabled ? ['Chrome'] : ['PhantomJS']),
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
