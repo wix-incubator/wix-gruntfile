@@ -6,7 +6,7 @@ module.exports = function (config) {
   var os = require('os');
   var isOsx = os.platform()  === 'darwin';
   config.set({
-    plugins: ['karma-jasmine', 'karma-coverage', 'karma-phantomjs-launcher', 'karma-growl-reporter', 'karma-osx-reporter', 'karma-teamcity-reporter', 'karma-ng-html2js-preprocessor'],
+    plugins: ['karma-jasmine', 'karma-coverage', 'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-growl-reporter', 'karma-osx-reporter', 'karma-teamcity-reporter', 'karma-ng-html2js-preprocessor'],
 
     preprocessors: {
       '{app,.tmp}/scripts/{,!(lib)/**/}*.js': 'coverage',
