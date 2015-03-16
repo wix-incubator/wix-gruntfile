@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.151",
+  "version": "0.1.152",
   "description": "Wix Gruntfile.",
   "homepage": "https://github.com/wix/wix-gruntfile",
   "bugs": {
@@ -10,6 +10,9 @@
     "name": "Shahar Talmi"
   },
   "main": "Gruntfile.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/wix/wix-gruntfile.git"
