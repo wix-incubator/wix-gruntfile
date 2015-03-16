@@ -1,6 +1,7 @@
 'use strict';
 
 var extend = require('util')._extend;
+var featureDetector = require('../feature-detector');
 
 module.exports = function (grunt) {
   function arrayToObj(arr) {
@@ -38,7 +39,7 @@ module.exports = function (grunt) {
   }
 
   grunt.registerTask('hamlIfEnabled', function () {
-    if (grunt.file.expand(process.cwd() + '/app/views/**/*.haml').length) {
+    if (featureDetector.isHamlEnabled()) {
       grunt.task.run('haml');
     }
   });

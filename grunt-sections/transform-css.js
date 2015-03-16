@@ -36,6 +36,6 @@ module.exports = function (grunt, options) {
           debugInfo: true
         }
       }
-    },
+    }
   };
 };
