@@ -67,21 +67,6 @@ module.exports = function (grunt, options) {
           files: options.unitTestFiles
         }
       },
-      e2e: {
-        options: {
-          configFile: path.join(__dirname, '../karma-e2e.conf.js'),
-          proxies: {'/': 'http://localhost:<%= connect.test.options.port %>/'},
-          browsers: ['Chrome']
-        }
-      },
-      e2eTeamcity: {
-        options: {
-          configFile: path.join(__dirname, '../karma-e2e.conf.js'),
-          proxies: {'/': 'http://localhost:<%= connect.test.options.port %>/'},
-          transports: ['xhr-polling'],
-          reporters: ['dots', 'teamcity', 'saucelabs']
-        }
-      },
       unit: {
         options: {
           configFile: path.join(__dirname, '../karma.conf.js'),
