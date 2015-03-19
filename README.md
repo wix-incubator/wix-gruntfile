@@ -83,7 +83,8 @@ Here is a list of available options:
   protractor: true, //whether to use protractor or fallback to angular scenario
   proxies: {}, //add more proxies to your connect server: `{'/_test/': 'http://www.wix.com/', ...}`
   beforeProxies: {}, //same as above, only it insert the proxy at the beginning of the list
-  useModulesStructure: false // if true, will assume project uses a modular file structure (see below for an elaboration)
+  useModulesStructure: false, // if true, will assume project uses a modular file structure (see below for an elaboration)
+  inline: false // if true, will disable autoprefixer and look for inline tags
 }
 ```
 
@@ -145,3 +146,19 @@ process.env.SAUCE_USERNAME = 'shahata';
 process.env.SAUCE_ACCESS_KEY = 'xxx';
 process.env.SAUCE_BROWSERS = 'Chrome FF IE10 IE11';
 ```
+## Inline Style
+In order to enable the inline style feature, the `inline` property of the Gruntfile options sould be `true`.
+
+Common use of the inline:
+####index.vm
+```html
+<!-- process-tags prefix('${baseStaticUrl}') -->
+<!-- build:mixedCss({.tmp,app}) styles/main.css -->
+	<link rel="stylesheet" href="styles/mixed-css-file-with-wix-params.css?__extractStyles=inline.css?__inline=true" />
+<!-- endbuild -->
+<!-- end-process-tags -->
+```
+**Notes:**
+1. Notice that the usemin task called `mixedCss`
+2. When the inline is `ON` the **autoprefixer** is `OFF`
+3. The task will extract wix syle params from `mixed-css-file-with-wix-params.css` and generate 2 files: `inline.css`(the file that will be inlined) and `mixed-css-file-with-wix-params_remain.css`(the file that will be minified & concatenated)
