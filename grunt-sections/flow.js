@@ -85,6 +85,18 @@ module.exports = function (grunt, options) {
         dest: '.tmp',
         src: '{styles,modules}/**/*.css'
       },
+      vmTmp: {
+        expand: true,
+        cwd: 'app',
+        dest: '.tmp',
+        src: '*.vm'
+      },
+      vmDist: {
+        expand: true,
+        cwd: '.tmp',
+        dest: 'dist',
+        src: '*.vm'
+      },
       vm: {
         files: [{
           expand: true,

@@ -27,8 +27,14 @@ module.exports = function (grunt, options) {
     beforeProxies: {},
     bowerComponent: false,
     useModulesStructure: false,
-    svgFontName: null
+    svgFontName: null,
+    autoprefixer: true,
+    inline: false
   }, options);
+
+  if(options.inline) {
+    options.autoprefixer = false;
+  }
 
   if (!options.preloadModule) {
     options.preloadModule = options.translationsModule || 'wixAppPreload';
@@ -70,6 +76,8 @@ module.exports = function (grunt, options) {
     processTags:            require('./grunt-sections/build-html')(grunt, options).processTags,
     cdnify:                 require('./grunt-sections/build-html')(grunt, options).cdnify,
     ngtemplates:            require('./grunt-sections/build-html')(grunt, options).ngtemplates,
+    extractStyles:          require('./grunt-sections/build-html')(grunt, options).extractStyles,
+    inline:                 require('./grunt-sections/build-html')(grunt, options).inline,
 
     release:                require('./grunt-sections/flow')(grunt, options).release,
     copy:                   require('./grunt-sections/flow')(grunt, options).copy,
@@ -104,13 +112,15 @@ module.exports = function (grunt, options) {
     'scssstyleIfEnabled',
     'webfontIfEnabled',
     'concurrent:server',
-    'autoprefixer',
+    'autoprefixerIfEnabled',
+    'inlineServeIfEnabled',
     'copy:vm'
   ]);
 
   grunt.registerTask('package', function () {
     grunt.task.run([
       'concurrent:dist',
+      'inlineDistIfEnabled',
       'useminPrepare',
       'ngtemplates',
       'concat',
