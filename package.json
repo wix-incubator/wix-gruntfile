@@ -74,7 +74,9 @@
     "karma-teamcity-reporter": "^0.1.0",
     "jasmine-reporters": "^1.0.1",
     "protractor": "^1.4.0",
-    "grunt-webfont": "^0.4.8"
+    "grunt-webfont": "^0.4.8",
+    "grunt-extract-styles": "^0.1.1",
+    "grunt-inline": "0.3.4"
   },
   "engines": {
     "node": ">=0.8.0"
