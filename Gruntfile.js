@@ -37,45 +37,50 @@ module.exports = function (grunt, options) {
   require('load-grunt-tasks')(grunt, {config: require('./package.json')});
   require('time-grunt')(grunt);
 
+  grunt.loadNpmTasks('grunt-file-creator');
+  grunt.loadNpmTasks('grunt-extend-config');
+  grunt.loadNpmTasks('grunt-merge-json');
+
   grunt.initConfig({
-    yeoman:                 require('./grunt-sections/flow')(grunt, options).yeoman,
-    clean:                  require('./grunt-sections/flow')(grunt, options).clean,
+    yeoman: require('./grunt-sections/flow')(grunt, options).yeoman,
+    clean: require('./grunt-sections/flow')(grunt, options).clean,
 
-    jshint:                 require('./grunt-sections/codestyle')(grunt, options).jshint,
-    jscs:                   require('./grunt-sections/codestyle')(grunt, options).jscs,
-    scsslint:               require('./grunt-sections/codestyle')(grunt, options).scsslint,
+    jshint: require('./grunt-sections/codestyle')(grunt, options).jshint,
+    jscs: require('./grunt-sections/codestyle')(grunt, options).jscs,
+    scsslint: require('./grunt-sections/codestyle')(grunt, options).scsslint,
 
-    autoprefixer:           require('./grunt-sections/transform-css')(grunt, options).autoprefixer,
-    compass:                require('./grunt-sections/transform-css')(grunt, options).compass,
-    traceur:                require('./grunt-sections/transform-js')(grunt, options).traceur,
-    ts:                     require('./grunt-sections/transform-js')(grunt, options).typescript,
-    replace:                require('./grunt-sections/transform-html')(grunt, options).replace,
-    haml:                   require('./grunt-sections/transform-html')(grunt, options).haml,
+    autoprefixer: require('./grunt-sections/transform-css')(grunt, options).autoprefixer,
+    compass: require('./grunt-sections/transform-css')(grunt, options).compass,
+    traceur: require('./grunt-sections/transform-js')(grunt, options).traceur,
+    ts: require('./grunt-sections/transform-js')(grunt, options).typescript,
+    replace: require('./grunt-sections/transform-html')(grunt, options).replace,
+    haml: require('./grunt-sections/transform-html')(grunt, options).haml,
 
-    jsonAngularTranslate:   require('./grunt-sections/generators')(grunt, options).translations,
-    webfont:                require('./grunt-sections/generators')(grunt, options).webfont,
+    jsonAngularTranslate: require('./grunt-sections/generators')(grunt, options).translations,
+    webfont: require('./grunt-sections/generators')(grunt, options).webfont,
 
-    watch:                  require('./grunt-sections/watch')(grunt, options),
-    connect:                require('./grunt-sections/connect')(grunt, options),
+    watch: require('./grunt-sections/watch')(grunt, options),
+    connect: require('./grunt-sections/connect')(grunt, options),
 
-    imagemin:               require('./grunt-sections/minify')(grunt, options).imagemin,
-    svgmin:                 require('./grunt-sections/minify')(grunt, options).svgmin,
-    ngAnnotate:             require('./grunt-sections/minify')(grunt, options).ngAnnotate,
-    uglify:                 require('./grunt-sections/minify')(grunt, options).uglify,
-    cssmin:                 require('./grunt-sections/minify')(grunt, options).cssmin,
+    imagemin: require('./grunt-sections/minify')(grunt, options).imagemin,
+    svgmin: require('./grunt-sections/minify')(grunt, options).svgmin,
+    ngAnnotate: require('./grunt-sections/minify')(grunt, options).ngAnnotate,
+    uglify: require('./grunt-sections/minify')(grunt, options).uglify,
+    cssmin: require('./grunt-sections/minify')(grunt, options).cssmin,
 
-    useminPrepare:          require('./grunt-sections/build-html')(grunt, options).useminPrepare,
-    usemin:                 require('./grunt-sections/build-html')(grunt, options).usemin,
-    velocityDebug:          require('./grunt-sections/build-html')(grunt, options).velocityDebug,
-    processTags:            require('./grunt-sections/build-html')(grunt, options).processTags,
-    cdnify:                 require('./grunt-sections/build-html')(grunt, options).cdnify,
-    ngtemplates:            require('./grunt-sections/build-html')(grunt, options).ngtemplates,
+    useminPrepare: require('./grunt-sections/build-html')(grunt, options).useminPrepare,
+    usemin: require('./grunt-sections/build-html')(grunt, options).usemin,
+    velocityDebug: require('./grunt-sections/build-html')(grunt, options).velocityDebug,
+    processTags: require('./grunt-sections/build-html')(grunt, options).processTags,
+    cdnify: require('./grunt-sections/build-html')(grunt, options).cdnify,
+    ngtemplates: require('./grunt-sections/build-html')(grunt, options).ngtemplates,
 
-    release:                require('./grunt-sections/flow')(grunt, options).release,
-    copy:                   require('./grunt-sections/flow')(grunt, options).copy,
+    release: require('./grunt-sections/flow')(grunt, options).release,
+    copy: require('./grunt-sections/flow')(grunt, options).copy,
+    petri: require('./grunt-sections/flow')(grunt, options).copy,
 
-    karma:                  require('./grunt-sections/test-runners')(grunt, options).karma,
-    protractor:             require('./grunt-sections/test-runners')(grunt, options).protractor,
+    karma: require('./grunt-sections/test-runners')(grunt, options).karma,
+    protractor: require('./grunt-sections/test-runners')(grunt, options).protractor,
 
     concurrent: {
       server: [
@@ -92,6 +97,8 @@ module.exports = function (grunt, options) {
       ]
     }
   });
+
+  require('./grunt-sections/package_experiments')(grunt, options);
 
   grunt.registerTask('wix-install', function () {
     shell.exec('npm install; bower install; bundle install', {silent: true});
@@ -126,6 +133,8 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('serve', [
     'wix-install',
+    'merge-json',
+    'file-creator:compileSpecs',
     'ignore-code-style-checks',
     'karma:unit',
     'clean:server',
