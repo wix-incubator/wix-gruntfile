@@ -37,10 +37,6 @@ module.exports = function (grunt, options) {
   require('load-grunt-tasks')(grunt, {config: require('./package.json')});
   require('time-grunt')(grunt);
 
-  grunt.loadNpmTasks('grunt-file-creator');
-  grunt.loadNpmTasks('grunt-extend-config');
-  grunt.loadNpmTasks('grunt-merge-json');
-
   grunt.initConfig({
     yeoman: require('./grunt-sections/flow')(grunt, options).yeoman,
     clean: require('./grunt-sections/flow')(grunt, options).clean,
