@@ -51,6 +51,11 @@ module.exports = function (grunt, options) {
         ngHtml2JsPreprocessor: {
           stripPrefix: '(app|.tmp)/',
           moduleName: options.preloadModule
+        },
+        customLaunchers: {
+          chromeHeadless: {
+            base: 'Chrome'
+          }
         }
       },
       teamcity: {
@@ -58,7 +63,14 @@ module.exports = function (grunt, options) {
           configFile: path.join(__dirname, '../karma.conf.js'),
           files: options.unitTestFiles,
           reporters: ['teamcity', 'coverage'],
-          coverageReporter: { type: 'teamcity' }
+          coverageReporter: { type: 'teamcity' },
+          customLaunchers: {
+            chromeHeadless: {
+              base: 'Chrome',
+              // required to run Chrome in a headless server (Xvfb)
+              flags: ['--no-sandbox']
+            }
+          }
         }
       },
       single: {
