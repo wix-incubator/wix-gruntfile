@@ -59,12 +59,22 @@ module.exports = function (config) {
     // Start these browsers, currently available:
     // - Chrome
     // - ChromeCanary
+    // - chromeHeadless (will start in "headless" mode)
     // - Firefox
     // - Opera
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: featureDetector.isTraceurEnabled() ? ['Chrome'] : ['PhantomJS'],
+    browsers: featureDetector.isTraceurEnabled() ? ['chromeHeadless'] : ['PhantomJS'],
+
+    // browser configuration
+    customLaunchers: {
+      chromeHeadless: {
+        base: 'Chrome',
+        // required to run Chrome in a headless environment (Xvfb)
+        flags: ['--no-sandbox']
+      }
+    },
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
