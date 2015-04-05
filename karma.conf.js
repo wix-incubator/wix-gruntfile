@@ -67,16 +67,6 @@ module.exports = function (config) {
     // - IE (only Windows)
     browsers: featureDetector.isTraceurEnabled() ? ['chromeHeadless'] : ['PhantomJS'],
 
-    // browser configuration
-    customLaunchers: {
-      chromeNoSandbox: {
-        base: 'Chrome',
-
-        // required to run Chrome in a headless server (Xvfb)
-        flags: ['--no-sandbox']
-      }
-    },
-
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
     singleRun: true
