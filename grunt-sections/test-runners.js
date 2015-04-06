@@ -59,6 +59,7 @@ module.exports = function (grunt, options) {
           files: options.unitTestFiles,
           reporters: ['teamcity', 'coverage'],
           coverageReporter: { type: 'teamcity' }
+
         }
       },
       single: {
