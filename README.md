@@ -154,12 +154,15 @@ Common use of the inline:
 ####index.vm
 ```html
 <!-- process-tags prefix('${baseStaticUrl}') -->
-<!-- build:mixedCss({.tmp,app}) styles/main.css -->
+<!-- build:css({.tmp,app}) styles/main.css -->
 <!-- endbuild -->
 <!-- end-process-tags -->
 <link rel="stylesheet" href="styles/mixed-css-file-with-wix-params.css?__extractStyles=inline.css" />
 ```
 **Notes:**
-1. `wixStyleInline` task will add the `remain` file to the concat of the last **CSS** usemin block, The VM file sould have at least one usemin cs block, otherwise the remain file will not concatenated & minified.
+1. `wixStyleInline` task will add the `remain` file to the concat of the first **CSS** usemin block, The VM file should have at least one usemin css block, otherwise the remain file will not concatenated & minified.
 2. When the **inline** property is `ON` the **autoprefixer** is `OFF`
-3. The task will extract wix syle params from `mixed-css-file-with-wix-params.css` and generate 2 files: `inline.css`(the file that will be inlined) and `mixed-css-file-with-wix-params.remain.css`(the file that will be minified & concatenated)
+3. The task will extract wix style params from `mixed-css-file-with-wix-params.css` and generate 2 files: `inline.css`(the file that will be inlined) and `mixed-css-file-with-wix-params.remain.css`(the file that will be minified & concatenated)
+4. Wix style implements **fonts** as malformed CSS declaration (`{{Body-M}};`, without attribute). 
+In order to keep POSTCSS parser intact, you should add a `font` attribute and smicolon before the wix style param, something like `font:;{{Body-M}};`- this is valid wix style param, and the parser will not break on it. 
+The extractStyles task will eventually convert it to `{{Body-M}};`.

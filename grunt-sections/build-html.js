@@ -38,7 +38,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('styleInlineDistIfEnabled', function () {
     if (options.inline) {
-      grunt.task.run(['copy:vmTmp', 'extractStyles:wixStyle', 'copy:vm', 'inline:wixStyle', 'copy:vmDist']);
+      grunt.task.run(['copy:vmTmp', 'extractStyles:wixStyle', 'inline:wixStyle', 'copy:vmDist']);
     }
   });
 
@@ -194,7 +194,7 @@ module.exports = function (grunt, options) {
         options: {
           exts: ['vm', 'html'],
           inlineTagAttributes: {
-            css: 'wix-style'
+            style: 'wix-style'
           }
         },
         files: [{

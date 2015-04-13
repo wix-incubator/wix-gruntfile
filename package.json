@@ -75,8 +75,8 @@
     "jasmine-reporters": "^1.0.1",
     "protractor": "^2.0.0",
     "grunt-webfont": "^0.4.8",
-    "grunt-extract-styles": "^0.1.1",
-    "wix-grunt-inline": "^0.3.3"
+    "grunt-extract-styles": "^0.2.0",
+    "grunt-wix-inline": "^0.3.3"
   },
   "engines": {
     "node": ">=0.8.0"
