@@ -12,7 +12,7 @@ module.exports = function (grunt, options) {
     },
     svgFont: {
       files: ['app/images/svg-font-icons/*.*'],
-      tasks: ['webfont', 'compass:server', 'autoprefixerIfEnabled']
+      tasks: ['webfont', 'compass:server', 'autoprefixer']
     },
     html: {
       files: ['app/{views,modules}/**/*.html'],
@@ -20,7 +20,7 @@ module.exports = function (grunt, options) {
     },
     replace: {
       files: ['app/**/*.vm'],
-      tasks: ['replace:dist', 'styleInlineServeIfEnabled', 'copy:vm']
+      tasks: ['replace:dist', 'copy:vm']
     },
     replaceConf: {
       files: ['replace.conf.js', 'replace.private.conf.js'],
@@ -51,11 +51,11 @@ module.exports = function (grunt, options) {
     },
     compass: {
       files: ['app/{styles,modules}/**/*.{scss,sass}'],
-      tasks: ['scssstyleIfEnabled', 'compass:server', 'autoprefixerIfEnabled', 'replace', 'styleInlineServeIfEnabled', 'copy:vm']
+      tasks: ['scssstyleIfEnabled', 'compass:server', 'autoprefixer']
     },
     styles: {
       files: ['app/{styles,modules}/**/*.css'],
-      tasks: ['newer:copy:styles', 'styleInlineServeIfEnabled', 'autoprefixerIfEnabled']
+      tasks: ['newer:copy:styles', 'autoprefixer']
     },
     gruntfile: {
       files: ['Gruntfile.js']

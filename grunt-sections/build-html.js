@@ -36,18 +36,6 @@ module.exports = function (grunt, options) {
     return originalTagsOnDebug(block, 'styles', makeStyleTag.bind(undefined, media));
   }
 
-  grunt.registerTask('styleInlineDistIfEnabled', function () {
-    if (options.inline) {
-      grunt.task.run(['copy:vmTmp', 'extractStyles:wixStyle', 'inline:wixStyle', 'copy:vmDist']);
-    }
-  });
-
-  grunt.registerTask('styleInlineServeIfEnabled', function () {
-    if (options.inline) {
-      grunt.task.run(['extractStyles:wixStyle', 'copy:vm', 'inline:wixStyle']);
-    }
-  });
-
   return {
     ngtemplates: {
       app: {
@@ -158,51 +146,6 @@ module.exports = function (grunt, options) {
       },
       dist: {
         html: ['dist/**/*.vm']
-      }
-    },
-    extractStyles: {
-      wixStyle: {
-        options: {
-          pattern: /\[\[[^\]]+\]\]/,
-          preProcess: function (css) {
-            // wix tpa params uses {{}}, this breaks the parsers. convert them to [[]].
-            var ret = css.replace(/font: ?; ?{{([^}]+)}};/g, 'font: [[$1]];');
-            ret = ret.replace(/{{([^}]+)}}/g, '[[$1]]');
-            return ret;
-          },
-          postProcess: function (css) {
-            // wix tpa params uses {{}}, convert back the [[]] to {{}}.
-            var ret = css.replace(/font: \[\[([^\]]+)\]\];/g, '{{$1}};');
-            ret = ret.replace(/\[\[([^\]}]+)\]\]/g, '{{$1}}');
-            return ret;
-          },
-          linkIdentifier: '?__wixStyleInline',
-          remainSuffix: '.remain',
-          extractedSuffix: '?__inline=true',
-          usemin: true
-        },
-        files: [{
-          expand: true,
-          cwd: '.tmp/',
-          dest: '.tmp/',
-          src: '*.vm'
-        }]
-      }
-    },
-    inline: {
-      wixStyle: {
-        options: {
-          exts: ['vm', 'html'],
-          inlineTagAttributes: {
-            style: 'wix-style'
-          }
-        },
-        files: [{
-          expand: true,
-          cwd: '.tmp',
-          src: '*.{html,vm}',
-          dest: '.tmp'
-        }]
       }
     }
   };
