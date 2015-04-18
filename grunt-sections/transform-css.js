@@ -1,6 +1,13 @@
 'use strict';
 
 module.exports = function (grunt, options) {
+
+  grunt.registerTask('autoprefixerIfEnabled', function () {
+    if(options.autoprefixer) {
+      grunt.task.run(['autoprefixer']);
+    }
+  });
+
   return {
     autoprefixer: {
       options: {
