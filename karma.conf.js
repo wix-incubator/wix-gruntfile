@@ -39,7 +39,8 @@ module.exports = function (config) {
     exclude: [
       '{,.tmp/}test/spec/e2e/**/*.js',
       '{,.tmp/}test/e2e/**/*.js',
-      '{app,.tmp}/scripts/locale/*_!(en).js'
+      '{app,.tmp}/scripts/locale/*_!(en).js',
+      '.tmp/test/app/**/*.js'
     ],
 
     // test results reporter to use
