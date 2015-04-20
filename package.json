@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.160",
+  "version": "0.1.161",
   "description": "Wix Gruntfile.",
   "homepage": "https://github.com/wix/wix-gruntfile",
   "bugs": {
@@ -60,8 +60,8 @@
     "grunt-usemin": "^2.6.2",
     "grunt-velocity-debug": "^0.1.0",
     "grunt-karma": "^0.9.0",
-    "grunt-ts": "^3.0.0",
-    "typescript": "^1.4.0",
+    "grunt-ts": "^4.0.0",
+    "typescript": null,
     "grunt-traceur-latest": "~0.0.4",
     "karma": "^0.12.25",
     "karma-coverage": "^0.2.1",
