@@ -195,7 +195,8 @@ module.exports = function (grunt, options) {
           exts: ['vm', 'html'],
           inlineTagAttributes: {
             style: 'wix-style'
-          }
+          },
+          cssmin: true
         },
         files: [{
           expand: true,
