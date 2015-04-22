@@ -44,7 +44,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('styleInlineServeIfEnabled', function () {
     if (options.inline) {
-      grunt.task.run(['extractStyles:wixStyle', 'copy:vm', 'inline:wixStyle']);
+      grunt.task.run(['extractStyles:wixStyle', 'inline:wixStyle']);
     }
   });
 
@@ -195,7 +195,8 @@ module.exports = function (grunt, options) {
           exts: ['vm', 'html'],
           inlineTagAttributes: {
             style: 'wix-style'
-          }
+          },
+          cssmin:true
         },
         files: [{
           expand: true,
