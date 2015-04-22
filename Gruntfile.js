@@ -20,6 +20,7 @@ module.exports = function (grunt, options) {
     translationsModule: 'wixAppTranslations',
     unitTestFiles: [],
     karmaTestFiles: null,
+    karmaConf: null,
     appFirst: true,
     page: '',
     protractor: false,
@@ -38,6 +39,14 @@ module.exports = function (grunt, options) {
 
   if (!options.preloadModule) {
     options.preloadModule = options.translationsModule || 'wixAppPreload';
+  }
+
+  if (options.karmaConf) {
+    options.karmaConf({set: function (karmaConf) {
+      options.unitTestFiles = karmaConf.files.filter(function (value) {
+        return value.indexOf('bower_component') !== -1;
+      });
+    }});
   }
 
   require('load-grunt-tasks')(grunt, {config: require('./package.json')});
