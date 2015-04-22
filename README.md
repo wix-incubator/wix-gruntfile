@@ -164,5 +164,5 @@ Common use of the inline:
 2. When the **inline** property is `ON` the **autoprefixer** is `OFF`
 3. The task will extract wix style params from `mixed-css-file-with-wix-params.css` and generate 2 files: `inline.css`(the file that will be inlined) and `mixed-css-file-with-wix-params.remain.css`(the file that will be minified & concatenated)
 4. Wix style implements **fonts** as malformed CSS declaration (`{{Body-M}};`, without attribute). 
-In order to keep POSTCSS parser intact, you should add a `font` attribute and smicolon before the wix style param, something like `font:;{{Body-M}};`- this is valid wix style param, and the parser will not break on it. 
+In order to keep POSTCSS parser intact, you should add a `font` attribute and semicolon before the wix style param, something like `font:;{{Body-M}};`- this is valid wix style param, and the parser will not break on it. 
 The extractStyles task will eventually convert it to `{{Body-M}};`.
