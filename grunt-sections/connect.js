@@ -24,7 +24,7 @@ module.exports = function (grunt, options) {
   function getProxies(proxyType) {
     var arr = [];
     for (var key in options[proxyType]) {
-      if (typeof(options[proxyType][key]) === 'string') {
+      if (typeof options[proxyType][key] === 'string') {
         arr.push(proxyFolder(key, options[proxyType][key]));
       } else {
         if (key[0] === '_') {
@@ -72,14 +72,16 @@ module.exports = function (grunt, options) {
     },
     test: {
       options: {
-        port: 9000,
+        port: 9876,
         middleware: function (connect) {
           return getProxies('beforeProxies').concat([
             //connect.compress(),
             mountFolder(connect, 'test', 86400000),
             mountFolder(connect, 'dist', 86400000),
             connect.urlencoded()
-          ]).concat(getProxies('proxies'));
+          ]).concat(grunt.config('yeoman').e2eTestServer ?
+              [proxyFolder('/_api/', '<%= yeoman.e2eTestServer %>')] : [])
+            .concat(getProxies('proxies'));
         }
       }
     },

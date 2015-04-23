@@ -33,7 +33,7 @@ module.exports = function (grunt, options) {
     inline: false
   }, options);
 
-  if(options.inline) {
+  if (options.inline) {
     options.autoprefixer = false;
   }
 
@@ -171,12 +171,12 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('test:e2e', function () {
+    grunt.task.run('connect:test');
     grunt.task.run('webdriver');
     grunt.task.run('protractor:normal');
   });
 
   grunt.registerTask('test:ci', [
-    'connect:test',
     'e2eIfEnabled:teamcity'
   ]);
 
@@ -184,7 +184,6 @@ module.exports = function (grunt, options) {
     'clean:dist',
     'test',
     'package',
-    'connect:test',
     'e2eIfEnabled:normal'
   ]);
 

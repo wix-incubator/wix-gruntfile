@@ -18,7 +18,7 @@ module.exports = {
 
   startProtractor: function (config, done) {
     var allowedOptions = ['sauceUser', 'sauceKey', 'capabilities.tunnel-identifier',
-                          'capabilities.build', 'browser', 'specs'];
+                          'capabilities.build', 'browser', 'specs', 'baseUrl'];
     allowedOptions.forEach(function (option) {
       var value = grunt.option(option);
       if (value) {

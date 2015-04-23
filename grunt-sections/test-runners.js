@@ -40,6 +40,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('e2eIfEnabled:teamcity', function () {
     if (options.protractor) {
+      grunt.task.run('connect:test');
       grunt.task.run('protractor:teamcity');
     }
   });
@@ -83,12 +84,14 @@ module.exports = function (grunt, options) {
     protractor: {
       normal: {
         options: {
-          configFile: 'protractor-conf.js'
+          configFile: 'protractor-conf.js',
+          baseUrl: 'http://localhost:9876/'
         }
       },
       teamcity: {
         options: {
-          configFile: path.join(__dirname, '../protractor-teamcity-conf.js')
+          configFile: path.join(__dirname, '../protractor-teamcity-conf.js'),
+          baseUrl: 'http://localhost:9876/'
         }
       }
     }
