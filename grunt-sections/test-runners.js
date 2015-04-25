@@ -40,7 +40,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('e2eIfEnabled:teamcity', function () {
     if (options.protractor) {
-      grunt.task.run('connect:test');
+      grunt.task.run('connect:sauce');
       grunt.task.run('protractor:teamcity');
     }
   });
