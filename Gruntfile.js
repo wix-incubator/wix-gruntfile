@@ -57,6 +57,7 @@ module.exports = function (grunt, options) {
     clean:                  require('./grunt-sections/flow')(grunt, options).clean,
 
     jshint:                 require('./grunt-sections/codestyle')(grunt, options).jshint,
+    tslint:                 require('./grunt-sections/codestyle')(grunt, options).tslint,
     jscs:                   require('./grunt-sections/codestyle')(grunt, options).jscs,
     scsslint:               require('./grunt-sections/codestyle')(grunt, options).scsslint,
 

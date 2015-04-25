@@ -1,21 +1,25 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.165",
   "description": "Wix Gruntfile.",
-  "homepage": "https://github.com/wix/wix-gruntfile",
-  "bugs": {
-    "url": "https://github.com/wix/wix-gruntfile/issues"
-  },
+  "version": "0.1.165",
   "author": {
     "name": "Shahar Talmi"
   },
-  "main": "Gruntfile.js",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
+  "homepage": "https://github.com/wix/wix-gruntfile",
   "repository": {
     "type": "git",
     "url": "git://github.com/wix/wix-gruntfile.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wix/wix-gruntfile/issues"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "main": "Gruntfile.js",
+  "dist": {
+    "tarball": "http://repo.dev.wix/artifactory/api/npm/npm-repos/wix-gruntfile/-/wix-gruntfile-0.1.165.tgz",
+    "shasum": "fdb6a1e689bb442c929a2b3d5ef813f3fdc61bd4"
   },
   "dependencies": {
     "compression": "^1.2.0",
@@ -76,9 +80,30 @@
     "protractor": "^2.0.0",
     "grunt-webfont": "^0.4.8",
     "grunt-extract-styles": "^0.2.0",
-    "grunt-wix-inline": "^0.3.3"
+    "grunt-wix-inline": "^0.3.3",
+    "grunt-tslint": "^2.0.0"
   },
-  "engines": {
-    "node": ">=0.8.0"
-  }
+  "maintainers": [
+    {
+      "name": "shahata",
+      "email": "shahar.talmi@gmail.com"
+    }
+  ],
+  "directories": {},
+  "scripts": {},
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "_from": "wix-gruntfile@>=0.1.2 <0.2.0",
+  "_npmVersion": "2.7.6",
+  "_npmUser": {
+    "name": "shahata",
+    "email": "shahar.talmi@gmail.com"
+  },
+  "_id": "wix-gruntfile@0.1.165",
+  "_shasum": "fdb6a1e689bb442c929a2b3d5ef813f3fdc61bd4",
+  "gitHead": "c6f2afdab3fe0248f1b57ea4e2dc7cffa36e4af9",
+  "_nodeVersion": "0.12.2",
+  "_resolved": "http://repo.dev.wix/artifactory/api/npm/npm-repos/wix-gruntfile/-/wix-gruntfile-0.1.165.tgz",
+  "readme": "ERROR: No README data found!"
 }

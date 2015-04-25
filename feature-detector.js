@@ -10,6 +10,9 @@ module.exports = {
   isTypescriptEnabled: function () {
     return isFeaturePresent('/app/scripts/*.ts');
   },
+  isTslintEnabled: function () {
+    return isFeaturePresent('/tslint.json');
+  },
   isTraceurEnabled: function () {
     return isFeaturePresent('/app/scripts/*.es6');
   },

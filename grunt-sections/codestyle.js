@@ -8,7 +8,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('ignore-code-style-checks', function () {
-    ['jshint', 'jscs', 'scsslint'].forEach(function (section) {
+    ['jshint', 'jscs', 'scsslint', 'tslint'].forEach(function (section) {
       var config = grunt.config(section);
       config.options.force = true;
       grunt.config(section, config);
@@ -22,6 +22,12 @@ module.exports = function (grunt) {
     if (featureDetector.isJscsEnabled()) {
       grunt.task.run('jscs');
     }
+    if (featureDetector.isTslintEnabled()) {
+      var config = grunt.config('tslint');
+      config.options.configuration = grunt.file.readJSON('tslint.json');
+      grunt.config('tslint', config);
+      grunt.task.run('tslint');
+    }
   });
 
   grunt.registerTask('scssstyleIfEnabled', function () {
@@ -31,6 +37,17 @@ module.exports = function (grunt) {
   });
 
   return {
+    tslint: {
+      options: {
+      },
+      files: {
+        src: [
+          'app/{scripts,modules}/**/*.ts',
+          'test/{spec,mock,e2e}/**/*.ts',
+          '!app/scripts/typings/**/*.ts'
+        ]
+      }
+    },
     jshint: {
       options: {
         force: false,
