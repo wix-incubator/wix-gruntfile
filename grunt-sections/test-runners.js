@@ -34,13 +34,15 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('e2eIfEnabled:normal', function () {
     if (options.protractor) {
-      grunt.task.run('test:e2e');
+      grunt.task.run('connect:test');
+      grunt.task.run('webdriver');
+      grunt.task.run('protractor:normal');
     }
   });
 
   grunt.registerTask('e2eIfEnabled:teamcity', function () {
     if (options.protractor) {
-      grunt.task.run('connect:sauce');
+      grunt.task.run('connect:test');
       grunt.task.run('protractor:teamcity');
     }
   });

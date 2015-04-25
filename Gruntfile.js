@@ -172,7 +172,7 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('test:e2e', function () {
-    grunt.task.run('connect:test');
+    grunt.task.run('connect:localTest');
     grunt.task.run('webdriver');
     grunt.task.run('protractor:normal');
   });

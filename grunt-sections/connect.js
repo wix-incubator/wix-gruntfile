@@ -70,22 +70,22 @@ module.exports = function (grunt, options) {
         }
       }
     },
-    test: {
+    localTest: {
       options: {
         port: 9876,
         middleware: function (connect) {
           return getProxies('beforeProxies').concat([
-            //connect.compress(),
+            mountFolder(connect, '.tmp'),
             mountFolder(connect, 'test'),
-            mountFolder(connect, 'dist'),
+            mountFolder(connect, 'app'),
             connect.urlencoded()
-          ]).concat(grunt.config('yeoman').e2eTestServer ?
-              [proxyFolder('/_api/', '<%= yeoman.e2eTestServer %>')] : [])
-            .concat(getProxies('proxies'));
+            ]).concat(grunt.config('yeoman').e2eTestServer ?
+                [proxyFolder('/_api/', '<%= yeoman.e2eTestServer %>')] : [])
+              .concat(getProxies('proxies'));
         }
       }
     },
-    sauce: {
+    test: {
       options: {
         port: 9876,
         middleware: function (connect) {
