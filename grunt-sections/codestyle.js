@@ -22,6 +22,9 @@ module.exports = function (grunt) {
     if (featureDetector.isJscsEnabled()) {
       grunt.task.run('jscs');
     }
+  });
+
+  grunt.registerTask('tsstyleIfEnabled', function () {
     if (featureDetector.isTslintEnabled()) {
       var config = grunt.config('tslint');
       config.options.configuration = grunt.file.readJSON('tslint.json');
