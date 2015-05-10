@@ -65,7 +65,7 @@
     "grunt-velocity-debug": "^0.1.0",
     "grunt-karma": "^0.9.0",
     "grunt-ts": "^4.0.0",
-    "typescript": "^1.5.0-alpha",
+    "typescript": "^1.5.0-beta",
     "grunt-traceur-latest": "~0.0.4",
     "karma": "^0.12.25",
     "karma-coverage": "^0.2.1",
