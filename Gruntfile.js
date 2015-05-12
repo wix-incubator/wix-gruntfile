@@ -103,7 +103,7 @@ module.exports = function (grunt, options) {
         'replace:dist',
         'copy:styles',
         'jsonAngularTranslate',
-        'petriExperimentsIfEnabled'
+        'petriExperiments'
       ],
       dist: [
         'imagemin',

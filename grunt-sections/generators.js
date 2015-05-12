@@ -1,18 +1,11 @@
 'use strict';
 
-var featureDetector = require('../feature-detector');
 var path = require('path');
 
 module.exports = function (grunt, options) {
   grunt.registerTask('webfontIfEnabled', function () {
     if (options.svgFontName) {
       grunt.task.run('webfont');
-    }
-  });
-
-  grunt.registerTask('petriExperimentsIfEnabled', function () {
-    if (featureDetector.isPetriExperimentsEnabled()) {
-      grunt.task.run('petriExperiments');
     }
   });
 

@@ -27,8 +27,5 @@ module.exports = {
   },
   isJscsEnabled: function () {
     return isFeaturePresent('/.jscsrc');
-  },
-  isPetriExperimentsEnabled: function () {
-    return isFeaturePresent('/app/petri-experiments/*.json');
   }
 };
