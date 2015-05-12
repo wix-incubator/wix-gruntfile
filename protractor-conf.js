@@ -25,8 +25,6 @@ module.exports.config = {
       });
     };
 
-    browser.addMockModule('disableNgAnimate', disableNgAnimate);
-
     var disableCssAnimate = function () {
       angular.module('disableCssAnimate', []).run(function () {
         var style = document.createElement('style');
@@ -42,7 +40,10 @@ module.exports.config = {
       });
     };
 
-    browser.addMockModule('disableCssAnimate', disableCssAnimate);
+    beforeEach(function () {
+			browser.addMockModule('disableNgAnimate', disableNgAnimate);
+			browser.addMockModule('disableCssAnimate', disableCssAnimate);
+		});
 
     // Store the name of the browser that's currently being used.
     browser.getCapabilities().then(function (caps) {
