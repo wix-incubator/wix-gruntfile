@@ -41,9 +41,9 @@ module.exports.config = {
     };
 
     beforeEach(function () {
-			browser.addMockModule('disableNgAnimate', disableNgAnimate);
-			browser.addMockModule('disableCssAnimate', disableCssAnimate);
-		});
+        browser.addMockModule('disableNgAnimate', disableNgAnimate);
+        browser.addMockModule('disableCssAnimate', disableCssAnimate);
+    });
 
     // Store the name of the browser that's currently being used.
     browser.getCapabilities().then(function (caps) {
