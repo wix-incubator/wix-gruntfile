@@ -68,6 +68,7 @@ module.exports = function (grunt, options) {
     replace:                require('./grunt-sections/transform-html')(grunt, options).replace,
     haml:                   require('./grunt-sections/transform-html')(grunt, options).haml,
 
+    petriExperiments:       require('./grunt-sections/generators')(grunt, options).petriExperiments,
     jsonAngularTranslate:   require('./grunt-sections/generators')(grunt, options).translations,
     webfont:                require('./grunt-sections/generators')(grunt, options).webfont,
 

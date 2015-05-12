@@ -10,6 +10,16 @@ module.exports = function (grunt, options) {
   });
 
   return {
+    petriExperiments: {
+      all: [
+        'app/petri-experiments/*.json',
+        'app/bower_components/*/dist/petri-experiments.json'
+      ],
+      options: {
+        json: 'dist/petri-experiments.json',
+        js: '.tmp/petri-experiments.js'
+      }
+    },
     translations: {
       server: {
         options: {
