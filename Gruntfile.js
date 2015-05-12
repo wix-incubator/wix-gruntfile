@@ -102,7 +102,8 @@ module.exports = function (grunt, options) {
         'compass:dist',
         'replace:dist',
         'copy:styles',
-        'jsonAngularTranslate'
+        'jsonAngularTranslate',
+        'petriExperimentsIfEnabled'
       ],
       dist: [
         'imagemin',

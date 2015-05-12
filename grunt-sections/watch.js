@@ -31,6 +31,10 @@ module.exports = function (grunt, options) {
       files: ['app/scripts/**/locale/**/*.*'],
       tasks: ['jsonAngularTranslate', 'jsstyleIfEnabled', 'karma:unit:run']
     },
+    experiments: {
+      files: ['app/petri-experiments/*.json'],
+      tasks: ['petriExperiments']
+    },
     test: {
       files: [
         'app/{scripts,modules}/**/*.js',
