@@ -5,6 +5,7 @@ var featureDetector = require('../feature-detector');
 module.exports = function (grunt, options) {
   grunt.registerTask('typescriptIfEnabled', function () {
     if (featureDetector.isTypescriptEnabled()) {
+      grunt.task.run('tsstyleIfEnabled');
       grunt.task.run('ts');
     }
   });
