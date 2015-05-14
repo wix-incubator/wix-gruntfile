@@ -47,11 +47,11 @@ module.exports = function (grunt, options) {
     },
     ts: {
       files: ['{test,app/scripts,app/modules}/**/*.ts'],
-      tasks: ['ts', 'jsstyleIfEnabled', 'karma:unit:run']
+      tasks: ['jsstyleIfEnabled', 'ts', 'karma:unit:run']
     },
     es6: {
       files: ['{test,app/scripts,app/modules}/**/*.es6'],
-      tasks: ['traceur', 'jsstyleIfEnabled', 'karma:unit:run']
+      tasks: ['jsstyleIfEnabled', 'traceur', 'karma:unit:run']
     },
     compass: {
       files: ['app/{styles,modules}/**/*.{scss,sass}'],

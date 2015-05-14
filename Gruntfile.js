@@ -118,9 +118,9 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('pre-build', [
+    'jsstyleIfEnabled',
     'typescriptIfEnabled',
     'traceurIfEnabled',
-    'jsstyleIfEnabled',
     'scssstyleIfEnabled',
     'webfontIfEnabled',
     'concurrent:server',
