@@ -160,6 +160,7 @@ Common use of the inline:
 <link rel="stylesheet" href="styles/mixed-css-file-with-wix-params.css?__extractStyles=inline.css" />
 ```
 **Notes:**
+
 1. `wixStyleInline` task will add the `remain` file to the concat of the first **CSS** usemin block, The VM file should have at least one usemin css block, otherwise the remain file will not concatenated & minified.
 2. When the **inline** property is `ON` the **autoprefixer** is `OFF`
 3. The task will extract wix style params from `mixed-css-file-with-wix-params.css` and generate 2 files: `inline.css`(the file that will be inlined) and `mixed-css-file-with-wix-params.remain.css`(the file that will be minified & concatenated)
