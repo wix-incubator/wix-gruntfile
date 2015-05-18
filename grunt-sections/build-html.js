@@ -172,7 +172,7 @@ module.exports = function (grunt, options) {
           },
           postProcess: function (css) {
             // wix tpa params uses {{}}, convert back the [[]] to {{}}.
-            var ret = css.replace(/font: \[\[([^\]]+)\]\];/g, '{{$1}};');
+            var ret = css.replace(/font: \[\[([^\]]+)\]\];/g, 'font:;{{$1}};');
             ret = ret.replace(/\[\[([^\]}]+)\]\]/g, '{{$1}}');
             return ret;
           },
