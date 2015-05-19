@@ -60,8 +60,9 @@ var sauceLabsBrowsers = {
 };
 
 var testBrowsers = (process.env.SAUCE_BROWSERS ? process.env.SAUCE_BROWSERS.split(' ') : Object.keys(sauceLabsBrowsers));
+var shardsLeft = 15;
 
-config.multiCapabilities = testBrowsers.map(function (key) {
+config.multiCapabilities = testBrowsers.map(function (key, index) {
   var browser = sauceLabsBrowsers[key];
   browser.name = 'e2e tests';
   browser['tunnel-identifier'] = process.env.BUILD_NUMBER;
@@ -70,7 +71,8 @@ config.multiCapabilities = testBrowsers.map(function (key) {
   }
   browser.build = process.env.BUILD_NUMBER;
   browser.shardTestFiles = true;
-  browser.maxInstances = 10;
+  browser.maxInstances = Math.round(shardsLeft/(testBrowsers.length - index));
+  shardsLeft -= browser.maxInstances;
   return sauceLabsBrowsers[key];
 });
 
