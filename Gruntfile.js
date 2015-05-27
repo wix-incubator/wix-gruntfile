@@ -95,22 +95,6 @@ module.exports = function (grunt, options) {
 
     karma:                  require('./grunt-sections/test-runners')(grunt, options).karma,
     protractor:             require('./grunt-sections/test-runners')(grunt, options).protractor,
-
-    concurrent: {
-      server: [
-        'hamlIfEnabled',
-        'compass:dist',
-        'replace:dist',
-        'copy:styles',
-        'jsonAngularTranslate',
-        'petriExperiments'
-      ],
-      dist: [
-        'imagemin',
-        //'svgmin',
-        'copy:dist'
-      ]
-    }
   });
 
   grunt.registerTask('wix-install', function () {
@@ -123,7 +107,12 @@ module.exports = function (grunt, options) {
     'traceurIfEnabled',
     'scssstyleIfEnabled',
     'webfontIfEnabled',
-    'concurrent:server',
+    'hamlIfEnabled',
+    'compass:dist',
+    'replace:dist',
+    'copy:styles',
+    'jsonAngularTranslate',
+    'petriExperiments',
     'autoprefixerIfEnabled',
     'styleInlineServeIfEnabled',
     'copy:vm'
@@ -131,7 +120,8 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('package', function () {
     grunt.task.run([
-      'concurrent:dist',
+      'imagemin',
+      'copy:dist',
       'useminPrepare',
       'styleInlineDistIfEnabled',
       'ngtemplates',
