@@ -17,16 +17,16 @@ module.exports = function (grunt) {
 
   grunt.registerTask('jsstyleIfEnabled', function () {
     if (featureDetector.isJshintEnabled()) {
-      grunt.task.run('jshint');
+      grunt.task.run('newer:jshint');
     }
     if (featureDetector.isJscsEnabled()) {
-      grunt.task.run('jscs');
+      grunt.task.run('newer:jscs');
     }
     if (featureDetector.isTslintEnabled()) {
       var config = grunt.config('tslint');
       config.options.configuration = grunt.file.readJSON('tslint.json');
       grunt.config('tslint', config);
-      grunt.task.run('tslint');
+      grunt.task.run('newer:tslint');
     }
   });
 
@@ -40,14 +40,14 @@ module.exports = function (grunt) {
     tslint: {
       options: {
       },
-      files: {
+      files: [{
         src: [
           'app/{scripts,modules}/**/*.ts',
           'test/{spec,mock,e2e}/**/*.ts',
           '!app/scripts/typings/**/*.ts',
           '!app/scripts/reference.ts'
         ]
-      }
+      }]
     },
     jshint: {
       options: {
@@ -58,36 +58,36 @@ module.exports = function (grunt) {
         options: {
           jshintrc: '.jshintrc'
         },
-        files: {
+        files: [{
           src: [
             'Gruntfile.js',
             'app/{scripts,modules}/**/*.js',
             '!app/modules/**/*.test.js',
             '!app/scripts/lib/**/*.js'
           ]
-        }
+        }]
       },
       test: {
         options: {
           jshintrc: 'test/.jshintrc'
         },
-        files: {
+        files: [{
           src: ['test/{spec,mock,e2e}/**/*.js', 'app/modules/**/*.test.js']
-        }
+        }]
       }
     },
     jscs: {
       options: {
         config: '.jscsrc'
       },
-      files: {
+      files: [{
         src: [
           'Gruntfile.js',
           'app/{scripts,modules}/**/*.js',
           '!app/scripts/lib/**/*.js',
           'test/{spec,mock,e2e}/**/*.js'
         ]
-      }
+      }]
     },
     scsslint: {
       styles: [
