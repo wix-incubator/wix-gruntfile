@@ -219,7 +219,7 @@ module.exports = function (grunt, options) {
   grunt.modifyTask = function (what, how) {
     var conf = grunt.config(what);
     if (typeof how === 'function') {
-      how.call(conf);
+      conf = how.call(conf, conf) || conf;
     } else {
       applyModifications(conf, how);
     }

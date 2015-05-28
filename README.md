@@ -104,10 +104,11 @@ Sometimes you will want to modify the configuration of a specific section in the
 grunt.modifyTask('task-name', {options: {someOptionObj: {someOptionProperty: 'someValue'}}});
 
 //this does the same as the modification above, but obviously is can do a lot more
-grunt.modifyTask('task-name', function () {
-  this.options = this.options || {};
-  this.someOptionObj = this.someOptionObj || {};
-  this.someOptionObj.someOptionProperty = 'someValue';
+grunt.modifyTask('task-name', function (task) {
+  task.options = task.options || {};
+  task.someOptionObj = task.someOptionObj || {};
+  task.someOptionObj.someOptionProperty = 'someValue';
+  return task;
 });
 ```
 
