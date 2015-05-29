@@ -26,7 +26,7 @@ module.exports = function (grunt) {
       var config = grunt.config('tslint');
       config.options.configuration = grunt.file.readJSON('tslint.json');
       grunt.config('tslint', config);
-      grunt.task.run('newer:tslint');
+      grunt.task.run('tslint');
     }
   });
 
@@ -40,14 +40,14 @@ module.exports = function (grunt) {
     tslint: {
       options: {
       },
-      files: [{
+      files: {
         src: [
           'app/{scripts,modules}/**/*.ts',
           'test/{spec,mock,e2e}/**/*.ts',
           '!app/scripts/typings/**/*.ts',
           '!app/scripts/reference.ts'
         ]
-      }]
+      }
     },
     jshint: {
       options: {
