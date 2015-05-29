@@ -80,14 +80,16 @@ module.exports = function (grunt) {
       options: {
         config: '.jscsrc'
       },
-      files: [{
-        src: [
-          'Gruntfile.js',
-          'app/{scripts,modules}/**/*.js',
-          '!app/scripts/lib/**/*.js',
-          'test/{spec,mock,e2e}/**/*.js'
-        ]
-      }]
+      all: {
+        files: [{
+          src: [
+            'Gruntfile.js',
+            'app/{scripts,modules}/**/*.js',
+            '!app/scripts/lib/**/*.js',
+            'test/{spec,mock,e2e}/**/*.js'
+          ]
+        }]
+      }
     },
     scsslint: {
       styles: [
