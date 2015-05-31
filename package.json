@@ -17,10 +17,6 @@
     "node": ">=0.8.0"
   },
   "main": "Gruntfile.js",
-  "dist": {
-    "tarball": "http://repo.dev.wix/artifactory/api/npm/npm-repos/wix-gruntfile/-/wix-gruntfile-0.1.165.tgz",
-    "shasum": "fdb6a1e689bb442c929a2b3d5ef813f3fdc61bd4"
-  },
   "dependencies": {
     "compression": "^1.2.0",
     "glob": "^5.0.3",
@@ -30,11 +26,6 @@
     "proxy-middleware": "^0.11.0",
     "shelljs": "^0.3.0",
     "time-grunt": "^1.0.0",
-    "wix-cdn-data": "^0.1.0"
-  },
-  "peerDependencies": {
-    "bower": "^1.3.1",
-    "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-jscs": "^1.5.0",
     "grunt-angular-templates": "^0.5.1",
@@ -53,7 +44,6 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-google-cdn-shahata": "^0.2.0",
     "grunt-json-angular-translate": "^0.1.0",
-    "grunt-petri-experiments": "^1.0.0",
     "grunt-newer": "^1.1.0",
     "grunt-ng-annotate": "^0.9.0",
     "grunt-process-tags": "~0.0.1",
@@ -79,9 +69,18 @@
     "jasmine-reporters": "^1.0.1",
     "protractor": "^2.0.0",
     "grunt-webfont": "^0.4.8",
+    "grunt-tslint": "^2.0.0",
+    "tslint": "^2.0.1"
+  },
+  "optionalDependencies": {
+    "wix-cdn-data": "^0.1.0",
+    "grunt-petri-experiments": "^1.0.0",
     "grunt-extract-styles": "^0.2.0",
-    "grunt-wix-inline": "^0.3.3",
-    "grunt-tslint": "^2.0.0"
+    "grunt-wix-inline": "^0.3.3"
+  },
+  "peerDependencies": {
+    "bower": "^1.3.1",
+    "grunt": "^0.4.5"
   },
   "maintainers": [
     {
@@ -89,21 +88,7 @@
       "email": "shahar.talmi@gmail.com"
     }
   ],
-  "directories": {},
-  "scripts": {},
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "_from": "wix-gruntfile@>=0.1.2 <0.2.0",
-  "_npmVersion": "2.7.6",
-  "_npmUser": {
-    "name": "shahata",
-    "email": "shahar.talmi@gmail.com"
-  },
-  "_id": "wix-gruntfile@0.1.165",
-  "_shasum": "fdb6a1e689bb442c929a2b3d5ef813f3fdc61bd4",
-  "gitHead": "c6f2afdab3fe0248f1b57ea4e2dc7cffa36e4af9",
-  "_nodeVersion": "0.12.2",
-  "_resolved": "http://repo.dev.wix/artifactory/api/npm/npm-repos/wix-gruntfile/-/wix-gruntfile-0.1.165.tgz",
-  "readme": "ERROR: No README data found!"
+  }
 }

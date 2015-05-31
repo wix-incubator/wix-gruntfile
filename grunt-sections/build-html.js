@@ -1,6 +1,15 @@
 'use strict';
 
 module.exports = function (grunt, options) {
+
+  var cdnData;
+
+  try {
+    cdnData = require('wix-cdn-data')[options.cdnify]();
+  } catch (e) {
+
+  }
+
   function makeScriptTag(defer, async, src) {
     return '<script ' + defer + async + 'src="' + src + '"><\/script>';
   }
@@ -154,7 +163,7 @@ module.exports = function (grunt, options) {
     },
     cdnify: {
       options: {
-        cdn: require('wix-cdn-data')[options.cdnify]()
+        cdn: cdnData
       },
       dist: {
         html: ['dist/**/*.vm']

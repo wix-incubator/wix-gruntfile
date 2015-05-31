@@ -49,8 +49,17 @@ module.exports = function (grunt, options) {
     }});
   }
 
-  require('load-grunt-tasks')(grunt, {config: require('./package.json')});
+  require('load-grunt-tasks')({loadNpmTasks: function (name) {
+    grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
+  }}, {config: require('./package.json')});
   require('time-grunt')(grunt);
+
+  var optionalTasks = ['petriExperiments'];
+  optionalTasks.forEach(function (task) {
+    if (!grunt.task.exists(task)) {
+      grunt.registerTask(task, function () {});
+    }
+  });
 
   grunt.initConfig({
     yeoman:                 require('./grunt-sections/flow')(grunt, options).yeoman,
@@ -94,7 +103,7 @@ module.exports = function (grunt, options) {
     copy:                   require('./grunt-sections/flow')(grunt, options).copy,
 
     karma:                  require('./grunt-sections/test-runners')(grunt, options).karma,
-    protractor:             require('./grunt-sections/test-runners')(grunt, options).protractor,
+    protractor:             require('./grunt-sections/test-runners')(grunt, options).protractor
   });
 
   grunt.registerTask('wix-install', function () {

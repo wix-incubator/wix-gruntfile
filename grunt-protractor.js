@@ -2,10 +2,11 @@
 
 var spawn = require('child_process').spawn;
 var grunt = require('grunt');
+var protractorDir = 'node_modules/wix-gruntfile/node_modules/protractor/bin';
 
 module.exports = {
   updateWebdriver: function (done) {
-    var p = spawn('node', ['node_modules/protractor/bin/webdriver-manager', 'update']);
+    var p = spawn('node', [protractorDir + '/webdriver-manager', 'update']);
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);
     p.on('exit', function (code) {
@@ -26,7 +27,7 @@ module.exports = {
       }
     });
 
-    var args = ['node_modules/protractor/bin/protractor', config.configFile];
+    var args = [protractorDir + '/protractor', config.configFile];
     args = args.concat(Object.keys(config).filter(function (key) {
       return key !== 'configFile';
     }).map(function (key) {
