@@ -43,7 +43,7 @@ module.exports = function (grunt, options) {
         }, {
           expand: true,
           cwd: '.tmp',
-          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', '{views,modules}/**/*.html', 'styles/svg-font/*'],
+          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', '{views,modules}/**/*.{html,html.js}', 'styles/svg-font/*'],
           dest: 'dist'
         }, {
           expand: true,

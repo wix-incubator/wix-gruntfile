@@ -121,6 +121,7 @@ module.exports = function (grunt, options) {
     'replace:dist',
     'copy:styles',
     'jsonAngularTranslate',
+    'ngtemplates:single',
     'petriExperiments',
     'autoprefixerIfEnabled',
     'styleInlineServeIfEnabled',

@@ -73,6 +73,40 @@ module.exports = function (grunt, options) {
           src: '{views,modules}/**/*.preload.html',
           dest: '.tmp/templates.app.js'
         }]
+      },
+      single: {
+        options: {
+          module: options.preloadModule,
+          url: function (url) {
+            return url.replace(/^(app\/|.tmp\/)/, '');
+          },
+          bootstrap: function (module, script) {
+            var str = '';
+            str += '\'use strict\';\n\n';
+            str += 'try {\n';
+            str += '  angular.module(\'' + module + '\');\n';
+            str += '} catch (e) {\n';
+            str += '  angular.module(\'' + module + '\', []);\n';
+            str += '}\n\n';
+            str += 'angular.module(\'' + module + '\').run([\'$templateCache\', function ($templateCache) {\n' + script + '}]);';
+            return str;
+          }
+        },
+        files: [{
+          expand: true,
+          cwd: '.tmp',
+          src: '{views,modules}/**/*.html',
+          dest: '.tmp/',
+          ext: '.html.js',
+          extDot: 'last'
+        }, {
+          expand: true,
+          cwd: 'app',
+          src: '{views,modules}/**/*.html',
+          dest: '.tmp/',
+          ext: '.html.js',
+          extDot: 'last'
+        }]
       }
     },
     useminPrepare: {
