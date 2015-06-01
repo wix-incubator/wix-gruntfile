@@ -3,7 +3,7 @@
 module.exports = function (grunt, options) {
 
   grunt.registerTask('autoprefixerIfEnabled', function () {
-    if(options.autoprefixer) {
+    if (options.autoprefixer) {
       grunt.task.run(['autoprefixer']);
     }
   });
@@ -31,7 +31,7 @@ module.exports = function (grunt, options) {
         imagesDir: 'app/images',
         javascriptsDir: 'app/scripts',
         fontsDir: 'app/fonts',
-        importPath: 'app/bower_components',
+        importPath: ['app/bower_components', '.tmp/styles/'],
         httpImagesPath: '../images',
         httpGeneratedImagesPath: '../images/generated',
         httpFontsPath: 'fonts',
