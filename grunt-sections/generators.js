@@ -4,6 +4,7 @@ var path = require('path');
 
 module.exports = function (grunt, options) {
   grunt.registerTask('webfontIfEnabled', function () {
+    grunt.file.mkdir('.tmp/styles');
     if (options.svgFontName) {
       grunt.task.run('webfont');
     }
@@ -68,4 +69,4 @@ module.exports = function (grunt, options) {
       }
     }
   };
-};
+}
