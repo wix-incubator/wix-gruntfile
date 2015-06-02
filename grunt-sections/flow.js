@@ -1,11 +1,36 @@
 'use strict';
 
+var fs = require('fs');
+var semver = require('semver');
+var shell = require('shelljs');
+
 module.exports = function (grunt, options) {
   grunt.registerTask('checkIfBower', function () {
     if (!options.bowerComponent) {
       grunt.fail.fatal('not bower component');
     }
   });
+
+  if (!grunt.task.exists('realRelease')) {
+    grunt.renameTask('release', 'realRelease');
+    grunt.registerTask('release', function (type) {
+      var result = shell.exec('git show bower-component:bower.json', {silent: true});
+      if (result.code === 0) {
+        var bowerJson = require(process.cwd() + '/bower.json');
+        var branchVersion = JSON.parse(result.output).version;
+        var currentVersion = bowerJson.version;
+        grunt.log.ok('branch:', branchVersion);
+        grunt.log.ok('me:', currentVersion);
+        if (semver.gt(branchVersion, currentVersion)) {
+          bowerJson.version = branchVersion;
+          fs.writeFileSync(process.cwd() + '/bower.json', JSON.stringify(bowerJson, null, 2));
+          grunt.log.ok('now:', branchVersion);
+        }
+      }
+      grunt.config('realRelease', grunt.config('release'));
+      grunt.task.run(type ? 'realRelease:' + type : 'realRelease');
+    });
+  }
 
   return {
     yeoman: {
