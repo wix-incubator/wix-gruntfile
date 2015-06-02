@@ -14,7 +14,7 @@ module.exports = function (grunt, options) {
   if (!grunt.task.exists('realRelease')) {
     grunt.renameTask('release', 'realRelease');
     grunt.registerTask('release', function (type) {
-      var result = shell.exec('git show bower-component:bower.json', {silent: true});
+      var result = shell.exec('git show origin/bower-component:bower.json', {silent: true});
       if (result.code === 0) {
         var bowerJson = require(process.cwd() + '/bower.json');
         var branchVersion = JSON.parse(result.output).version;
