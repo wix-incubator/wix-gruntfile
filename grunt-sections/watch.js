@@ -8,7 +8,7 @@ module.exports = function (grunt, options) {
     },
     haml: {
       files: ['app/{views,modules}/**/*.haml'],
-      tasks: ['newer:haml', 'ngtemplates:single', 'karma:unit:run']
+      tasks: ['newer:haml', 'newer:ngtemplates:single', 'karma:unit:run']
     },
     svgFont: {
       files: ['app/images/svg-font-icons/*.*'],
@@ -16,7 +16,7 @@ module.exports = function (grunt, options) {
     },
     html: {
       files: ['app/{views,modules}/**/*.html'],
-      tasks: ['ngtemplates:single', 'karma:unit:run']
+      tasks: ['newer:ngtemplates:single', 'karma:unit:run']
     },
     replace: {
       files: ['app/**/*.vm'],
