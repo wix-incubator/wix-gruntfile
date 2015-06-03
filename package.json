@@ -1,7 +1,7 @@
 {
   "name": "wix-gruntfile",
   "description": "Wix Gruntfile.",
-  "version": "0.1.192",
+  "version": "0.1.193",
   "author": {
     "name": "Shahar Talmi"
   },
@@ -91,5 +91,6 @@
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "scripts": {}
 }
