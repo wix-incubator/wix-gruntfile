@@ -8,16 +8,16 @@ function isFeaturePresent(pattern) {
 
 module.exports = {
   isTypescriptEnabled: function () {
-    return isFeaturePresent('/{app/scripts,test}/*.ts');
+    return isFeaturePresent('/{app/scripts,app/modules,test}/**/*.ts');
   },
   isTslintEnabled: function () {
     return isFeaturePresent('/tslint.json');
   },
   isTraceurEnabled: function () {
-    return isFeaturePresent('/app/scripts/*.es6');
+    return isFeaturePresent('/{app/scripts,app/modules,test}/**/*.es6');
   },
   isHamlEnabled: function () {
-    return isFeaturePresent('/app/views/**/*.haml');
+    return isFeaturePresent('/app/{views,modules}/**/*.haml');
   },
   isScssStyleEnabled: function () {
     return isFeaturePresent('/.scss-lint.yml');
