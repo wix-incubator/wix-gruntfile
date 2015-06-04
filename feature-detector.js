@@ -8,13 +8,13 @@ function isFeaturePresent(pattern) {
 
 module.exports = {
   isTypescriptEnabled: function () {
-    return isFeaturePresent('/app/scripts/*.ts');
+    return isFeaturePresent('/app/scripts/*.ts') || isFeaturePresent('/app/modules/*.ts');
   },
   isTslintEnabled: function () {
     return isFeaturePresent('/tslint.json');
   },
   isTraceurEnabled: function () {
-    return isFeaturePresent('/app/scripts/*.es6');
+    return isFeaturePresent('/app/scripts/*.es6') || isFeaturePresent('/app/modules/*.es6');
   },
   isHamlEnabled: function () {
     return isFeaturePresent('/app/views/**/*.haml');
