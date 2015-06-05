@@ -190,7 +190,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'dist',
-          src: '**/*.{html,vm}',
+          src: '**{!bower_components}/*.{html,vm}',
           dest: 'dist'
         }]
       }
