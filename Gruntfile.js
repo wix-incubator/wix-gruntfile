@@ -49,10 +49,16 @@ module.exports = function (grunt, options) {
     }});
   }
 
-  require('load-grunt-tasks')({loadNpmTasks: function (name) {
-    grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
-  }}, {config: require('./package.json')});
-  require('time-grunt')(grunt);
+  if (process.argv[2] === 'lint') {
+    ['grunt-contrib-jshint', 'grunt-jscs', 'grunt-tslint', 'grunt-scss-lint', 'grunt-newer'].forEach(function (name) {
+      grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
+    });
+  } else {
+    require('load-grunt-tasks')({loadNpmTasks: function (name) {
+      grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
+    }}, {config: require('./package.json')});
+    require('time-grunt')(grunt);
+  }
 
   var optionalTasks = ['petriExperiments'];
   optionalTasks.forEach(function (task) {
