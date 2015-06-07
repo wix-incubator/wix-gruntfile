@@ -45,8 +45,7 @@ module.exports = function (grunt, options) {
         mangle: !options.bowerComponent,
         compress: options.bowerComponent ? false : {},
         beautify: options.bowerComponent,
-        sourceMap: true,
-        sourceMapIncludeSources: true
+        sourceMap: true
       },
       locale: {
         files: [{
