@@ -190,7 +190,10 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'dist',
-          src: '**/*.{html,vm}',
+          src: [
+            '**/*.{html,vm}',
+            '!bower_components/**/*'
+          ],
           dest: 'dist'
         }]
       }
@@ -200,7 +203,10 @@ module.exports = function (grunt, options) {
         cdn: cdnData
       },
       dist: {
-        html: ['dist/**/*.vm']
+        html: [
+          'dist/**/*.vm',
+          '!dist/bower_components/**/*'
+        ]
       }
     },
     extractStyles: {
