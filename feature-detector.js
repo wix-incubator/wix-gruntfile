@@ -8,7 +8,7 @@ function isFeaturePresent(pattern) {
 
 module.exports = {
   isTypescriptEnabled: function () {
-    return isFeaturePresent('/app/scripts/*.ts');
+    return isFeaturePresent('/{app/scripts,test}/*.ts');
   },
   isTslintEnabled: function () {
     return isFeaturePresent('/tslint.json');
