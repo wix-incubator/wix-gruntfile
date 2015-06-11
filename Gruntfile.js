@@ -215,6 +215,12 @@ module.exports = function (grunt, options) {
     return arr;
   };
 
+  grunt.hookMultiTask = function (name) {
+    var dep = grunt.hookTask(name);
+    grunt.config(dep[0], grunt.config(dep[0]));
+    return dep;
+  };
+
   function isObject(v) {
     return v !== null && typeof v === 'object' && v.constructor !== Array;
   }
