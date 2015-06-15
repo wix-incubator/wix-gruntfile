@@ -153,7 +153,7 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('serve', [
-    'wix-install',
+    // 'wix-install',
     'ignore-code-style-checks',
     'karma:unit',
     'clean:server',
