@@ -1,10 +1,11 @@
 'use strict';
 
 var shell = require('shelljs');
+var featureDetector = require('../feature-detector');
 
 module.exports = function (grunt, options) {
   grunt.registerTask('typescriptIfEnabled', function () {
-    if (grunt.task.exists('ts')) {
+    if (grunt.task.exists('ts') && featureDetector.isTypescriptEnabled()) {
       grunt.file.write('app/scripts/reference.ts', '/// <reference path="../../reference.ts" />');
       grunt.file.write('test/reference.ts', '/// <reference path="../reference.ts" />');
       grunt.task.run('tsWithHack:rename');
@@ -26,7 +27,7 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('traceurIfEnabled', function () {
-    if (grunt.task.exists('traceur')) {
+    if (grunt.task.exists('traceur') && featureDetector.isTraceurEnabled()) {
       grunt.task.run('traceur');
     }
   });
