@@ -4,6 +4,7 @@ module.exports = function (grunt, options) {
 
   var extend = require('util')._extend;
   var shell = require('shelljs');
+  var featureDetector = require('./feature-detector');
 
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
@@ -49,8 +50,24 @@ module.exports = function (grunt, options) {
     }});
   }
 
+  var lintPlugins = ['grunt-contrib-jshint', 'grunt-jscs', 'grunt-tslint', 'grunt-scss-lint', 'grunt-newer'];
   if (process.argv[2] === 'lint') {
-    ['grunt-contrib-jshint', 'grunt-jscs', 'grunt-tslint', 'grunt-scss-lint', 'grunt-newer'].forEach(function (name) {
+    lintPlugins.forEach(function (name) {
+      grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
+    });
+  } else if (process.argv[2] === 'serve') {
+    var plugins = lintPlugins.concat([
+                   'grunt-text-replace', 'grunt-contrib-copy', 'grunt-karma', 'grunt-contrib-watch',
+                   'grunt-contrib-connect', 'grunt-contrib-compass', 'grunt-angular-templates',
+                   'grunt-json-angular-translate',  'grunt-petri-experiments', 'grunt-contrib-clean'
+                  ]);
+    plugins = plugins.concat(options.inline ? ['grunt-extract-styles', 'grunt-wix-inline'] : []);
+    plugins = plugins.concat(options.svgFontName ? ['grunt-webfont'] : []);
+    plugins = plugins.concat(options.autoprefixer ? ['grunt-autoprefixer'] : []);
+    plugins = plugins.concat(featureDetector.isTraceurEnabled() ? ['grunt-traceur-latest'] : []);
+    plugins = plugins.concat(featureDetector.isTypescriptEnabled() ? ['grunt-ts'] : []);
+    plugins = plugins.concat(featureDetector.isHamlEnabled() ? ['grunt-haml2html-shahata'] : []);
+    plugins.forEach(function (name) {
       grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
     });
   } else {
