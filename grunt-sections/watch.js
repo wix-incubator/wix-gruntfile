@@ -47,7 +47,17 @@ module.exports = function (grunt, options) {
     },
     ts: {
       files: ['{test,app/scripts,app/modules}/**/*.ts'],
-      tasks: ['jsstyleIfEnabled', 'ts', 'karma:unit:run']
+      tasks: ['jsstyleIfEnabled', 'tsWithHack:copy', 'karma:unit:run'],
+      options: {
+        event: ['changed', 'added']
+      }
+    },
+    tsDelete: {
+      files: ['{test,app/scripts,app/modules}/**/*.ts'],
+      tasks: ['clean:ts', 'tsWithHack:copy', 'karma:unit:run'],
+      options: {
+        event: ['deleted']
+      }
     },
     es6: {
       files: ['{test,app/scripts,app/modules}/**/*.es6'],
