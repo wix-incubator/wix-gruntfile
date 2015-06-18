@@ -45,11 +45,11 @@ module.exports = function (grunt, options) {
     options: {
       port: options.port,
       // Change this to 'localhost' to block access to the server from outside.
-      hostname: '0.0.0.0',
-      livereload: options.livereload
+      hostname: '0.0.0.0'
     },
     livereload: {
       options: {
+        livereload: options.livereload,
         protocol: options.protocol,
         key: readCertFile('server.key'),
         cert: readCertFile('server.crt'),
@@ -91,6 +91,7 @@ module.exports = function (grunt, options) {
         middleware: function (connect) {
           return getProxies('beforeProxies').concat([
             //connect.compress(),
+            connect.favicon(),
             mountFolder(connect, 'test', 86400000),
             mountFolder(connect, 'dist', 86400000),
             connect.urlencoded()
