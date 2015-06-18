@@ -63,7 +63,9 @@ config.onPrepare = function () {
   });
 
   afterEach(function () {
-    browser.clearMockModules();
+    browser.removeMockModule('disableNgAnimate');
+    browser.removeMockModule('disableCssAnimate');
+    browser.removeMockModule('biLoggerDryRun');
   });
 
   // Store the name of the browser that's currently being used.
