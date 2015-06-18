@@ -1,4 +1,4 @@
-/* global browser, angular, document, beforeEach */
+/* global browser, angular, document, beforeEach, afterEach */
 'use strict';
 
 var config = {};
@@ -47,9 +47,23 @@ config.onPrepare = function () {
     });
   };
 
+  var biLoggerDryRun = function () {
+    angular.module('biLoggerDryRun', []).config(function () {
+      /* global W */
+      if (typeof W !== 'undefined' && W.BI) {
+        W.BI.DryRun = true;
+      }
+    });
+  };
+
   beforeEach(function () {
-      browser.addMockModule('disableNgAnimate', disableNgAnimate);
-      browser.addMockModule('disableCssAnimate', disableCssAnimate);
+    browser.addMockModule('disableNgAnimate', disableNgAnimate);
+    browser.addMockModule('disableCssAnimate', disableCssAnimate);
+    browser.addMockModule('biLoggerDryRun', biLoggerDryRun);
+  });
+
+  afterEach(function () {
+    browser.clearMockModules();
   });
 
   // Store the name of the browser that's currently being used.
