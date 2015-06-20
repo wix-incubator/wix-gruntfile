@@ -50,7 +50,7 @@ module.exports = function (grunt, options) {
         }]
       },
       ts: ['.tmp/test', '.tmp/scripts/*', '!.tmp/scripts/locale'],
-      server: '.tmp',
+      server: ['.tmp/*', '!.tmp/views'],
       index: '.tmp/*.{vm,html}'
     },
     release: {
