@@ -1,15 +1,17 @@
 'use strict';
 
 module.exports = function (grunt) {
-  var changedFiles = [];
-  var lrserver = require('tiny-lr')({
-    errorListener: function (err) {
-      grunt.fatal('Failed to start livereload: ' + err);
-    }
-  });
-  lrserver.listen(35729);
-  grunt.event.on('watch', function (status, filepath) {
-    changedFiles.push(filepath);
+  var changedFiles = [], lrserver;
+  grunt.registerTask('livereloadServer', function () {
+    lrserver = require('tiny-lr')({
+      errorListener: function (err) {
+        grunt.fatal('Failed to start livereload: ' + err);
+      }
+    });
+    lrserver.listen(35729);
+    grunt.event.on('watch', function (status, filepath) {
+      changedFiles.push(filepath);
+    });
   });
   grunt.registerTask('triggerLivereload', function () {
     if (changedFiles.length) {

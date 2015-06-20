@@ -175,6 +175,7 @@ module.exports = function (grunt, options) {
     'karma:unit',
     'clean:ts',
     'pre-build',
+    'livereloadServer',
     'connect:livereload',
     'karma:unit:run',
     'watch'
