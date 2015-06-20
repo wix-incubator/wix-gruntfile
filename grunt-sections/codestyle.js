@@ -42,14 +42,16 @@ module.exports = function (grunt) {
     tslint: {
       options: {
       },
-      files: [{
-        src: [
-          'app/{scripts,modules}/**/*.ts',
-          'test/{spec,mock,e2e}/**/*.ts',
-          '!app/scripts/typings/**/*.ts',
-          '!app/scripts/reference.ts'
-        ]
-      }]
+      all: {
+        files: [{
+          src: [
+            'app/{scripts,modules}/**/*.ts',
+            'test/{spec,mock,e2e}/**/*.ts',
+            '!app/scripts/typings/**/*.ts',
+            '!app/scripts/reference.ts'
+          ]
+        }]
+      }
     },
     jshint: {
       options: {
