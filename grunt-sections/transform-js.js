@@ -8,7 +8,7 @@ module.exports = function (grunt, options) {
     if (grunt.task.exists('ts') && featureDetector.isTypescriptEnabled()) {
       grunt.file.write('app/scripts/reference.ts', '/// <reference path="../../reference.ts" />');
       grunt.file.write('test/reference.ts', '/// <reference path="../reference.ts" />');
-      grunt.task.run('tsWithHack:rename');
+      grunt.task.run('tsWithHack:copy');
     }
   });
 
@@ -28,7 +28,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('traceurIfEnabled', function () {
     if (grunt.task.exists('traceur') && featureDetector.isTraceurEnabled()) {
-      grunt.task.run('traceur');
+      grunt.task.run('newer:traceur');
     }
   });
 

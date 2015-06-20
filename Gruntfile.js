@@ -55,7 +55,7 @@ module.exports = function (grunt, options) {
     lintPlugins.forEach(function (name) {
       grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
     });
-  } else if (process.argv[2] === 'serve') {
+  } else if (process.argv[2] === 'serve' || process.argv[2] === 'serve:clean') {
     var plugins = lintPlugins.concat([
                    'grunt-text-replace', 'grunt-contrib-copy', 'grunt-karma', 'grunt-contrib-watch',
                    'grunt-contrib-connect', 'grunt-contrib-compass', 'grunt-angular-templates',
@@ -102,6 +102,7 @@ module.exports = function (grunt, options) {
 
     petriExperiments:       require('./grunt-sections/generators')(grunt, options).petriExperiments,
     jsonAngularTranslate:   require('./grunt-sections/generators')(grunt, options).translations,
+    webfontIfEnabled:       require('./grunt-sections/generators')(grunt, options).webfontIfEnabled,
     webfont:                require('./grunt-sections/generators')(grunt, options).webfont,
 
     watch:                  require('./grunt-sections/watch')(grunt, options),
@@ -138,17 +139,17 @@ module.exports = function (grunt, options) {
     'typescriptIfEnabled',
     'traceurIfEnabled',
     'scssstyleIfEnabled',
-    'webfontIfEnabled',
+    'newer:webfontIfEnabled',
     'hamlIfEnabled',
     'compass:dist',
     'replace:dist',
-    'copy:styles',
-    'jsonAngularTranslate',
-    'ngtemplates:single',
-    'petriExperiments',
+    'newer:copy:styles',
+    'newer:jsonAngularTranslate',
+    'newer:ngtemplates:single',
+    'newer:petriExperiments',
     'autoprefixerIfEnabled',
     'styleInlineServeIfEnabled',
-    'copy:vm'
+    'newer:copy:vm'
   ]);
 
   grunt.registerTask('package', function () {
@@ -170,19 +171,24 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('serve', [
-    // 'wix-install',
     'ignore-code-style-checks',
     'karma:unit',
-    'clean:server',
+    'clean:ts',
     'pre-build',
-    'karma:unit:run',
     'connect:livereload',
+    'karma:unit:run',
     'watch'
   ]);
 
   grunt.registerTask('serve:dist', [
     'ignore-code-style-checks',
     'connect:dist:keepalive'
+  ]);
+
+  grunt.registerTask('serve:clean', [
+    'clean:server',
+    'newer-clean',
+    'serve'
   ]);
 
   grunt.registerTask('serve:coverage', [

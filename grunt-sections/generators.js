@@ -3,10 +3,12 @@
 var path = require('path');
 
 module.exports = function (grunt, options) {
-  grunt.registerTask('webfontIfEnabled', function () {
+  grunt.registerMultiTask('webfontIfEnabled', function () {
     grunt.file.mkdir('.tmp/styles');
-    if (options.svgFontName) {
+    if (options.svgFontName && this.files.length) {
       grunt.task.run('webfont');
+    } else {
+      console.log('Task disabled');
     }
   });
 
@@ -46,6 +48,13 @@ module.exports = function (grunt, options) {
           src: '*/**/locale/*.{json,new_json}',
           dest: '.tmp/scripts',
           ext: '.js'
+        }]
+      }
+    },
+    webfontIfEnabled: {
+      all: {
+        files: [{
+          src: 'app/images/svg-font-icons/*.svg'
         }]
       }
     },

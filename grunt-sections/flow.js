@@ -11,7 +11,7 @@ module.exports = function (grunt, options) {
     }
   });
 
-  if (!grunt.task.exists('realRelease')) {
+  if (grunt.task.exists('release') && !grunt.task.exists('realRelease')) {
     grunt.renameTask('release', 'realRelease');
     grunt.registerTask('release', function (type) {
       var result = shell.exec('git show origin/bower-component:bower.json', {silent: true});
