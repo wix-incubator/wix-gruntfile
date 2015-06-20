@@ -40,7 +40,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('hamlIfEnabled', function () {
     if (grunt.task.exists('haml') && featureDetector.isHamlEnabled()) {
-      grunt.task.run('haml');
+      grunt.task.run('newer:haml');
     }
   });
 
