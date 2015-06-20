@@ -49,7 +49,7 @@ module.exports = function (grunt, options) {
           ]
         }]
       },
-      ts: ['.tmp/test', '.tmp/scripts/*', '!.tmp/scripts/locale'],
+      ts: ['.tmp/test', '.tmp/scripts/*', '!.tmp/scripts/locale', '.tmp/templates.*.js'],
       server: '.tmp',
       index: '.tmp/*.{vm,html}'
     },
