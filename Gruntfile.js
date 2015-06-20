@@ -198,6 +198,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'newer-clean',
     'pre-build',
     'karma:single'
   ]);
