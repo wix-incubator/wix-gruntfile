@@ -139,6 +139,7 @@ module.exports = function (grunt, options) {
     'typescriptIfEnabled',
     'traceurIfEnabled',
     'scssstyleIfEnabled',
+    'mkdirTmpStyles',
     'newer:webfontIfEnabled',
     'hamlIfEnabled',
     'compass:dist',

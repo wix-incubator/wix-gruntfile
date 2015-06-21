@@ -8,6 +8,10 @@ module.exports = function (grunt, options) {
     }
   });
 
+  grunt.registerTask('mkdirTmpStyles', function () {
+    grunt.file.mkdir('.tmp/styles');
+  });
+
   return {
     autoprefixer: {
       options: {
