@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (grunt) {
+module.exports = function (grunt, options) {
   var changedFiles = [], lrserver;
   grunt.registerTask('livereloadServer', function () {
     lrserver = require('tiny-lr')({
@@ -8,7 +8,7 @@ module.exports = function (grunt) {
         grunt.fatal('Failed to start livereload: ' + err);
       }
     });
-    lrserver.listen(35729);
+    lrserver.listen(options.livereload);
     grunt.event.on('watch', function (status, filepath) {
       changedFiles.push(filepath);
     });
