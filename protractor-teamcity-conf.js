@@ -3,12 +3,14 @@
 
 var config = require('./protractor-conf').config;
 
-function fixBrowserName(browserName) {
+function calcBrowserName(caps) {
+  var browserName = caps.get('browserName');
   if (browserName === 'internet explorer') {
-    return 'IE';
+    browserName = 'IE';
   } else {
-    return browserName.charAt(0).toUpperCase() + browserName.slice(1);
+    browserName = browserName.charAt(0).toUpperCase() + browserName.slice(1);
   }
+  return browserName + ' ' + caps.get('version').split('.').shift();
 }
 
 if (process.env.BUILD_NUMBER !== '12345') {
@@ -18,9 +20,11 @@ if (process.env.BUILD_NUMBER !== '12345') {
     var reporter = new jasmineReporters.TeamCityReporter();
     var suiteStarted = reporter.suiteStarted;
     browser.getCapabilities().then(function (caps) {
-      var prefix = fixBrowserName(caps.get('browserName')) + ' ' + caps.get('version') + ' - ';
+      var prefix = calcBrowserName(caps) + ' - ';
       reporter.suiteStarted = function (suite) {
-        suite.description = suite.description && prefix + suite.description;
+        if (suite.description) {
+          suite.description = prefix + suite.description;
+        }
         return suiteStarted.apply(this, arguments);
       };
       jasmine.getEnv().addReporter(reporter);
