@@ -64,7 +64,7 @@ module.exports = function (grunt, options) {
             proxyFolder('/wcservices/', '<%= yeoman.api %>'.replace('_api', 'wcservices')),
             proxyFolder('/_api/', '<%= yeoman.api %>'),
             proxyFolder('/_partials/', '<%= yeoman.partials %>'),
-            proxyFolder('/_livereload/', 'http://localhost:<%= watch.options.livereload %>/'),
+            proxyFolder('/_livereload/', 'http://localhost:<%= connect.options.livereload %>/'),
             connect.urlencoded()
           ]).concat(getProxies('proxies'));
         }
