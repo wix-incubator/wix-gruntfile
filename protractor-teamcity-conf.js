@@ -19,16 +19,17 @@ if (process.env.BUILD_NUMBER !== '12345') {
     var jasmineReporters = require('jasmine-reporters');
     var reporter = new jasmineReporters.TeamCityReporter();
     var suiteStarted = reporter.suiteStarted;
+    var prefix = '';
     browser.getCapabilities().then(function (caps) {
-      var prefix = calcBrowserName(caps) + ' - ';
-      reporter.suiteStarted = function (suite) {
-        if (suite.description) {
-          suite.description = prefix + suite.description;
-        }
-        return suiteStarted.apply(this, arguments);
-      };
-      jasmine.getEnv().addReporter(reporter);
+      prefix = calcBrowserName(caps) + ' - ';
     });
+    reporter.suiteStarted = function (suite) {
+      if (suite.description) {
+        suite.description = prefix + suite.description;
+      }
+      return suiteStarted.apply(this, arguments);
+    };
+    jasmine.getEnv().addReporter(reporter);
     onPrepare.apply(this, arguments);
   };
 }
