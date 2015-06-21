@@ -1,13 +1,30 @@
-/* global process, exports, jasmine */
+/* global process, exports, jasmine, browser */
 'use strict';
 
 var config = require('./protractor-conf').config;
+
+function fixBrowserName(browserName) {
+  if (browserName === 'internet explorer') {
+    return 'IE';
+  } else {
+    return browserName.charAt(0).toUpperCase() + browserName.slice(1);
+  }
+}
 
 if (process.env.BUILD_NUMBER !== '12345') {
   var onPrepare = config.onPrepare || function () {};
   config.onPrepare = function () {
     var jasmineReporters = require('jasmine-reporters');
-    jasmine.getEnv().addReporter(new jasmineReporters.TeamCityReporter());
+    var reporter = new jasmineReporters.TeamCityReporter();
+    var suiteStarted = reporter.suiteStarted;
+    browser.getCapabilities().then(function (caps) {
+      var prefix = fixBrowserName(caps.get('browserName')) + ' ' + caps.get('version') + ' - ';
+      reporter.suiteStarted = function (suite) {
+        suite.description = suite.description && prefix + suite.description;
+        return suiteStarted.apply(this, arguments);
+      };
+      jasmine.getEnv().addReporter(reporter);
+    });
     onPrepare.apply(this, arguments);
   };
 }
