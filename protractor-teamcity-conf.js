@@ -18,17 +18,19 @@ if (process.env.BUILD_NUMBER !== '12345') {
   config.onPrepare = function () {
     var jasmineReporters = require('jasmine-reporters');
     var reporter = new jasmineReporters.TeamCityReporter();
-    var suiteStarted = reporter.suiteStarted;
     var prefix = '';
     browser.getCapabilities().then(function (caps) {
       prefix = calcBrowserName(caps) + ' - ';
     });
-    reporter.suiteStarted = function (suite) {
-      if (suite.description) {
-        suite.description = prefix + suite.description;
-      }
-      return suiteStarted.apply(this, arguments);
-    };
+    ['specStarted', 'specDone'].forEach(function (f) {
+      var hooked = reporter[f];
+      reporter[f] = function (spec) {
+        if (spec.description && spec.description.indexOf(prefix) !== 0) {
+          spec.description = prefix + spec.description;
+        }
+        return hooked.apply(this, arguments);
+      };
+    });
     jasmine.getEnv().addReporter(reporter);
     onPrepare.apply(this, arguments);
   };
