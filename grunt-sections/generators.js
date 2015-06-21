@@ -4,7 +4,6 @@ var path = require('path');
 
 module.exports = function (grunt, options) {
   grunt.registerMultiTask('webfontIfEnabled', function () {
-    grunt.file.mkdir('.tmp/styles');
     if (options.svgFontName && this.files.length) {
       grunt.task.run('webfont');
     } else {
