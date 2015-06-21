@@ -6,8 +6,8 @@ var config = require('./protractor-conf').config;
 if (process.env.BUILD_NUMBER !== '12345') {
   var onPrepare = config.onPrepare || function () {};
   config.onPrepare = function () {
-    require('jasmine-reporters');
-    jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
+    var jasmineReporters = require('jasmine-reporters');
+    jasmine.getEnv().addReporter(new jasmineReporters.TeamCityReporter());
     onPrepare.apply(this, arguments);
   };
 }
@@ -71,7 +71,7 @@ config.multiCapabilities = testBrowsers.map(function (key, index) {
   }
   browser.build = process.env.BUILD_NUMBER;
   browser.shardTestFiles = true;
-  browser.maxInstances = Math.round(shardsLeft/(testBrowsers.length - index));
+  browser.maxInstances = Math.round(shardsLeft / (testBrowsers.length - index));
   shardsLeft -= browser.maxInstances;
   return sauceLabsBrowsers[key];
 });
