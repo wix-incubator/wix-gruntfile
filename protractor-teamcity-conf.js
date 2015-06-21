@@ -15,24 +15,24 @@ function calcBrowserName(caps) {
 
 if (process.env.BUILD_NUMBER !== '12345') {
   var onPrepare = config.onPrepare || function () {};
+  config.jasmineNodeOpts.print = function () {};
   config.onPrepare = function () {
-    var jasmineReporters = require('jasmine-reporters');
-    var reporter = new jasmineReporters.TeamCityReporter();
-    var prefix = '';
-    browser.getCapabilities().then(function (caps) {
-      prefix = calcBrowserName(caps) + ' - ';
+    return browser.getCapabilities().then(function (caps) {
+      var jasmineReporters = require('jasmine-reporters');
+      var reporter = new jasmineReporters.TeamCityReporter();
+      var prefix = calcBrowserName(caps) + ' - ';
+      ['specStarted', 'specDone'].forEach(function (f) {
+        var hooked = reporter[f];
+        reporter[f] = function (spec) {
+          if (spec.description && spec.description.indexOf(prefix) !== 0) {
+            spec.description = prefix + spec.description;
+          }
+          return hooked.apply(this, arguments);
+        };
+      });
+      jasmine.getEnv().addReporter(reporter);
+      return onPrepare.apply(this, arguments);
     });
-    ['specStarted', 'specDone'].forEach(function (f) {
-      var hooked = reporter[f];
-      reporter[f] = function (spec) {
-        if (spec.description && spec.description.indexOf(prefix) !== 0) {
-          spec.description = prefix + spec.description;
-        }
-        return hooked.apply(this, arguments);
-      };
-    });
-    jasmine.getEnv().addReporter(reporter);
-    onPrepare.apply(this, arguments);
   };
 }
 

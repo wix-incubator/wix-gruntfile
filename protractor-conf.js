@@ -90,7 +90,7 @@ config.onPrepare = function () {
     browser.params.browser = caps.get('browserName');
   });
 
-  onPrepare.apply(this, arguments);
+  return onPrepare.apply(this, arguments);
 };
 
 config.jasmineNodeOpts = {
