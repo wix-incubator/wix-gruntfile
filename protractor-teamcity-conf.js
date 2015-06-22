@@ -1,14 +1,38 @@
-/* global process, exports, jasmine */
+/* global process, exports, jasmine, browser */
 'use strict';
 
 var config = require('./protractor-conf').config;
 
+function calcBrowserName(caps) {
+  var browserName = caps.get('browserName');
+  if (browserName === 'internet explorer') {
+    browserName = 'IE';
+  } else {
+    browserName = browserName.charAt(0).toUpperCase() + browserName.slice(1);
+  }
+  return browserName + ' ' + caps.get('version').split('.').shift();
+}
+
 if (process.env.BUILD_NUMBER !== '12345') {
   var onPrepare = config.onPrepare || function () {};
+  config.jasmineNodeOpts.print = function () {};
   config.onPrepare = function () {
-    require('jasmine-reporters');
-    jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
-    onPrepare.apply(this, arguments);
+    return browser.getCapabilities().then(function (caps) {
+      var jasmineReporters = require('jasmine-reporters');
+      var reporter = new jasmineReporters.TeamCityReporter();
+      var prefix = calcBrowserName(caps) + ' - ';
+      ['specStarted', 'specDone'].forEach(function (f) {
+        var hooked = reporter[f];
+        reporter[f] = function (spec) {
+          if (spec.description && spec.description.indexOf(prefix) !== 0) {
+            spec.description = prefix + spec.description;
+          }
+          return hooked.apply(this, arguments);
+        };
+      });
+      jasmine.getEnv().addReporter(reporter);
+      return onPrepare.apply(this, arguments);
+    });
   };
 }
 
@@ -71,7 +95,7 @@ config.multiCapabilities = testBrowsers.map(function (key, index) {
   }
   browser.build = process.env.BUILD_NUMBER;
   browser.shardTestFiles = true;
-  browser.maxInstances = Math.round(shardsLeft/(testBrowsers.length - index));
+  browser.maxInstances = Math.round(shardsLeft / (testBrowsers.length - index));
   shardsLeft -= browser.maxInstances;
   return sauceLabsBrowsers[key];
 });
