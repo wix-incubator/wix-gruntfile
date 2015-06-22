@@ -153,6 +153,12 @@ module.exports = function (grunt, options) {
     'newer:copy:vm'
   ]);
 
+  grunt.registerTask('pre-build:clean', [
+    'clean:dist',
+    'newer-clean',
+    'pre-build'
+  ]);
+
   grunt.registerTask('package', function () {
     grunt.task.run([
       'imagemin',
@@ -199,9 +205,7 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('test', [
-    'clean:server',
-    'newer-clean',
-    'pre-build',
+    'pre-build:clean',
     'karma:single'
   ]);
 
@@ -216,15 +220,14 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('build', [
-    'clean:dist',
-    'test',
+    'pre-build:clean',
+    'karma:single',
     'package',
     'e2eIfEnabled:normal'
   ]);
 
   grunt.registerTask('build:ci', [
-    'clean:dist',
-    'pre-build',
+    'pre-build:clean',
     'karma:teamcity',
     'package'
   ]);
