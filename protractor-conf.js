@@ -1,4 +1,4 @@
-/* global browser, angular, document, beforeEach, afterEach */
+/* global browser, angular, document, beforeEach, afterEach, jasmine */
 'use strict';
 
 var config = {};
@@ -17,7 +17,7 @@ config.specs = [
   process.cwd() + '/test/e2e/spec/**/*.js'
 ];
 
-config.framework = 'jasmine';
+config.framework = 'jasmine2';
 
 config.capabilities = {
   browserName: 'chrome'
@@ -56,7 +56,24 @@ config.onPrepare = function () {
     });
   };
 
+  function toJasmine2(obj) {
+    var result = {};
+    Object.keys(obj).forEach(function (x) {
+      result[x] = function () {
+        return {
+          compare: function (actual, expected) {
+            return {pass: (obj[x].bind({actual: actual}))(expected)};
+          }
+        };
+      };
+    });
+    return result;
+  }
+
   beforeEach(function () {
+    this.addMatchers = function (obj) {
+      return jasmine.addMatchers(toJasmine2(obj));
+    };
     browser.addMockModule('disableNgAnimate', disableNgAnimate);
     browser.addMockModule('disableCssAnimate', disableCssAnimate);
     browser.addMockModule('biLoggerDryRun', biLoggerDryRun);
@@ -73,7 +90,7 @@ config.onPrepare = function () {
     browser.params.browser = caps.get('browserName');
   });
 
-  onPrepare.apply(this, arguments);
+  return onPrepare.apply(this, arguments);
 };
 
 config.jasmineNodeOpts = {
