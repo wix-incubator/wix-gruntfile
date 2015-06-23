@@ -20756,13 +20756,13 @@
       }
     },
     "jasmine-reporters": {
-      "version": "2.0.6",
-      "from": "jasmine-reporters@*",
-      "resolved": "http://repo.dev.wix/artifactory/api/npm/npm-repos/jasmine-reporters/-/jasmine-reporters-2.0.6.tgz",
+      "version": "1.0.2",
+      "from": "http://repo.dev.wix/artifactory/api/npm/npm-repos/jasmine-reporters/-/jasmine-reporters-1.0.2.tgz",
+      "resolved": "http://repo.dev.wix/artifactory/api/npm/npm-repos/jasmine-reporters/-/jasmine-reporters-1.0.2.tgz",
       "dependencies": {
         "mkdirp": {
           "version": "0.3.5",
-          "from": "mkdirp@>=0.3.5 <0.4.0",
+          "from": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz",
           "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz"
         }
       }
