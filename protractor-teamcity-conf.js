@@ -17,6 +17,7 @@ if (process.env.BUILD_NUMBER !== '12345') {
   var onPrepare = config.onPrepare || function () {};
   config.jasmineNodeOpts.print = function () {};
   config.onPrepare = function () {
+    onPrepare.apply(this, arguments);
     return browser.getCapabilities().then(function (caps) {
       var jasmineReporters = require('jasmine-reporters');
       var reporter = new jasmineReporters.TeamCityReporter();
@@ -31,7 +32,6 @@ if (process.env.BUILD_NUMBER !== '12345') {
         };
       });
       jasmine.getEnv().addReporter(reporter);
-      return onPrepare.apply(this, arguments);
     });
   };
 }
