@@ -3,11 +3,14 @@
 var featureDetector = require('../feature-detector');
 
 module.exports = function (grunt) {
+  var tslint = 'newer:tslint';
+
   grunt.registerTask('force-jshint', function () {
     grunt.task.run('ignore-code-style-checks');
   });
 
   grunt.registerTask('ignore-code-style-checks', function () {
+    tslint = 'force:newer:tslint';
     ['jshint', 'jscs', 'scsslint', 'tslint'].forEach(function (section) {
       var config = grunt.config(section);
       config.options.force = true;
@@ -28,7 +31,7 @@ module.exports = function (grunt) {
       var config = grunt.config('tslint');
       config.options.configuration = grunt.file.readJSON('tslint.json');
       grunt.config('tslint', config);
-      grunt.task.run('newer:tslint');
+      grunt.task.run(tslint);
     }
   });
 

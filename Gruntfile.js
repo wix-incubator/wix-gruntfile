@@ -50,7 +50,8 @@ module.exports = function (grunt, options) {
     }});
   }
 
-  var lintPlugins = ['grunt-contrib-jshint', 'grunt-jscs', 'grunt-tslint', 'grunt-scss-lint', 'grunt-newer'];
+  var lintPlugins = ['grunt-contrib-jshint', 'grunt-jscs', 'grunt-tslint', 'grunt-scss-lint',
+                     'grunt-newer', 'grunt-force-task'];
   if (process.argv[2] === 'lint') {
     lintPlugins.forEach(function (name) {
       grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
