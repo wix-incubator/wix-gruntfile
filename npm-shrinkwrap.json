@@ -1,6 +1,6 @@
 {
   "name": "wix-gruntfile",
-  "version": "0.1.231",
+  "version": "0.1.232",
   "dependencies": {
     "bower": {
       "version": "1.4.1",
