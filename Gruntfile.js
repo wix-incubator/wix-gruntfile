@@ -102,6 +102,7 @@ module.exports = function (grunt, options) {
     haml:                   require('./grunt-sections/transform-html')(grunt, options).haml,
 
     petriExperiments:       require('./grunt-sections/generators')(grunt, options).petriExperiments,
+    manifestPackager:       require('./grunt-sections/generators')(grunt, options).manifestPackager,
     jsonAngularTranslate:   require('./grunt-sections/generators')(grunt, options).translations,
     webfontIfEnabled:       require('./grunt-sections/generators')(grunt, options).webfontIfEnabled,
     webfont:                require('./grunt-sections/generators')(grunt, options).webfont,
@@ -164,6 +165,7 @@ module.exports = function (grunt, options) {
     grunt.task.run([
       'imagemin',
       'copy:dist',
+      'manifestPackager',
       'useminPrepare',
       'styleInlineDistIfEnabled',
       'ngtemplates',

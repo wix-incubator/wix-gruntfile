@@ -40,6 +40,7 @@
     "grunt-jscs": "^1.5.0",
     "grunt-json-angular-translate": "^0.1.0",
     "grunt-karma": "^0.11.0",
+    "grunt-manifest-packager": "^1.0.0",
     "grunt-newer": "^1.1.0",
     "grunt-ng-annotate": "^1.0.0",
     "grunt-process-tags": "~0.0.1",

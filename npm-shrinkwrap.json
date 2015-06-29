@@ -17665,6 +17665,10 @@
         }
       }
     },
+    "grunt-manifest-packager": {
+      "version": "1.0.0",
+      "from": "grunt-manifest-packager@*"
+    },
     "grunt-newer": {
       "version": "1.1.0",
       "from": "http://repo.dev.wix/artifactory/api/npm/npm-repos/grunt-newer/-/grunt-newer-1.1.0.tgz",

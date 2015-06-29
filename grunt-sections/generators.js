@@ -22,6 +22,18 @@ module.exports = function (grunt, options) {
         js: '.tmp/petri-experiments.js'
       }
     },
+    manifestPackager: {
+      all: {
+        files: [{
+          expand: true,
+          cwd: 'app',
+          src: '*.manifest.json',
+          dest: '.tmp/manifests',
+          ext: '.html',
+          extDot: 'last'
+        }]
+      }
+    },
     translations: {
       server: {
         options: {
