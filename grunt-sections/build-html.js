@@ -110,7 +110,7 @@ module.exports = function (grunt, options) {
       }
     },
     useminPrepare: {
-      html: 'app/*.{html,vm}',
+      html: '{.tmp/manifests,app}/*.{html,vm}',
       options: {
         staging: 'dist',
         dest: 'dist',
