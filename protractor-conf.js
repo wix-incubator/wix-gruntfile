@@ -68,6 +68,14 @@ config.onPrepare = function () {
     browser.removeMockModule('biLoggerDryRun');
   });
 
+  afterEach(function () {
+    if (process.env.ECHO_BROWSER_LOGS) {
+      browser.manage().logs().get('browser').then(function (browserLog) {
+        console.log('\x1b[33m%s\x1b[0m', '\n log: ' + require('util').inspect(browserLog));
+      });
+    }
+  });
+
   // Store the name of the browser that's currently being used.
   browser.getCapabilities().then(function (caps) {
     browser.params.browser = caps.get('browserName');
