@@ -240,10 +240,16 @@ module.exports = function (grunt, options) {
   });
 
   grunt.hookTask = function (name) {
-    var hooked = name + '.hooked.' + Math.floor(Math.random() * 10000);
+    var hooked = [name, 'hooked', Math.floor(Math.random() * 10000)].join('_');
     var arr = [hooked];
     grunt.renameTask(name, hooked);
     grunt.registerTask(name, arr);
+    return arr;
+  };
+
+  grunt.hookMultiTask = function (name) {
+    var arr = grunt.hookTask(name);
+    grunt.config(arr[0], grunt.config(name));
     return arr;
   };
 
