@@ -95,6 +95,16 @@ module.exports = function (grunt, options) {
           dest: 'dist/_debug_scripts'
         }, {
           expand: true,
+          cwd: '.tmp/modules/',
+          src: ['**/!(*.test).js'],
+          dest: 'dist/_debug_modules'
+        }, {
+          expand: true,
+          cwd: 'app/modules/',
+          src: ['**/!(*.test).js'],
+          dest: 'dist/_debug_modules'
+        }, {
+          expand: true,
           cwd: '.tmp/styles/',
           src: ['**/*.css', 'svg-font/*'],
           dest: 'dist/_debug_styles'
