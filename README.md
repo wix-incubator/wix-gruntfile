@@ -4,7 +4,7 @@ Customizable Gruntfile built to work with wix-angular projects
 
 ## Installation
 
-No installtion needed in case you scaffold using `yo wix-angular`
+No installation needed in case you scaffold using `yo wix-angular`
 
 Otherwise - `npm install --save-dev wix-gruntfile`
 
@@ -19,14 +19,7 @@ module.exports = function (grunt) {
     port: 9000,
     preloadModule: 'newsFeedCommon',
     translationsModule: 'wixNewsFeedTranslations',
-    unitTestFiles: [
-      'app/bower_components/jquery/jquery.js',
-      'app/bower_components/angular/angular.js',
-      'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/bower_components/angular-translate/angular-translate.js',
-      'app/bower_components/es5-shim/es5-shim.js',
-      ...
-    ]
+    karmaConf: require('./karma.conf.js')
   });
 
   // keep reading for instructions on how to add custom stuff to your grunt
@@ -51,7 +44,7 @@ You can run and debug protractor tests directly from your IDE (Intellij/Webstorm
 
 To set the configuration, follow the [instructions from protractor docs](https://github.com/angular/protractor/blob/master/docs/debugging.md#setting-up-webstorm-for-debugging).
 
-### Build the project locally (rarely needed):
+### Build the project locally:
 
 `grunt build` will run the complete build process including e2e tests (only on chrome)
 
@@ -69,18 +62,14 @@ Here is a list of available options:
 
 ```js
 {
-  protocol: 'http', //the protocol used for working locally (http/https)
-  staging: 'pizza', //the staging environment used locally (local.pizza.wixpress.com)
-                    //don't forget to add it to your hosts file
-  subdomain: 'www', //subdomain used for api calls to staging (www.pizza.wixpress.com/_api)
-  port: 9000, //port used for local server
-  livereload: 35729, //port used for livereload server (important for when running multiple grunts)
-  translationsModule: 'wixAppTranslations', //module name used for translations
-                                            //don't forget to add module dependency for this
-  unitTestFiles: [],  //files you want to add to unit tests loader (in addition to your sources)
-  karmaTestFiles: null, //roll your own unit test file list (wix-gruntfile will not add anything)
-  page: '', //name of page to open: http://local.{staging}.wixpress.com:{port}/{page}
-  protractor: true, //whether to use protractor or fallback to angular scenario
+wixpress.com/_api)
+  port: 9000,                              //port used for local server
+  livereload: 35729,                       //port used for livereload server
+  preloadModule: 'myAppInternal',          //module name for preload html
+  translationsModule: 'myAppTranslations', //module name for translation js
+  svgFontName: 'my-app',                   //font name for svg icons
+  karmaConf: require('./karma.conf.js'),   //inheriting your karma config
+  protractor: true                         //should run e2e tests
   proxies: {}, //add more proxies to your connect server: `{'/_test/': 'http://www.wix.com/', ...}`
   beforeProxies: {}, //same as above, only it insert the proxy at the beginning of the list
   useModulesStructure: false // if true, will assume project uses a modular file structure (see below for an elaboration)
@@ -135,9 +124,14 @@ Override the url that opens in the dashboard when you run `grunt serve`:
 grunt.modifyTask('yeoman', {local: 'http://localhost:9000/'});
 ```
 
-Override the proxied url for api calls:
+Override the proxied url for _api calls:
 ```js
 grunt.modifyTask('yeoman', {api: 'http://www.wix.com/_api/'});
+```
+
+Override the proxied url for _api calls in e2e tests:
+```js
+grunt.modifyTask('yeoman', {e2eTestServer: 'http://localhost:3333/'});
 ```
 
 Override sauce labs configuration:
@@ -147,6 +141,16 @@ process.env.SAUCE_ACCESS_KEY = 'xxx';
 process.env.SAUCE_BROWSERS = 'Chrome FF IE10 IE11';
 ```
 
+Add private grunt file that overrides stuff you don't want to commit:
+```js
+try {
+  require('./Gruntfile.private.js')(grunt); //override stuff locally
+} catch (err) {
+  if (err.code !== 'MODULE_NOT_FOUND') {
+    throw (err);
+  }
+}
+```
 
 ## WixStyle inline
 To enable the wixStyle inline feature, `inline` property of the Gruntfile options sould be `true`.
