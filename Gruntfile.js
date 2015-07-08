@@ -12,6 +12,7 @@ module.exports = function (grunt, options) {
   };
 
   options = extend({
+    version: '0.0.0',
     cdnify: 'http',
     protocol: 'http',
     staging: 'pizza',
@@ -33,6 +34,10 @@ module.exports = function (grunt, options) {
     autoprefixer: true,
     inline: false
   }, options);
+
+  if (options.version.split('.')[0] > 0) {
+    options.cdnify = 'vm';
+  }
 
   if (options.inline) {
     options.autoprefixer = false;
