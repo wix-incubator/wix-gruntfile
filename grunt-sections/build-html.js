@@ -27,9 +27,12 @@ module.exports = function (grunt, options) {
       '<!-- #end -->';
   }
 
-  function originalTagsOnDebug(block, prefix, fn) {
+  function originalTagsOnDebug(block, prefixes, fn) {
     var original = block.src.map(function (src) {
-      return fn(src.replace(new RegExp('^' + prefix + '/'), '_debug_' + prefix + '/'));
+      var dst = prefixes.reduce(function (src, prefix) {
+        return src.replace(new RegExp('^' + prefix + '/'), '_debug_' + prefix + '/');
+      }, src);
+      return fn(dst);
     }).join('\n');
     return makeOriginalOrBlock(original, fn(block.dest));
   }
@@ -37,12 +40,12 @@ module.exports = function (grunt, options) {
   function originalScriptOnDebug(block) {
     var defer = block.defer ? 'defer ' : '';
     var async = block.async ? 'async ' : '';
-    return originalTagsOnDebug(block, 'scripts', makeScriptTag.bind(undefined, defer, async));
+    return originalTagsOnDebug(block, ['scripts', 'modules'], makeScriptTag.bind(undefined, defer, async));
   }
 
   function originalCssOnDebug(block) {
     var media = block.media ? ' media="' + block.media + '"' : '';
-    return originalTagsOnDebug(block, 'styles', makeStyleTag.bind(undefined, media));
+    return originalTagsOnDebug(block, ['styles'], makeStyleTag.bind(undefined, media));
   }
 
   grunt.registerTask('styleInlineDistIfEnabled', function () {
