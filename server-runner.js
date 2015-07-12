@@ -22,6 +22,13 @@ function startServer(js, params) {
   serverProcess.stdout.on('data', function () {
     deferred.fulfill();
   });
+  serverProcess.stderr.on('data', function (data) {
+    console.log('stderr: ' + data);
+  });
+  serverProcess.on('close', function (code) {
+    console.log('\x1b[31m%s\x1b[0m', 'Fake server aborted!! This might mean port is already in use.');
+    process.exit();
+  });
   return deferred.promise;
 }
 
