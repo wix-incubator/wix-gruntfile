@@ -192,7 +192,7 @@ module.exports = function (grunt, options) {
     'pre-build',
     'livereloadServer',
     'connect:livereload',
-    'karma:unit:run',
+    'force:karma:unit:run',
     'watch'
   ]);
 
