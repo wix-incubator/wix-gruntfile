@@ -251,7 +251,7 @@ module.exports = function (grunt, options) {
     grunt.registerTask(name, arr);
     var hookedCfgPath = hooked.replace(/:/g, '.');
     var nameCfgPath = name.replace(/:/g, '.');
-    grunt.config.set(hookedCfgPath, grunt.config.get(nameCfgPath));
+    grunt.config.set(hookedCfgPath, grunt.config.getRaw(nameCfgPath));
     return arr;
   };
 
