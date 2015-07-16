@@ -245,10 +245,13 @@ module.exports = function (grunt, options) {
   });
 
   grunt.hookTask = function (name) {
-    var hooked = name + '.hooked.' + Math.floor(Math.random() * 10000);
+    var hooked = name + '(hooked' + Math.floor(Math.random() * 10000) + ')';
     var arr = [hooked];
     grunt.renameTask(name, hooked);
     grunt.registerTask(name, arr);
+    var hookedCfgPath = hooked.replace(/:/g, '.');
+    var nameCfgPath = name.replace(/:/g, '.');
+    grunt.config.set(hookedCfgPath, grunt.config.get(nameCfgPath));
     return arr;
   };
 
