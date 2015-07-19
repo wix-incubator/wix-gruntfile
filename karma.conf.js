@@ -46,7 +46,7 @@ module.exports = function (config) {
 
     // test results reporter to use
     // possible values: dots || progress || growl
-    reporters: ['progress', 'coverage', 'growl', 'karmaSimpleReporter'].concat(isOsx ? ['osx'] : []),
+    reporters: ['coverage', 'growl', 'karmaSimpleReporter'].concat(isOsx ? ['osx'] : []),
 
     // web server port
     port: 8880,
