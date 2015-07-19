@@ -83,7 +83,7 @@ module.exports = function (grunt, options) {
     require('time-grunt')(grunt);
   }
 
-  var optionalTasks = ['petriExperiments'];
+  var optionalTasks = ['petriExperiments', 'manifestPackager'];
   optionalTasks.forEach(function (task) {
     if (!grunt.task.exists(task)) {
       grunt.registerTask(task, function () {});
