@@ -1,6 +1,9 @@
 /* global browser, angular, document, beforeEach, afterEach */
 'use strict';
 
+var fs = require('fs');
+var glob = require('glob');
+
 var config = {};
 try {
   config = require(process.cwd() + '/protractor-base-conf').config;
@@ -22,6 +25,29 @@ config.framework = 'jasmine';
 config.capabilities = {
   browserName: 'chrome'
 };
+
+function hasFocusedTests(patterns, strings) {
+  var commentsRegex = /(?:\/\*(?:[\s\S]*?)\*\/)|(?:([\s;])+\/\/(?:.*)$)/gm;
+  var found = false;
+  patterns.forEach(function (pattern) {
+    glob.sync(pattern).forEach(function (file) {
+      if (!found) {
+        var fileContent = fs.readFileSync(file, 'utf-8');
+        fileContent = fileContent.replace(commentsRegex, '');
+        strings.forEach(function (str) {
+          found = found || fileContent.indexOf(str) >= 0;
+        });
+      }
+    });
+  });
+  return found;
+}
+
+if(!hasFocusedTests(config.specs, ['iit(', 'ddescribe('])) {
+  // Add capabilities
+  config.capabilities.shardTestFiles = true;
+  config.capabilities.maxInstances = 6;
+}
 
 var onPrepare = config.onPrepare || function () {};
 config.onPrepare = function () {
