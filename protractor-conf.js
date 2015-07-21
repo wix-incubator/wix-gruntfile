@@ -28,19 +28,16 @@ config.capabilities = {
 
 function hasFocusedTests(patterns, strings) {
   var commentsRegex = /(?:\/\*(?:[\s\S]*?)\*\/)|(?:([\s;])+\/\/(?:.*)$)/gm;
-  var found = false;
-  patterns.forEach(function (pattern) {
-    glob.sync(pattern).forEach(function (file) {
-      if (!found) {
-        var fileContent = fs.readFileSync(file, 'utf-8');
-        fileContent = fileContent.replace(commentsRegex, '');
-        strings.forEach(function (str) {
-          found = found || fileContent.indexOf(str) >= 0;
-        });
-      }
+
+  return patterns.some(function (pattern) {
+    return glob.sync(pattern).some(function (file) {
+      var fileContent = fs.readFileSync(file, 'utf-8');
+      fileContent = fileContent.replace(commentsRegex, '');
+      return strings.some(function (str) {
+        return fileContent.indexOf(str) >= 0;
+      });
     });
   });
-  return found;
 }
 
 if(!hasFocusedTests(config.specs, ['iit(', 'ddescribe('])) {
