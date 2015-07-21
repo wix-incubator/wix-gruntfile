@@ -1,6 +1,12 @@
 /* global process, exports, jasmine */
 'use strict';
 
+var buildName = 'e2e tests';
+try {
+  buildName = require(process.cwd() + '/package.json').name;
+} catch (e) {
+
+}
 var config = require('./protractor-conf').config;
 
 if (process.env.BUILD_NUMBER !== '12345') {
@@ -18,11 +24,11 @@ config.sauceKey = process.env.SAUCE_ACCESS_KEY;
 var sauceLabsBrowsers = {
   Chrome: {
     browserName: 'chrome',
-    platform: 'Windows 8'
+    platform: 'Windows 7'
   },
   ChromeOSX: {
     browserName: 'chrome',
-    platform: 'OS X 10.9'
+    platform: 'OS X 10.6'
   },
   FF: {
     browserName: 'firefox',
@@ -30,22 +36,27 @@ var sauceLabsBrowsers = {
   },
   FFOSX: {
     browserName: 'firefox',
-    platform: 'OS X 10.9'
+    platform: 'OS X 10.6'
   },
   IE11: {
     browserName: 'internet explorer',
     version: '11',
-    platform: 'Windows 8.1'
+    platform: 'Windows 7'
   },
   IE10: {
     browserName: 'internet explorer',
     version: '10',
-    platform: 'Windows 8'
+    platform: 'Windows 7'
   },
   IE9: {
     browserName: 'internet explorer',
     version: '9',
     platform: 'Windows 7'
+  },
+  Safari8: {
+    browserName: 'safari',
+    version: '8',
+    platform: 'OS X 10.10'
   },
   Safari7: {
     browserName: 'safari',
@@ -64,14 +75,15 @@ var shardsLeft = 15;
 
 config.multiCapabilities = testBrowsers.map(function (key, index) {
   var browser = sauceLabsBrowsers[key];
-  browser.name = 'e2e tests';
+  browser.name = buildName;
   browser['tunnel-identifier'] = process.env.BUILD_NUMBER;
   if (browser.platform !== 'OS X 10.9') {
     browser['screen-resolution'] = '1280x1024';
   }
-  browser.build = process.env.BUILD_NUMBER;
+  browser.public = 'team';
+  browser.build = buildName + ' ' + process.env.BUILD_NUMBER;
   browser.shardTestFiles = true;
-  browser.maxInstances = Math.round(shardsLeft/(testBrowsers.length - index));
+  browser.maxInstances = Math.round(shardsLeft / (testBrowsers.length - index));
   shardsLeft -= browser.maxInstances;
   return sauceLabsBrowsers[key];
 });
