@@ -217,7 +217,11 @@ module.exports = function (grunt, options) {
     'karma:single'
   ]);
 
-  grunt.registerTask('test:e2e', function () {
+  grunt.registerTask('test:e2e', function (type) {
+    if (type === 'noshard') {
+      grunt.modifyTask('protractor', {normal: {options: {'capabilities.shardTestFiles': 0}}});
+    }
+
     grunt.task.run('connect:localTest');
     grunt.task.run('webdriver');
     grunt.task.run('protractor:normal');

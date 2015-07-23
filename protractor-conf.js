@@ -23,27 +23,27 @@ config.specs = [
 config.framework = 'jasmine';
 
 config.capabilities = {
-  browserName: 'chrome'
+  browserName: 'chrome',
+  shardTestFiles: true,
+  maxInstances: 6
 };
 
-function hasFocusedTests(patterns, strings) {
-  var commentsRegex = /(?:\/\*(?:[\s\S]*?)\*\/)|(?:([\s;])+\/\/(?:.*)$)/gm;
+function hasFocusedTests(patterns, stringsRegex) {
+  var commentsRegex = /(?:\/\*(?:[\s\S]*?)\*\/)|(?:^[\s;]*\/\/.*$)/gm;
 
   return patterns.some(function (pattern) {
     return glob.sync(pattern).some(function (file) {
       var fileContent = fs.readFileSync(file, 'utf-8');
       fileContent = fileContent.replace(commentsRegex, '');
-      return strings.some(function (str) {
-        return fileContent.indexOf(str) >= 0;
-      });
+
+      return stringsRegex.test(fileContent);
     });
   });
 }
 
-if(!hasFocusedTests(config.specs, ['iit(', 'ddescribe('])) {
-  // Add capabilities
-  config.capabilities.shardTestFiles = true;
-  config.capabilities.maxInstances = 6;
+if(hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm)) {
+  config.capabilities.shardTestFiles = false;
+  console.log('\x1b[33m%s\x1b[0m', 'Protractor sharding is disabled due to presence of focused tests.');
 }
 
 var onPrepare = config.onPrepare || function () {};
