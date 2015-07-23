@@ -217,7 +217,11 @@ module.exports = function (grunt, options) {
     'karma:single'
   ]);
 
-  grunt.registerTask('test:e2e', function () {
+  grunt.registerTask('test:e2e', function (type) {
+    if (type === 'noshard') {
+      grunt.modifyTask('protractor', {normal: {options: {'capabilities.shardTestFiles': 0}}});
+    }
+
     grunt.task.run('connect:localTest');
     grunt.task.run('webdriver');
     grunt.task.run('protractor:normal');
@@ -225,6 +229,26 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('test:ci', [
     'e2eIfEnabled:teamcity'
+  ]);
+
+  grunt.registerTask('test:ci_parallel_main_server', [
+    'e2eIfEnabled:teamcity_main_server_parallel'
+  ]);
+
+  grunt.registerTask('test:ci_parallel_diff_server_diff_tunnel', [
+    'e2eIfEnabled:teamcity_diff_server_diff_tunnel'
+  ]);
+
+  grunt.registerTask('test:ci_parallel_same_tunnel', [
+    'e2eIfEnabled:teamcity_diff_server_diff_tunnel'
+  ]);
+
+  grunt.registerTask('test:ci_parallel_same_server', [
+    'e2eIfEnabled:teamcity_same_server'
+  ]);
+
+  grunt.registerTask('test:ci_parallel_same_server_tunnel', [
+    'e2eIfEnabled:teamcity_same_server_tunnel'
   ]);
 
   grunt.registerTask('build', [

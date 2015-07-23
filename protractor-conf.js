@@ -1,6 +1,9 @@
 /* global browser, angular, document, beforeEach, afterEach */
 'use strict';
 
+var fs = require('fs');
+var glob = require('glob');
+
 var config = {};
 try {
   config = require(process.cwd() + '/protractor-base-conf').config;
@@ -20,8 +23,28 @@ config.specs = [
 config.framework = 'jasmine';
 
 config.capabilities = {
-  browserName: 'chrome'
+  browserName: 'chrome',
+  shardTestFiles: true,
+  maxInstances: 6
 };
+
+function hasFocusedTests(patterns, stringsRegex) {
+  var commentsRegex = /(?:\/\*(?:[\s\S]*?)\*\/)|(?:^[\s;]*\/\/.*$)/gm;
+
+  return patterns.some(function (pattern) {
+    return glob.sync(pattern).some(function (file) {
+      var fileContent = fs.readFileSync(file, 'utf-8');
+      fileContent = fileContent.replace(commentsRegex, '');
+
+      return stringsRegex.test(fileContent);
+    });
+  });
+}
+
+if(hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm)) {
+  config.capabilities.shardTestFiles = false;
+  console.log('\x1b[33m%s\x1b[0m', 'Protractor sharding is disabled due to presence of focused tests.');
+}
 
 var onPrepare = config.onPrepare || function () {};
 config.onPrepare = function () {

@@ -18,7 +18,7 @@ module.exports = function (grunt) {
     });
   });
 
-  grunt.registerTask('lint', ['jsstyleIfEnabled', 'scssstyleIfEnabled']);
+  grunt.registerTask('lint', ['newer-clean', 'jsstyleIfEnabled', 'scssstyleIfEnabled']);
 
   grunt.registerTask('jsstyleIfEnabled', function () {
     if (featureDetector.isJshintEnabled()) {
