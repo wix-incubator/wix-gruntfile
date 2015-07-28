@@ -72,6 +72,7 @@ module.exports = function (grunt, options) {
     },
     localTest: {
       options: {
+        livereload: options.livereload,
         port: 9876,
         middleware: function (connect) {
           return getProxies('beforeProxies').concat([
