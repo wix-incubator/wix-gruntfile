@@ -2,6 +2,7 @@
 
 var url = require('url');
 var path = require('path');
+var inject = require('connect-inject');
 
 module.exports = function (grunt, options) {
   var proxyMiddleware = require('proxy-middleware');
@@ -72,10 +73,10 @@ module.exports = function (grunt, options) {
     },
     localTest: {
       options: {
-        livereload: options.livereload,
         port: 9876,
         middleware: function (connect) {
           return getProxies('beforeProxies').concat([
+            inject({snippet: '<script>Livereload = \'HACK\''}),
             mountFolder(connect, '.tmp'),
             mountFolder(connect, 'test'),
             mountFolder(connect, 'app'),
