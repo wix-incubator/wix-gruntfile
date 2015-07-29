@@ -28,7 +28,7 @@ var sauceLabsBrowsers = {
   },
   ChromeOSX: {
     browserName: 'chrome',
-    platform: 'OS X 10.6'
+    platform: 'OS X 10.8'
   },
   FF: {
     browserName: 'firefox',
@@ -36,7 +36,7 @@ var sauceLabsBrowsers = {
   },
   FFOSX: {
     browserName: 'firefox',
-    platform: 'OS X 10.6'
+    platform: 'OS X 10.8'
   },
   IE11: {
     browserName: 'internet explorer',
@@ -77,7 +77,7 @@ config.multiCapabilities = testBrowsers.map(function (key, index) {
   var browser = sauceLabsBrowsers[key];
   browser.name = buildName;
   browser['tunnel-identifier'] = process.env.BUILD_NUMBER;
-  if (browser.platform !== 'OS X 10.9') {
+  if (browser.platform !== 'OS X 10.9' && browser.platform !== 'OS X 10.10') {
     browser['screen-resolution'] = '1280x1024';
   }
   browser.public = 'team';
