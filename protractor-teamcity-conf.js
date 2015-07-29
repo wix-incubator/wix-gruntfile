@@ -36,7 +36,7 @@ var sauceLabsBrowsers = {
   },
   FFOSX: {
     browserName: 'firefox',
-    platform: 'OS X 10.8'
+    platform: 'OS X 10.10'
   },
   IE11: {
     browserName: 'internet explorer',
