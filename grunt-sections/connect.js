@@ -76,7 +76,7 @@ module.exports = function (grunt, options) {
         port: 9876,
         middleware: function (connect) {
           return getProxies('beforeProxies').concat([
-            inject({snippet: '<script>LiveReload = \'HACK\''}),
+            inject({snippet: '<script>LiveReload = \'HACK\'</script>'}),
             mountFolder(connect, '.tmp'),
             mountFolder(connect, 'test'),
             mountFolder(connect, 'app'),
