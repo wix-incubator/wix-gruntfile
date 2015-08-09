@@ -5,6 +5,7 @@ if [ $? -ne 0 ]; then
     exit 0
 fi
 
+echo "##teamcity[blockOpened name='Grunt Release']"
 PROJECT_DIR=$(pwd)
 cd /tmp
 rm -rf bower_component
@@ -33,3 +34,4 @@ git diff --exit-code --cached --stat
 if [ $? -ne 0 ]; then
     $NODE_HOME/node node_modules/grunt-cli/bin/grunt release
 fi
+echo "##teamcity[blockClosed name='Grunt Release']"
