@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$NODE_HOME/node node_modules/grunt-cli/bin/grunt checkIfBower --no-color
+$NODE_HOME/node node_modules/grunt-cli/bin/grunt checkIfBower
 if [ $? -ne 0 ]; then
     exit 0
 fi
@@ -31,5 +31,5 @@ git add --all .
 git reset HEAD bower.json
 git diff --exit-code --cached --stat
 if [ $? -ne 0 ]; then
-    $NODE_HOME/node node_modules/grunt-cli/bin/grunt release --no-color
+    $NODE_HOME/node node_modules/grunt-cli/bin/grunt release
 fi

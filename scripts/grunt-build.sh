@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-$NODE_HOME/node node_modules/grunt-cli/bin/grunt build:ci --no-color
+$NODE_HOME/node node_modules/grunt-cli/bin/grunt build:ci
 
 rm -f /tmp/sauce-connect-ready
 node_modules/wix-gruntfile/scripts/sc \
@@ -17,4 +17,4 @@ while [ ! -f /tmp/sauce-connect-ready ]; do
   sleep 5
 done
 
-$NODE_HOME/node node_modules/grunt-cli/bin/grunt test:ci --no-color
+$NODE_HOME/node node_modules/grunt-cli/bin/grunt test:ci
