@@ -6,6 +6,15 @@ module.exports = function (grunt, options) {
   var shell = require('shelljs');
   var featureDetector = require('./feature-detector');
 
+  var packageJson = grunt.file.readJSON('package.json');
+  if (!packageJson.scripts || !packageJson.scripts.build) {
+    grunt.file.write('package.json', JSON.stringify(extend(packageJson, {
+      scripts: {
+        build: 'node_modules/wix-gruntfile/scripts/build.sh'
+      }
+    }), null, 2));
+  }
+
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
     return this;
