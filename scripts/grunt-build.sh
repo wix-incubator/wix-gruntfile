@@ -7,7 +7,12 @@ echo "##teamcity[blockClosed name='Grunt Build']"
 
 echo "##teamcity[blockOpened name='Sauce Tunnel']"
 rm -f /tmp/sauce-connect-ready
-node_modules/wix-gruntfile/scripts/sc \
+SAUCE_TUNNEL="node_modules/wix-gruntfile/scripts/sc"
+if [ "`uname`" = "Darwin" ]; then
+    SAUCE_TUNNEL="node_modules/wix-gruntfile/scripts/sc-osx"
+fi
+
+$SAUCE_TUNNEL \
     --readyfile /tmp/sauce-connect-ready \
     --tunnel-identifier $BUILD_NUMBER \
     --user $SAUCE_USERNAME \
