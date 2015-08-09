@@ -28,6 +28,7 @@ cp -r $PROJECT_DIR/!(.git) .
 grep -v dist .gitignore > .gitignore.new
 mv -f .gitignore.new .gitignore
 git add --all .
+git reset HEAD bower.json
 git diff --exit-code --cached --stat
 if [ $? -ne 0 ]; then
     $NODE_HOME/node node_modules/grunt-cli/bin/grunt release --no-color
