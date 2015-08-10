@@ -14,6 +14,13 @@ module.exports = function (grunt, options) {
       }
     }), null, 2));
   }
+  if (!packageJson.scripts || !packageJson.scripts.release) {
+    grunt.file.write('package.json', JSON.stringify(extend(packageJson, {
+      scripts: {
+        release: 'node_modules/wix-gruntfile/scripts/release.sh'
+      }
+    }), null, 2));
+  }
 
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);

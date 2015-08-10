@@ -2,7 +2,7 @@
 set -e
 
 echo "##teamcity[blockOpened name='Grunt Build']"
-$NODE_HOME/node node_modules/grunt-cli/bin/grunt build:ci
+$(npm bin)/grunt build:ci
 echo "##teamcity[blockClosed name='Grunt Build']"
 
 echo "##teamcity[blockOpened name='Sauce Tunnel']"
@@ -27,5 +27,5 @@ done
 echo "##teamcity[blockClosed name='Sauce Tunnel']"
 
 echo "##teamcity[blockOpened name='Grunt Test']"
-$NODE_HOME/node node_modules/grunt-cli/bin/grunt test:ci
+$(npm bin)/grunt test:ci
 echo "##teamcity[blockClosed name='Grunt Test']"

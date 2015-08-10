@@ -10,7 +10,7 @@ echo "##teamcity[blockClosed name='Bundle Install']"
 if [ -d node_modules/bower ];then
   echo "##teamcity[blockOpened name='Bower Install']"
   rm -rf app/bower_components
-  $NODE_HOME/node node_modules/bower/bin/bower cache clean
-  $NODE_HOME/node node_modules/bower/bin/bower install
+  $(npm bin)/bower cache clean
+  $(npm bin)/bower install
   echo "##teamcity[blockClosed name='Bower Install']"
 fi
