@@ -7,19 +7,11 @@ module.exports = function (grunt, options) {
   var featureDetector = require('./feature-detector');
 
   var packageJson = grunt.file.readJSON('package.json');
-  if (!packageJson.scripts || !packageJson.scripts.build) {
-    grunt.file.write('package.json', JSON.stringify(extend(packageJson, {
-      scripts: {
-        build: 'node_modules/wix-gruntfile/scripts/build.sh'
-      }
-    }), null, 2));
-  }
-  if (!packageJson.scripts || !packageJson.scripts.release) {
-    grunt.file.write('package.json', JSON.stringify(extend(packageJson, {
-      scripts: {
-        release: 'node_modules/wix-gruntfile/scripts/release.sh'
-      }
-    }), null, 2));
+  if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release) {
+    packageJson.scripts = packageJson.scripts || {};
+    packageJson.scripts.build = packageJson.scripts.build || 'node_modules/wix-gruntfile/scripts/build.sh';
+    packageJson.scripts.release = packageJson.scripts.release || 'node_modules/wix-gruntfile/scripts/release.sh';
+    grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
   }
 
   Array.prototype.replace = function (j, k) {
