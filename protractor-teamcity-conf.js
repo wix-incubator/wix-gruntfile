@@ -93,6 +93,7 @@ var capabilities1 = capabilities.slice(0, indexArr);
 var capabilities2 = capabilities.slice(indexArr);
 
 config.multiCapabilities = capabilities;
+config.getPageTimeout = 30;
 
 exports.config = config;
 exports.arrays = {cap1: capabilities1, cap2: capabilities2};
