@@ -71,9 +71,9 @@ var sauceLabsBrowsers = {
 };
 
 var testBrowsers = (process.env.SAUCE_BROWSERS ? process.env.SAUCE_BROWSERS.split(' ') : Object.keys(sauceLabsBrowsers));
-var shardsLeft = 15;
+var shardsLeft = 16;
 
-config.multiCapabilities = testBrowsers.map(function (key, index) {
+var capabilities = testBrowsers.map(function (key, index) {
   var browser = sauceLabsBrowsers[key];
   browser.name = buildName;
   browser['tunnel-identifier'] = process.env.BUILD_NUMBER;
@@ -88,4 +88,11 @@ config.multiCapabilities = testBrowsers.map(function (key, index) {
   return sauceLabsBrowsers[key];
 });
 
+var indexArr = Math.floor(capabilities.length / 2);
+var capabilities1 = capabilities.slice(0, indexArr);
+var capabilities2 = capabilities.slice(indexArr);
+
+config.multiCapabilities = capabilities;
+
 exports.config = config;
+exports.arrays = {cap1: capabilities1, cap2: capabilities2};
