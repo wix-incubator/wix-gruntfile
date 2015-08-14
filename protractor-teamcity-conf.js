@@ -71,7 +71,7 @@ var sauceLabsBrowsers = {
 };
 
 var testBrowsers = (process.env.SAUCE_BROWSERS ? process.env.SAUCE_BROWSERS.split(' ') : Object.keys(sauceLabsBrowsers));
-var shardsLeft = 16;
+var shardsLeft = 15;
 
 var capabilities = testBrowsers.map(function (key, index) {
   var browser = sauceLabsBrowsers[key];
