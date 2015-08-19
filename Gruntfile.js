@@ -272,6 +272,10 @@ module.exports = function (grunt, options) {
     'package'
   ]);
 
+  grunt.registerTask('publish', [
+    'release'
+  ]);
+
   grunt.registerTask('default', function () {
     grunt.task.run(['build']);
   });

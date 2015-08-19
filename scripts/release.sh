@@ -25,6 +25,6 @@ git reset HEAD bower.json
 git diff --exit-code --cached --stat
 
 if [ $? -ne 0 ]; then
-    $(npm bin)/grunt release
+    $(npm bin)/grunt publish
 fi
 echo "##teamcity[blockClosed name='Grunt Release']"
