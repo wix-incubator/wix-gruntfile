@@ -80,6 +80,22 @@ var capabilities = testBrowsers.map(function (key, index) {
   if (browser.platform !== 'OS X 10.9' && browser.platform !== 'OS X 10.10') {
     browser['screen-resolution'] = '1280x1024';
   }
+
+  var executableName;
+  if (browser.platform.indexOf('Windows')>-1) {
+    executableName = 'EditDNS_Windows.bat';
+  }
+  else {
+    executableName = 'EditDNS.sh';
+  }
+
+  browser.prerun = {
+    executable: 'https://github.com/wix/wix-gruntfile/raw/master/' + executableName,
+    args: [],
+    background: false,
+    timeout: 30
+  };
+
   browser.public = 'team';
   browser.build = buildName + ' ' + process.env.BUILD_NUMBER;
   browser.shardTestFiles = true;
