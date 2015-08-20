@@ -18,7 +18,7 @@ $SAUCE_TUNNEL \
   --user $SAUCE_USERNAME \
   --api-key $SAUCE_ACCESS_KEY \
   --logfile /tmp/sc.log \
-  --tunnel-domains localhost \
+  --tunnel-domains localhost,local.wix.com \
   --pidfile /tmp/sc.pid &
 
 while [ ! -f /tmp/sauce-connect-ready ]; do
