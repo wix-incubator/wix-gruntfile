@@ -28,7 +28,7 @@ var sauceLabsBrowsers = {
   },
   ChromeOSX: {
     browserName: 'chrome',
-    platform: 'OS X 10.6'
+    platform: 'OS X 10.8'
   },
   FF: {
     browserName: 'firefox',
@@ -36,7 +36,7 @@ var sauceLabsBrowsers = {
   },
   FFOSX: {
     browserName: 'firefox',
-    platform: 'OS X 10.6'
+    platform: 'OS X 10.10'
   },
   IE11: {
     browserName: 'internet explorer',
@@ -73,11 +73,11 @@ var sauceLabsBrowsers = {
 var testBrowsers = (process.env.SAUCE_BROWSERS ? process.env.SAUCE_BROWSERS.split(' ') : Object.keys(sauceLabsBrowsers));
 var shardsLeft = 15;
 
-config.multiCapabilities = testBrowsers.map(function (key, index) {
+var capabilities = testBrowsers.map(function (key, index) {
   var browser = sauceLabsBrowsers[key];
   browser.name = buildName;
   browser['tunnel-identifier'] = process.env.BUILD_NUMBER;
-  if (browser.platform !== 'OS X 10.9') {
+  if (browser.platform !== 'OS X 10.9' && browser.platform !== 'OS X 10.10') {
     browser['screen-resolution'] = '1280x1024';
   }
   browser.public = 'team';
@@ -88,4 +88,12 @@ config.multiCapabilities = testBrowsers.map(function (key, index) {
   return sauceLabsBrowsers[key];
 });
 
+var indexArr = Math.floor(capabilities.length / 2);
+var capabilities1 = capabilities.slice(0, indexArr);
+var capabilities2 = capabilities.slice(indexArr);
+
+config.multiCapabilities = capabilities;
+config.getPageTimeout = 30;
+
 exports.config = config;
+exports.arrays = {cap1: capabilities1, cap2: capabilities2};

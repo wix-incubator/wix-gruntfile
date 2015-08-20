@@ -42,6 +42,18 @@ module.exports = function (grunt, options) {
     return connect.static(require('path').resolve(grunt.template.process(dir)), { maxAge: maxage || 0 });
   }
 
+  function middlewareServerBuildWithCache(connect) {
+    return getProxies('beforeProxies').concat([
+      //connect.compress(),
+      connect.favicon(),
+      mountFolder(connect, 'test', 86400000),
+      mountFolder(connect, 'dist', 86400000),
+      connect.urlencoded()
+    ]).concat(grunt.config('yeoman').e2eTestServer ?
+        [proxyFolder('/_api/', '<%= yeoman.e2eTestServer %>')] : [])
+        .concat(getProxies('proxies'));
+  }
+
   return {
     options: {
       port: options.port,
@@ -76,7 +88,7 @@ module.exports = function (grunt, options) {
         port: 9876,
         middleware: function (connect) {
           return getProxies('beforeProxies').concat([
-            inject({snippet: '<script>Livereload = \'HACK\''}),
+            inject({snippet: '<script>LiveReload = \'HACK\'</script>'}),
             mountFolder(connect, '.tmp'),
             mountFolder(connect, 'test'),
             mountFolder(connect, 'app'),
@@ -90,17 +102,13 @@ module.exports = function (grunt, options) {
     test: {
       options: {
         port: 9876,
-        middleware: function (connect) {
-          return getProxies('beforeProxies').concat([
-            //connect.compress(),
-            connect.favicon(),
-            mountFolder(connect, 'test', 86400000),
-            mountFolder(connect, 'dist', 86400000),
-            connect.urlencoded()
-          ]).concat(grunt.config('yeoman').e2eTestServer ?
-              [proxyFolder('/_api/', '<%= yeoman.e2eTestServer %>')] : [])
-            .concat(getProxies('proxies'));
-        }
+        middleware: middlewareServerBuildWithCache
+      }
+    },
+    testSecondaryServer: {
+      options: {
+        port: 9877,
+        middleware: middlewareServerBuildWithCache
       }
     },
     dist: {

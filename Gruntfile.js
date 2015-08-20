@@ -6,6 +6,14 @@ module.exports = function (grunt, options) {
   var shell = require('shelljs');
   var featureDetector = require('./feature-detector');
 
+  var packageJson = grunt.file.readJSON('package.json');
+  if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release) {
+    packageJson.scripts = packageJson.scripts || {};
+    packageJson.scripts.build = packageJson.scripts.build || 'node_modules/wix-gruntfile/scripts/build.sh';
+    packageJson.scripts.release = packageJson.scripts.release || 'node_modules/wix-gruntfile/scripts/release.sh';
+    grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
+  }
+
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
     return this;
@@ -231,6 +239,26 @@ module.exports = function (grunt, options) {
     'e2eIfEnabled:teamcity'
   ]);
 
+  grunt.registerTask('test:ci_parallel_main_server', [
+    'e2eIfEnabled:teamcity_main_server_parallel'
+  ]);
+
+  grunt.registerTask('test:ci_parallel_diff_server_diff_tunnel', [
+    'e2eIfEnabled:teamcity_diff_server_diff_tunnel'
+  ]);
+
+  grunt.registerTask('test:ci_parallel_same_tunnel', [
+    'e2eIfEnabled:teamcity_diff_server_diff_tunnel'
+  ]);
+
+  grunt.registerTask('test:ci_parallel_same_server', [
+    'e2eIfEnabled:teamcity_same_server'
+  ]);
+
+  grunt.registerTask('test:ci_parallel_same_server_tunnel', [
+    'e2eIfEnabled:teamcity_same_server_tunnel'
+  ]);
+
   grunt.registerTask('build', [
     'pre-build:clean',
     'karma:single',
@@ -242,6 +270,10 @@ module.exports = function (grunt, options) {
     'pre-build:clean',
     'karma:teamcity',
     'package'
+  ]);
+
+  grunt.registerTask('publish', [
+    'release'
   ]);
 
   grunt.registerTask('default', function () {
