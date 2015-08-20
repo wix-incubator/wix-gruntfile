@@ -1,23 +1,25 @@
 #!/bin/bash
 set -e
 
-CONNECT_URL="https://saucelabs.com/downloads/sc-4.3.9-linux.tar.gz"
-CONNECT_DOWNLOAD="sc-4.3.9-linux"
+CONNECT_URL="https://saucelabs.com/downloads/sc-4.3.11-linux.tar.gz"
+CONNECT_DOWNLOAD="sc-4.3.11-linux"
 CONNECT_DOWNLOAD_FILE=$CONNECT_DOWNLOAD.tar.gz
 CONNECT_DIR=".sauce-connect"
 CONNECT_LOG="log"
 BUILD_REMOTE_LOG="https://build-logs.firebaseio.com/builds.json"
 GRUNT="$NODE_HOME/node node_modules/grunt-cli/bin/grunt"
 SC_EXE="./sc"
+SAUCE_READY_FILE="./sauce-connect-ready"
+SAUCE_READY_FILE_2="./sauce-connect-ready-2"
 
 NORM=""
 TEXTCOLOR=""
 
-#build_number, port
+#build_number, port, ready file
 function startTunnel {
 	echo "Starting Sauce Connect in the background (tunnel $1)"
 	echo "Logging into $CONNECT_LOG"
-	$SC_EXE --readyfile ./sauce-connect-ready \
+	$SC_EXE --readyfile $3 \
 	    --tunnel-identifier $1 \
 	    --user $SAUCE_USERNAME \
 	    --api-key $SAUCE_ACCESS_KEY \
@@ -29,9 +31,9 @@ function startTunnel {
 
 function startOneTunnel {
 
-	startTunnel $BUILD_NUMBER 4445
+	startTunnel $BUILD_NUMBER 4445 $SAUCE_READY_FILE
 
-    while [ ! -f ./sauce-connect-ready ]; do
+    while [ ! -f $SAUCE_READY_FILE ]; do
 	  echo "Waiting for Sauce Labs..."
 	  sleep 5
 	done
@@ -44,10 +46,10 @@ function startTwoTunnels {
 
 	SECOND_BUILD_NUMBER="$BUILD_NUMBER""2"
 
-	startTunnel $BUILD_NUMBER 4445
-	startTunnel $SECOND_BUILD_NUMBER 4446
+	startTunnel $BUILD_NUMBER 4445 $SAUCE_READY_FILE
+	startTunnel $SECOND_BUILD_NUMBER 4446 $SAUCE_READY_FILE_2
 
-	while [ ! -f ./sauce-connect-ready ] && [ ! -f ./sauce-connect-ready-2 ]; do
+	while [ ! -f $SAUCE_READY_FILE ] && [ ! -f $SAUCE_READY_FILE_2 ]; do
 	  echo "Waiting for Sauce Labs..."
 	  sleep 5
 	done
@@ -59,7 +61,12 @@ function startTwoTunnels {
 # start_time, elapsed time
 function printCompleteCommand {
 	END_DATE=$(date '+%x_%H:%M:%S:%N')
-	curl -X POST -d '{"startTime": "'"$1"'", "endTime": "'"$END_DATE"'", "buildName": "scheduler-client", "buildMode": "'"$BUILD_MODE"'", "totalDuration": "'"$(($2/60)) min $(($2%60)) sec"'"}' $BUILD_REMOTE_LOG
+	curl -X POST -d '{"status": "success", "startTime": "'"$1"'", "endTime": "'"$END_DATE"'", "buildName": "'"$MODULE_NAME"'", "buildMode": "'"$BUILD_MODE"'", "totalDuration": "'"$(($2/60)) min $(($2%60)) sec"'"}' $BUILD_REMOTE_LOG
+}
+
+function printFailedCommand {
+	END_DATE=$(date '+%x_%H:%M:%S:%N')
+	curl -X POST -d '{"status": "fail", "endTime": "'"$END_DATE"'", "buildName": "'"$MODULE_NAME"'", "buildMode": "'"$BUILD_MODE"'"}' $BUILD_REMOTE_LOG
 }
 
 function regular_mode {
@@ -68,11 +75,8 @@ function regular_mode {
 
 	START_DATE=$(date '+%x_%H:%M:%S:%N')
 	START_TIME=$SECONDS
-	$GRUNT test:ci
-	ELAPSED_TIME=$(($SECONDS - $START_TIME))
-	echo "${TEXTCOLOR}***** Done 1: regular mode:${NORM}"
-	echo "${TEXTCOLOR}$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec ${NORM}"
-	printCompleteCommand $START_DATE $ELAPSED_TIME
+	$GRUNT test:ci & pid1=$!
+	wait $pid1 || RUN_RESULT_STATUS=1
 }
 
 function seperate_server_and_tunnel {
@@ -83,12 +87,8 @@ function seperate_server_and_tunnel {
 	START_TIME=$SECONDS
 	$GRUNT test:ci_parallel_main_server & pid1=$!
 	$GRUNT test:ci_parallel_diff_server_diff_tunnel & pid2=$!
-	wait $pid1
-	wait $pid2
-	ELAPSED_TIME=$(($SECONDS - $START_TIME))
-	echo "${TEXTCOLOR}Done 2: separate server and tunnel${NORM}"
-	echo "${TEXTCOLOR}$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec ${NORM}"
-	printCompleteCommand $START_DATE $ELAPSED_TIME
+	wait $pid1 || RUN_RESULT_STATUS=1
+	wait $pid2 || RUN_RESULT_STATUS=1
 }
 
 function same_server_and_tunnel {
@@ -99,12 +99,8 @@ function same_server_and_tunnel {
 	START_TIME=$SECONDS
 	$GRUNT test:ci_parallel_main_server & pid1=$!
 	$GRUNT test:ci_parallel_same_server_tunnel & pid2=$!
-	wait $pid1
-	wait $pid2
-	ELAPSED_TIME=$(($SECONDS - $START_TIME))
-	echo "${TEXTCOLOR}***** Done 3: same server and tunnel${NORM}"
-	echo "${TEXTCOLOR}$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec ${NORM}"
-	printCompleteCommand $START_DATE $ELAPSED_TIME
+	wait $pid1 || RUN_RESULT_STATUS=1
+	wait $pid2 || RUN_RESULT_STATUS=1
 }
 
 function seperate_server_same_tunnel {
@@ -115,12 +111,8 @@ function seperate_server_same_tunnel {
 	START_DATE=$(date '+%x_%H:%M:%S:%N')
 	$GRUNT test:ci_parallel_main_server & pid1=$!
 	$GRUNT test:ci_parallel_same_tunnel & pid2=$!
-	wait $pid1
-	wait $pid2
-	ELAPSED_TIME=$(($SECONDS - $START_TIME))
-	echo "${TEXTCOLOR}***** Done 4: same tunnel${NORM}"
-	echo "${TEXTCOLOR}$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec ${NORM}"
-	printCompleteCommand $START_DATE $ELAPSED_TIME
+	wait $pid1 || RUN_RESULT_STATUS=1
+	wait $pid2 || RUN_RESULT_STATUS=1
 }
 
 function same_server_seperate_tunnel {
@@ -131,21 +123,17 @@ function same_server_seperate_tunnel {
 	START_DATE=$(date '+%x_%H:%M:%S:%N')
 	$GRUNT test:ci_parallel_main_server & pid1=$!
 	$GRUNT test:ci_parallel_same_server & pid2=$!
-	wait $pid1
-	wait $pid2
-	ELAPSED_TIME=$(($SECONDS - $START_TIME))
-	echo "${TEXTCOLOR}***** Done 5: same server${NORM}"
-	echo "${TEXTCOLOR}$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec ${NORM}"
-	printCompleteCommand $START_DATE $ELAPSED_TIME
+	wait $pid1 || RUN_RESULT_STATUS=1
+	wait $pid2 || RUN_RESULT_STATUS=1
 }
 
 #to run locally define export LOCAL_MODE=1 (change path to sc if needed)
 if [[ $LOCAL_MODE = 1 ]]; then
-	# SC_EXE="/Applications/sc-4.3.8-osx/bin/sc"
     GRUNT="grunt"
-    CONNECT_URL="https://saucelabs.com/downloads/sc-4.3.10-osx.zip"
-    CONNECT_DOWNLOAD="sc-4.3.10-osx"
+    CONNECT_URL="https://saucelabs.com/downloads/sc-4.3.11-osx.zip"
+    CONNECT_DOWNLOAD="sc-4.3.11-osx"
     CONNECT_DOWNLOAD_FILE=$CONNECT_DOWNLOAD.zip
+    BUILD_REMOTE_LOG="https://build-logs.firebaseio.com/local-builds.json"
 fi
 
 mkdir -p $CONNECT_DIR
@@ -171,4 +159,13 @@ else
 	echo echo "${TEXTCOLOR}Running seperate_server_and_tunnel${NORM}"
 	BUILD_MODE="seperate_server_and_tunnel"
 	seperate_server_and_tunnel
+fi
+
+if [[ $RUN_RESULT_STATUS = 1 ]]; then
+	printFailedCommand
+else
+	ELAPSED_TIME=$(($SECONDS - $START_TIME))
+	echo "${TEXTCOLOR}***** Done $BUILD_MODE${NORM}"
+	echo "${TEXTCOLOR}$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec ${NORM}"
+	printCompleteCommand $START_DATE $ELAPSED_TIME
 fi
