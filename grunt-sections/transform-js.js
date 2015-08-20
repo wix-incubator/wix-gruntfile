@@ -9,7 +9,20 @@ module.exports = function (grunt, options) {
       grunt.file.write('app/scripts/reference.ts', '/// <reference path="../../reference.ts" />');
       grunt.file.write('test/reference.ts', '/// <reference path="../reference.ts" />');
       grunt.task.run('tsWithHack:copy');
+      grunt.task.run('copy:tmp');
+      grunt.task.run('tsSourceMapModifier');
     }
+  });
+
+  grunt.registerTask('tsSourceMapModifier', function () {
+    var mapArr = grunt.file.expand('.tmp/scripts/**/*.js.map');
+    mapArr.forEach(function(filePath){
+      var content = grunt.file.readJSON(filePath);
+      var source = content.sources.pop().split('/');
+      var modifiedSource = source[source.length-1];
+      content.sources.push(modifiedSource);
+      grunt.file.write(filePath, JSON.stringify(content));
+    });
   });
 
   grunt.registerTask('tsWithHack', function (param) {
@@ -65,7 +78,7 @@ module.exports = function (grunt, options) {
         reference: 'reference.ts',
         options: {
           target: 'es5',
-          sourceMap: false,
+          sourceMap: true,
           declaration: false,
           removeComments: false,
           module: 'commonjs'

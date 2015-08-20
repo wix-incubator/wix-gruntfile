@@ -86,7 +86,7 @@ module.exports = function (grunt, options) {
         }, {
           expand: true,
           cwd: '.tmp/scripts/',
-          src: ['**/*.js'],
+          src: ['**/*.js', '**/*.js.map', '**/*.ts'],
           dest: 'dist/_debug_scripts'
         }, {
           expand: true,
@@ -96,7 +96,7 @@ module.exports = function (grunt, options) {
         }, {
           expand: true,
           cwd: '.tmp/modules/',
-          src: ['**/!(*.test).js'],
+          src: ['**/!(*.test).js', '**/!(*.test).js.map', '**/!(*.test).ts'],
           dest: 'dist/_debug_modules'
         }, {
           expand: true,
@@ -117,6 +117,12 @@ module.exports = function (grunt, options) {
           src: 'node_modules/wix-gruntfile/.sadignore',
           dest: 'dist/.sadignore'
         }]
+      },
+      tmp:{
+        expand: true,
+        cwd: 'app',
+        dest: '.tmp',
+        src: ['scripts/**/*.ts']
       },
       styles: {
         expand: true,
