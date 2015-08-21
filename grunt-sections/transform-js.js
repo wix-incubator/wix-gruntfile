@@ -5,15 +5,13 @@ var featureDetector = require('../feature-detector');
 
 module.exports = function (grunt, options) {
   grunt.registerTask('typescriptIfEnabled', function () {
-    if (grunt.task.exists('ts') && featureDetector.isTypescriptEnabled()) {
-      grunt.file.write('app/scripts/reference.ts', '/// <reference path="../../reference.ts" />');
-      grunt.file.write('test/reference.ts', '/// <reference path="../reference.ts" />');
+    if (grunt.task.exists('typescriptUsingTsConfig') && featureDetector.isTypescriptEnabled()) {
       grunt.task.run('tsWithHack:copy');
     }
   });
 
   grunt.registerTask('tsWithHack', function (param) {
-    grunt.task.run('ts');
+    grunt.task.run('typescriptUsingTsConfig');
     grunt.task.run('theTsHack:' + param);
   });
 
@@ -60,15 +58,23 @@ module.exports = function (grunt, options) {
     },
     typescript: {
       build: {
-        src: ['app/' + (options.useModulesStructure ? 'modules' : 'scripts') + '/**/*.ts', 'test/**/*.ts'],
-        outDir: '.tmp/',
-        reference: 'reference.ts',
         options: {
-          target: 'es5',
-          sourceMap: false,
-          declaration: false,
-          removeComments: false,
-          module: 'commonjs'
+          rootDir: "./",
+          defaultTsConfig: {
+            "compilerOptions": {
+              "target": "es5",
+              "module": "commonjs",
+              "removeComments": false,
+              "declaration": false,
+              "sourceMap": false,
+              "outDir": ".tmp"
+            },
+            "filesGlob": [
+              'app/' + (options.useModulesStructure ? 'modules' : 'scripts') + '/**/*.ts',
+              'test/**/*.ts'
+            ],
+            "files": []
+          }
         }
       }
     }

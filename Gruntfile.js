@@ -79,7 +79,7 @@ module.exports = function (grunt, options) {
     plugins = plugins.concat(options.svgFontName ? ['grunt-webfont'] : []);
     plugins = plugins.concat(options.autoprefixer ? ['grunt-autoprefixer'] : []);
     plugins = plugins.concat(featureDetector.isTraceurEnabled() ? ['grunt-traceur-latest'] : []);
-    plugins = plugins.concat(featureDetector.isTypescriptEnabled() ? ['grunt-ts'] : []);
+    plugins = plugins.concat(featureDetector.isTypescriptEnabled() ? ['grunt-typescript-using-tsconfig'] : []);
     plugins = plugins.concat(featureDetector.isHamlEnabled() ? ['grunt-haml2html-shahata'] : []);
     plugins.forEach(function (name) {
       grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
@@ -110,7 +110,7 @@ module.exports = function (grunt, options) {
     autoprefixer:           require('./grunt-sections/transform-css')(grunt, options).autoprefixer,
     compass:                require('./grunt-sections/transform-css')(grunt, options).compass,
     traceur:                require('./grunt-sections/transform-js')(grunt, options).traceur,
-    ts:                     require('./grunt-sections/transform-js')(grunt, options).typescript,
+    typescriptUsingTsConfig:require('./grunt-sections/transform-js')(grunt, options).typescript,
     replace:                require('./grunt-sections/transform-html')(grunt, options).replace,
     haml:                   require('./grunt-sections/transform-html')(grunt, options).haml,
 
