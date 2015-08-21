@@ -22,6 +22,10 @@ $SAUCE_TUNNEL \
   --pidfile /tmp/sc.pid &
 
 while [ ! -f /tmp/sauce-connect-ready ]; do
+  if [ ! -f /tmp/sc.pid ]; then
+    echo "##teamcity[message text='Sauce tunnel failed to start' status='ERROR']"
+    exit 1
+  fi
   echo "Waiting for Sauce Labs..."
   sleep 5
   ps $(cat /tmp/sc.pid) > /dev/null
