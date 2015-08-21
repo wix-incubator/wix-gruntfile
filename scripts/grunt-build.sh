@@ -7,6 +7,7 @@ echo "##teamcity[blockClosed name='Grunt Build']"
 
 echo "##teamcity[blockOpened name='Sauce Tunnel']"
 rm -f /tmp/sauce-connect-ready
+rm -f /tmp/sc.pid
 SAUCE_TUNNEL="node_modules/wix-gruntfile/scripts/sc"
 if [ "`uname`" = "Darwin" ]; then
     SAUCE_TUNNEL="node_modules/wix-gruntfile/scripts/sc-osx"
@@ -20,15 +21,14 @@ $SAUCE_TUNNEL \
   --logfile /tmp/sc.log \
   --tunnel-domains localhost \
   --pidfile /tmp/sc.pid &
-sleep 5
 
 while [ ! -f /tmp/sauce-connect-ready ]; do
+  echo "Waiting for Sauce Labs..."
+  sleep 5
   if [ ! -f /tmp/sc.pid ]; then
     echo "##teamcity[message text='Sauce tunnel failed to start' status='ERROR']"
     exit 1
   fi
-  echo "Waiting for Sauce Labs..."
-  sleep 5
   ps $(cat /tmp/sc.pid) > /dev/null
   if [ $? -ne 0 ]; then
     echo "##teamcity[message text='Sauce tunnel died' status='ERROR']"
