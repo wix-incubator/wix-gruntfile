@@ -20,6 +20,7 @@ $SAUCE_TUNNEL \
   --logfile /tmp/sc.log \
   --tunnel-domains localhost \
   --pidfile /tmp/sc.pid &
+sleep 5
 
 while [ ! -f /tmp/sauce-connect-ready ]; do
   if [ ! -f /tmp/sc.pid ]; then
