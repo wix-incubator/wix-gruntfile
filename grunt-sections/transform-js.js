@@ -13,7 +13,9 @@ module.exports = function (grunt, options) {
       grunt.task.run('tsSourceMapModifier');
     }
   });
-
+  
+  //this task change the source path in js.map files
+  //that generated from the sourcemap of typescript task
   grunt.registerTask('tsSourceMapModifier', function () {
     var mapArr = grunt.file.expand('.tmp/scripts/**/*.js.map');
     mapArr.forEach(function(filePath){
