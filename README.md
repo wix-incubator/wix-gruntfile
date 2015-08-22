@@ -162,7 +162,7 @@ Common use of the inline:
 <!-- build:css({.tmp,app}) styles/main.css -->
 <!-- endbuild -->
 <!-- end-process-tags -->
-<link rel="stylesheet" href="styles/mixed-css-file-with-wix-params.css?__extractStyles=inline.css" />
+<link rel="stylesheet" href="styles/mixed-css-file-with-wix-params.css?__wixStyleInline=inline.css" />
 ```
 **Notes:**
 
