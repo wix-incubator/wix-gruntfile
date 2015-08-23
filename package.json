@@ -81,7 +81,7 @@
     "grunt-manifest-packager": "^1.0.0",
     "wix-cdn-data": "^0.1.0",
     "grunt-petri-experiments": "^1.0.0",
-    "grunt-extract-styles": "^0.3.0",
+    "grunt-extract-styles": "^0.2.0",
     "grunt-wix-inline": "^0.3.3"
   },
   "peerDependencies": {
