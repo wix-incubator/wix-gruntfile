@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-trap "killall sc sc-osx" EXIT
+trap "killall sc" EXIT
 
 node_modules/wix-gruntfile/scripts/install-dependencies.sh
 node_modules/wix-gruntfile/scripts/grunt-build.sh
