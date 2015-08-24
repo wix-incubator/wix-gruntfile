@@ -68,6 +68,7 @@ module.exports = function (grunt, options) {
           sourceMap: false,
           declaration: false,
           removeComments: false,
+          experimentalDecorators: true,
           module: 'commonjs'
         }
       }
