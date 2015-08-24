@@ -1,7 +1,7 @@
 {
   "name": "wix-gruntfile",
   "description": "Wix Gruntfile.",
-  "version": "0.1.273",
+  "version": "0.1.284",
   "author": {
     "name": "Shahar Talmi"
   },
@@ -38,7 +38,7 @@
     "grunt-force-task": "^1.0.0",
     "grunt-google-cdn-shahata": "^0.2.0",
     "grunt-haml2html-shahata": "^0.3.0",
-    "grunt-jscs": "^1.5.0",
+    "grunt-jscs": "^2.1.0",
     "grunt-json-angular-translate": "^0.1.0",
     "grunt-karma": "^0.11.0",
     "grunt-newer": "^1.1.0",
