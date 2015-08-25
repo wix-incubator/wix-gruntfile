@@ -18,9 +18,6 @@ if (process.env.BUILD_NUMBER !== '12345') {
   };
 }
 
-config.sauceUser = process.env.SAUCE_USERNAME;
-config.sauceKey = process.env.SAUCE_ACCESS_KEY;
-
 var sauceLabsBrowsers = {
   Chrome: {
     browserName: 'chrome',
@@ -71,7 +68,7 @@ var sauceLabsBrowsers = {
 };
 
 var testBrowsers = (process.env.SAUCE_BROWSERS ? process.env.SAUCE_BROWSERS.split(' ') : Object.keys(sauceLabsBrowsers));
-var shardsLeft = testBrowsers.length; //15;
+var shardsLeft = 15;
 
 var capabilities = testBrowsers.map(function (key, index) {
   var browser = sauceLabsBrowsers[key];
@@ -96,8 +93,10 @@ var indexArr = Math.floor(capabilities.length / 2);
 var capabilities1 = capabilities.slice(0, indexArr);
 var capabilities2 = capabilities.slice(indexArr);
 
-config.multiCapabilities = capabilities;
-config.getPageTimeout = 30;
+// config.sauceUser = process.env.SAUCE_USERNAME;
+// config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+// config.multiCapabilities = capabilities;
+// config.getPageTimeout = 30;
 
 exports.config = config;
 exports.arrays = {cap1: capabilities1, cap2: capabilities2};
