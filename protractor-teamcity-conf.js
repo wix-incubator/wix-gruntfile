@@ -84,6 +84,9 @@ var capabilities = testBrowsers.map(function (key, index) {
   browser.idleTimeout = 180;
   browser.build = buildName + ' ' + process.env.BUILD_NUMBER;
   browser.shardTestFiles = true;
+  browser.recordVideo = false;
+  browser.recordScreenshots = false;
+  browser.recordLogs = false;
   browser.maxInstances = Math.round(shardsLeft / (testBrowsers.length - index));
   shardsLeft -= browser.maxInstances;
   return sauceLabsBrowsers[key];
