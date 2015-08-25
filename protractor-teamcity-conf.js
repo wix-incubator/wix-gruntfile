@@ -71,7 +71,7 @@ var sauceLabsBrowsers = {
 };
 
 var testBrowsers = (process.env.SAUCE_BROWSERS ? process.env.SAUCE_BROWSERS.split(' ') : Object.keys(sauceLabsBrowsers));
-var shardsLeft = 15;
+var shardsLeft = testBrowsers.length; //15;
 
 var capabilities = testBrowsers.map(function (key, index) {
   var browser = sauceLabsBrowsers[key];
@@ -81,6 +81,7 @@ var capabilities = testBrowsers.map(function (key, index) {
     browser['screen-resolution'] = '1280x1024';
   }
   browser.public = 'team';
+  browser.idleTimeout = 180;
   browser.build = buildName + ' ' + process.env.BUILD_NUMBER;
   browser.shardTestFiles = true;
   browser.maxInstances = Math.round(shardsLeft / (testBrowsers.length - index));
