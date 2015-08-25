@@ -4,6 +4,7 @@ set -e
 echo "##teamcity[blockOpened name='Grunt Build']"
 $(npm bin)/grunt build:ci
 echo "##teamcity[blockClosed name='Grunt Build']"
+exit 0
 
 echo "##teamcity[blockOpened name='Sauce Tunnel']"
 rm -f /tmp/sauce-connect-ready
