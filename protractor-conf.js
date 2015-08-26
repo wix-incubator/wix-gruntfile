@@ -100,7 +100,8 @@ config.onPrepare = function () {
 };
 
 config.jasmineNodeOpts = {
-  defaultTimeoutInterval: 300000
+  defaultTimeoutInterval: 300000,
+  isVerbose: true
 };
 
 module.exports.config = config;
