@@ -11,7 +11,7 @@ var config = require('./protractor-conf').config;
 
 if (process.env.BUILD_NUMBER !== '12345') {
   var onPrepare = config.onPrepare || function () {};
-  config.capabilities.shardTestFiles = false;
+  config.capabilities.maxInstances = process.env.PROTRACTOR_SHARDS || 1;
   config.onPrepare = function () {
     require('jasmine-reporters');
     jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
