@@ -40,7 +40,8 @@ module.exports = function (grunt, options) {
     useModulesStructure: false,
     svgFontName: null,
     autoprefixer: true,
-    inline: false
+    inline: false,
+    enableAngularMigration: false
   }, options);
 
   if (options.version.split('.')[0] > 0) {
@@ -317,5 +318,9 @@ module.exports = function (grunt, options) {
     }
     grunt.config(what, conf);
   };
+  
+  if (options.enableAngularMigration) {
+    require('./grunt-sections/angular-migration')(grunt, options).addMigration();
+  }
 
 };
