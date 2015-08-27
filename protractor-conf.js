@@ -41,15 +41,19 @@ function hasFocusedTests(patterns, stringsRegex) {
   });
 }
 
-if(hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm)) {
-  config.capabilities.shardTestFiles = false;
-  console.log('\x1b[33m%s\x1b[0m', 'Protractor sharding is disabled due to presence of focused tests.');
+function warn(message) {
+  console.log('\x1b[33m%s\x1b[0m', message);
 }
 
-var useJasmine2 = !!process.env.USE_JASMINE2;
+if(hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm)) {
+  config.capabilities.shardTestFiles = false;
+  warn('Protractor sharding is disabled due to presence of focused tests.');
+}
+
+var useJasmine2 = config.framework === 'jasmine' && !!process.env.USE_JASMINE2;
 if (useJasmine2) {
   config.framework = 'jasmine2';
-  console.log('\x1b[33m%s\x1b[0m', 'Forcing protractor to use jasmine2');
+  warn('Forcing protractor to use jasmine2 testing framework.');
 }
 
 var onPrepare = config.onPrepare || function () {};
