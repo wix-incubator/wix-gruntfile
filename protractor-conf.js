@@ -41,13 +41,28 @@ function hasFocusedTests(patterns, stringsRegex) {
   });
 }
 
+function warn(message) {
+  console.log('\x1b[33m%s\x1b[0m', message);
+}
+
 if(hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm)) {
   config.capabilities.shardTestFiles = false;
-  console.log('\x1b[33m%s\x1b[0m', 'Protractor sharding is disabled due to presence of focused tests.');
+  warn('Protractor sharding is disabled due to presence of focused tests.');
+}
+
+var useJasmine2 = config.framework === 'jasmine' && !!process.env.USE_JASMINE2;
+if (useJasmine2) {
+  config.framework = 'jasmine2';
+  warn('Forcing protractor to use jasmine2 testing framework.');
 }
 
 var onPrepare = config.onPrepare || function () {};
 config.onPrepare = function () {
+
+  if (useJasmine2) {
+    require('karma-jasmine1-shim/lib/shim');
+  }
+
   // Disable animations so e2e tests run more quickly
   var disableNgAnimate = function () {
     angular.module('disableNgAnimate', []).run(function ($animate) {

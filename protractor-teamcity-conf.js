@@ -16,8 +16,13 @@ if (process.env.BUILD_NUMBER !== '12345') {
     // config.capabilities.shardTestFiles = false;
   }
   config.onPrepare = function () {
-    require('jasmine-reporters');
-    jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
+    if (config.framework === 'jasmine2') {
+      var reporters = require('jasmine-reporters2');
+      jasmine.getEnv().addReporter(new reporters.TeamcityReporter());
+    } else {
+      require('jasmine-reporters');
+      jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
+    }
     onPrepare.apply(this, arguments);
   };
 }
