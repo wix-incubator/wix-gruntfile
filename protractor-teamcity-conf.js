@@ -18,7 +18,7 @@ if (process.env.BUILD_NUMBER !== '12345') {
   config.onPrepare = function () {
     if (config.framework === 'jasmine2') {
       var reporters = require('jasmine-reporters2');
-      jasmine.getEnv().addReporter(new reporters.TeamcityReporter());
+      jasmine.getEnv().addReporter(new reporters.TeamCityReporter());
     } else {
       require('jasmine-reporters');
       jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
