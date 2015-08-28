@@ -63,6 +63,7 @@
     "karma-coverage": "^0.3.1",
     "karma-growl-reporter": "^0.1.1",
     "karma-jasmine": "~0.1.3",
+    "karam-jasmine2": "git://github.com/mastertheblaster/karma-jasmine.git",
     "karma-jasmine1-shim": "git://github.com/donataswix/karma-jasmine1-shim.git",
     "karma-ng-html2js-preprocessor": "^0.1.0",
     "karma-osx-reporter": "^0.2.0",
