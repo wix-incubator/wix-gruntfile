@@ -8,9 +8,23 @@ module.exports = function (config) {
   var os = require('os');
   var isOsx = os.platform()  === 'darwin';
 
-  config.set({
-    plugins: [
-      'karma-jasmine',
+  var frameworks = ['jasmine'],
+      plugins = [
+        'karma-jasmine',
+        'karma-coverage',
+        'karma-phantomjs-launcher',
+        'karma-growl-reporter',
+        'karma-osx-reporter',
+        'karma-teamcity-reporter',
+        'karma-ng-html2js-preprocessor',
+        'karma-chrome-launcher',
+        'karma-simple-reporter'];
+
+  if (!!process.env.USE_JASMINE2) {
+    frameworks = ['jasmine2', 'jasmine1-shim'];
+    plugins = [
+      'karma-jasmine2',
+      'karma-jasmine1-shim',
       'karma-coverage',
       'karma-phantomjs-launcher',
       'karma-growl-reporter',
@@ -18,8 +32,11 @@ module.exports = function (config) {
       'karma-teamcity-reporter',
       'karma-ng-html2js-preprocessor',
       'karma-chrome-launcher',
-      'karma-simple-reporter'
-    ],
+      'karma-simple-reporter'];
+  }
+
+  config.set({
+    plugins: plugins,
 
     preprocessors: {
       '{app,.tmp}/scripts/{,!(lib)/**/}*.js': 'coverage',
@@ -32,7 +49,7 @@ module.exports = function (config) {
     basePath: '',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine'],
+    frameworks: frameworks,
 
     // list of files / patterns to load in the browser
     files: [ ],
