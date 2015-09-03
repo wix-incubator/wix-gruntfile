@@ -318,9 +318,11 @@ module.exports = function (grunt, options) {
     }
     grunt.config(what, conf);
   };
-  
+
   if (options.enableAngularMigration) {
     require('./grunt-sections/angular-migration')(grunt, options).addMigration();
   }
+
+  require('./grunt-sections/flag-nokarma')(grunt, options);
 
 };
