@@ -50,7 +50,7 @@
     "grunt-text-replace": "^0.4.0",
     "grunt-traceur-latest": "~0.0.4",
     "grunt-ts": "^4.0.0",
-    "grunt-tslint": "^2.3.1-beta",
+    "grunt-tslint": "^2.5.0-beta",
     "grunt-usemin": "^2.6.2",
     "grunt-velocity-debug": "^0.1.0",
     "grunt-webfont": "^0.4.8",
@@ -78,7 +78,7 @@
     "shelljs": "^0.3.0",
     "time-grunt": "^1.0.0",
     "tiny-lr": "^0.1.6",
-    "tslint": "^2.3.1-beta",
+    "tslint": "^2.5.0-beta",
     "typescript": "^1.5.0"
   },
   "optionalDependencies": {
