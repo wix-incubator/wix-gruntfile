@@ -19,7 +19,7 @@
   "main": "Gruntfile.js",
   "dependencies": {
     "compression": "^1.2.0",
-    "connect-inject": "^0.4.0",
+    "connect-injector": "^0.4.2",
     "glob": "^5.0.3",
     "grunt": "^0.4.5",
     "grunt-angular-templates": "^0.5.1",

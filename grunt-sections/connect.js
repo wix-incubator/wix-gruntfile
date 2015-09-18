@@ -2,7 +2,7 @@
 
 var url = require('url');
 var path = require('path');
-var inject = require('connect-inject');
+var injector = require('connect-injector');
 
 module.exports = function (grunt, options) {
   var proxyMiddleware = require('proxy-middleware');
@@ -88,7 +88,12 @@ module.exports = function (grunt, options) {
         port: 9876,
         middleware: function (connect) {
           return getProxies('beforeProxies').concat([
-            inject({snippet: '<script>LiveReload = \'HACK\'</script>'}),
+            injector(function when(req, res) {
+              var contentType = res.getHeader('content-type');
+              return contentType && contentType.indexOf('text/html') > -1;
+            }, function converter(content, req, res, callback) {
+              callback(null, content.toString().replace('</body>', '<script>LiveReload = \'HACK\'</script></body>'));
+            }),
             mountFolder(connect, '.tmp'),
             mountFolder(connect, 'test'),
             mountFolder(connect, 'app'),
