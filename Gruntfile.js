@@ -59,7 +59,7 @@ module.exports = function (grunt, options) {
   if (options.karmaConf) {
     options.karmaConf({set: function (karmaConf) {
       options.unitTestFiles = karmaConf.files.filter(function (value) {
-        return value.indexOf('bower_component') !== -1;
+        return typeof value !== 'string' || value.indexOf('bower_component') !== -1;
       });
     }});
   }
@@ -318,7 +318,7 @@ module.exports = function (grunt, options) {
     }
     grunt.config(what, conf);
   };
-  
+
   if (options.enableAngularMigration) {
     require('./grunt-sections/angular-migration')(grunt, options).addMigration();
   }
