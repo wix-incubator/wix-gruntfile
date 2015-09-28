@@ -81,7 +81,8 @@ module.exports = function (grunt, options) {
             '.htaccess',
             'bower_components/**/*',
             'images/**/*.{webp,ico,svg}',
-            'fonts/*'
+            'fonts/**/*',
+            'videos/**/*'
           ]
         }, {
           expand: true,
