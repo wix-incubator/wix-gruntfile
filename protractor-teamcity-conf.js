@@ -11,15 +11,21 @@ var config = require('./protractor-conf').config;
 
 if (process.env.BUILD_NUMBER !== '12345') {
   var onPrepare = config.onPrepare || function () {};
+  config.capabilities.maxInstances = parseInt(process.env.PROTRACTOR_SHARDS, 10) || 1;
+  if (config.capabilities.maxInstances === 1) {
+    // config.capabilities.shardTestFiles = false;
+  }
   config.onPrepare = function () {
-    require('jasmine-reporters');
-    jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
+    if (config.framework === 'jasmine2') {
+      var reporters = require('jasmine-reporters2');
+      jasmine.getEnv().addReporter(new reporters.TeamCityReporter());
+    } else {
+      require('jasmine-reporters');
+      jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
+    }
     onPrepare.apply(this, arguments);
   };
 }
-
-config.sauceUser = process.env.SAUCE_USERNAME;
-config.sauceKey = process.env.SAUCE_ACCESS_KEY;
 
 var sauceLabsBrowsers = {
   Chrome: {
@@ -81,8 +87,12 @@ var capabilities = testBrowsers.map(function (key, index) {
     browser['screen-resolution'] = '1280x1024';
   }
   browser.public = 'team';
+  browser.idleTimeout = 180;
   browser.build = buildName + ' ' + process.env.BUILD_NUMBER;
   browser.shardTestFiles = true;
+  browser.recordVideo = false;
+  browser.recordScreenshots = false;
+  browser.recordLogs = false;
   browser.maxInstances = Math.round(shardsLeft / (testBrowsers.length - index));
   shardsLeft -= browser.maxInstances;
   return sauceLabsBrowsers[key];
@@ -92,8 +102,10 @@ var indexArr = Math.floor(capabilities.length / 2);
 var capabilities1 = capabilities.slice(0, indexArr);
 var capabilities2 = capabilities.slice(indexArr);
 
-config.multiCapabilities = capabilities;
-config.getPageTimeout = 30;
+// config.sauceUser = process.env.SAUCE_USERNAME;
+// config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+// config.multiCapabilities = capabilities;
+// config.getPageTimeout = 30;
 
 exports.config = config;
 exports.arrays = {cap1: capabilities1, cap2: capabilities2};
