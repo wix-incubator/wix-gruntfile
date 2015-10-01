@@ -97,12 +97,12 @@ module.exports = function (grunt, options) {
         }, {
           expand: true,
           cwd: '.tmp/modules/',
-          src: ['**/!(*.test).js'],
+          src: ['**/!(*.test).js', '**/*.css'],
           dest: 'dist/_debug_modules'
         }, {
           expand: true,
           cwd: 'app/modules/',
-          src: ['**/!(*.test).js'],
+          src: ['**/!(*.test).js', '**/*.css'],
           dest: 'dist/_debug_modules'
         }, {
           expand: true,
