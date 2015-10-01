@@ -45,7 +45,7 @@ module.exports = function (grunt, options) {
 
   function originalCssOnDebug(block) {
     var media = block.media ? ' media="' + block.media + '"' : '';
-    return originalTagsOnDebug(block, ['styles'], makeStyleTag.bind(undefined, media));
+    return originalTagsOnDebug(block, ['styles', 'modules'], makeStyleTag.bind(undefined, media));
   }
 
   grunt.registerTask('styleInlineDistIfEnabled', function () {
