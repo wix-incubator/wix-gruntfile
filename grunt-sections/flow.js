@@ -45,6 +45,7 @@ module.exports = function (grunt, options) {
           src: [
             '.tmp',
             'dist/*',
+            'dist-angular',
             '!dist/.git*'
           ]
         }]

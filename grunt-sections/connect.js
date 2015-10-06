@@ -47,6 +47,7 @@ module.exports = function (grunt, options) {
       //connect.compress(),
       connect.favicon(),
       mountFolder(connect, 'test', 86400000),
+      mountFolder(connect, 'dist-angular', 86400000),
       mountFolder(connect, 'dist', 86400000),
       connect.urlencoded()
     ]).concat(grunt.config('yeoman').e2eTestServer ?
@@ -122,6 +123,7 @@ module.exports = function (grunt, options) {
         middleware: function (connect) {
           return getProxies('beforeProxies').concat([
             mountFolder(connect, 'test'),
+            mountFolder(connect, 'dist-angular'),
             mountFolder(connect, 'dist'),
             proxyFolder('/_api/', '<%= yeoman.api %>'),
             proxyFolder('/_partials/', '<%= yeoman.partials %>'),
