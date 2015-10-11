@@ -16,8 +16,8 @@ config.allScriptsTimeout = 120000;
 config.baseUrl = 'http://localhost:9000/';
 
 config.specs = [
-  process.cwd() + '/test/spec/e2e/**/*.js',
-  process.cwd() + '/test/e2e/spec/**/*.js'
+  process.cwd() + '/.tmp/e2e/spec/**/*.js',
+  process.cwd() + '/.tmp/test/spec/e2e/**/*.js'
 ];
 
 config.framework = 'jasmine';
@@ -45,7 +45,7 @@ function warn(message) {
   console.log('\x1b[33m%s\x1b[0m', message);
 }
 
-if(hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm)) {
+if (hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm)) {
   config.capabilities.shardTestFiles = false;
   warn('Protractor sharding is disabled due to presence of focused tests.');
 }

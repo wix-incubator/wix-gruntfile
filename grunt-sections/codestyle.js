@@ -50,7 +50,7 @@ module.exports = function (grunt) {
           src: [
             'app/{scripts,modules}/**/*.ts',
             'test/{spec,mock,e2e}/**/*.ts',
-            '!app/{scripts,modules}/typings/**/*.ts',
+            '!**/typings/**/*.ts',
             '!app/{scripts,modules}/reference.ts'
           ]
         }]
