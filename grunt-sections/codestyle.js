@@ -48,10 +48,10 @@ module.exports = function (grunt) {
       all: {
         files: [{
           src: [
-            'app/{scripts,modules}/**/*.ts',
+            'app/{scripts,modules,test}/**/*.ts',
             'test/{spec,mock,e2e}/**/*.ts',
             '!app/{scripts,modules}/typings/**/*.ts',
-            '!app/{scripts,modules}/reference.ts'
+            '!app/{scripts,modules,test}/reference.ts'
           ]
         }]
       }
@@ -70,16 +70,17 @@ module.exports = function (grunt) {
             'Gruntfile.js',
             'app/{scripts,modules}/**/*.js',
             '!app/modules/**/*.test.js',
+            '!app/test/**/*.js',
             '!app/scripts/lib/**/*.js'
           ]
         }]
       },
       test: {
         options: {
-          jshintrc: 'test/.jshintrc'
+          jshintrc: featureDetector.isTestInAppFolderEnabled() ? 'app/test/.jshintrc' : 'test/.jshintrc'
         },
         files: [{
-          src: ['test/{spec,mock,e2e}/**/*.js', 'app/modules/**/*.test.js']
+          src: ['test/{spec,mock,e2e}/**/*.js', 'app/modules/**/*.test.js', 'app/test/{spec,mock,e2e}/**/*.js']
         }]
       }
     },
@@ -91,7 +92,7 @@ module.exports = function (grunt) {
         files: [{
           src: [
             'Gruntfile.js',
-            'app/{scripts,modules}/**/*.js',
+            'app/{scripts,modules,test}/**/*.js',
             '!app/scripts/lib/**/*.js',
             'test/{spec,mock,e2e}/**/*.js'
           ]

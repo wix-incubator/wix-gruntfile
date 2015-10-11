@@ -17,7 +17,9 @@ config.baseUrl = 'http://localhost:9000/';
 
 config.specs = [
   process.cwd() + '/test/spec/e2e/**/*.js',
-  process.cwd() + '/test/e2e/spec/**/*.js'
+  process.cwd() + '/test/e2e/spec/**/*.js',
+  process.cwd() + '/app/test/spec/e2e/**/*.js',
+  process.cwd() + '/app/test/e2e/spec/**/*.js'
 ];
 
 config.framework = 'jasmine';

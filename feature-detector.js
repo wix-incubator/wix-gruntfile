@@ -25,6 +25,9 @@ module.exports = {
   isJshintEnabled: function () {
     return isFeaturePresent('/.jshintrc');
   },
+  isTestInAppFolderEnabled: function () {
+    return isFeaturePresent('/app/test/**/*.{js,ts}');
+  },
   isJscsEnabled: function () {
     return isFeaturePresent('/.jscsrc');
   }
