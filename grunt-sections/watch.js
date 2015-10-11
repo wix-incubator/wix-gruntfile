@@ -55,7 +55,7 @@ module.exports = function (grunt, options) {
     },
     test: {
       files: [
-        'app/{scripts,modules}/**/*.js',
+        'app/{scripts,modules,test}/**/*.js',
         'test/**/*.js',
         'karma.conf.js',
         '!test/spec/e2e/**/*.js',
@@ -64,7 +64,7 @@ module.exports = function (grunt, options) {
       tasks: ['jsstyleIfEnabled', 'triggerLivereload', 'karma:unit:run']
     },
     ts: {
-      files: ['{test,app/scripts,app/modules}/**/*.ts'],
+      files: ['{test,app/scripts,app/modules,app/test}/**/*.ts'],
       tasks: ['jsstyleIfEnabled', 'tsWithHack:copy', 'triggerLivereload', 'karma:unit:run'],
       options: {
         event: ['changed', 'added']
