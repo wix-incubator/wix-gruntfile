@@ -35,6 +35,7 @@ module.exports = function (grunt, options) {
       grunt.task.run('newer:traceur');
     }
   });
+  var createDeclaration = options.bowerComponent;
 
   return {
     traceur: {
@@ -70,7 +71,7 @@ module.exports = function (grunt, options) {
         options: {
           target: 'es5',
           sourceMap: false,
-          declaration: false,
+          declaration: createDeclaration,
           removeComments: false,
           experimentalDecorators: true,
           module: 'commonjs'
