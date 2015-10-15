@@ -38,5 +38,7 @@ done
 echo "##teamcity[blockClosed name='Sauce Tunnel']"
 
 echo "##teamcity[blockOpened name='Grunt Test']"
+ping 127.0.0.1 &
 $(npm bin)/grunt test:ci
+killall ping
 echo "##teamcity[blockClosed name='Grunt Test']"
