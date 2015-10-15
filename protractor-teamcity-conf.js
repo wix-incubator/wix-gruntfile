@@ -13,7 +13,7 @@ if (process.env.BUILD_NUMBER !== '12345') {
   var onPrepare = config.onPrepare || function () {};
   config.capabilities.maxInstances = parseInt(process.env.PROTRACTOR_SHARDS, 10) || 1;
   if (config.capabilities.maxInstances === 1) {
-    // config.capabilities.shardTestFiles = false;
+    config.capabilities.shardTestFiles = false;
   }
   config.onPrepare = function () {
     if (config.framework === 'jasmine2') {
