@@ -122,7 +122,8 @@ module.exports = function (grunt, options) {
     sass:                   require('./grunt-sections/transform-css')(grunt, options).sass,
     traceur:                require('./grunt-sections/transform-js')(grunt, options).traceur,
     ts:                     require('./grunt-sections/transform-js')(grunt, options).typescript,
-    replace:                require('./grunt-sections/transform-html')(grunt, options).replace,
+    replace:                extend(require('./grunt-sections/transform-html')(grunt, options).replace,
+                                   require('./grunt-sections/export-dts')(grunt, options).replace),
     haml:                   require('./grunt-sections/transform-html')(grunt, options).haml,
 
     petriExperiments:       require('./grunt-sections/generators')(grunt, options).petriExperiments,
@@ -153,7 +154,8 @@ module.exports = function (grunt, options) {
     copy:                   require('./grunt-sections/flow')(grunt, options).copy,
 
     karma:                  require('./grunt-sections/test-runners')(grunt, options).karma,
-    protractor:             require('./grunt-sections/test-runners')(grunt, options).protractor
+    protractor:             require('./grunt-sections/test-runners')(grunt, options).protractor,
+    concat:                 require('./grunt-sections/export-dts')(grunt, options).concat
   });
 
   grunt.registerTask('wix-install', function () {
@@ -206,7 +208,9 @@ module.exports = function (grunt, options) {
       'uglify',
       'cdnify',
       'usemin',
-      'processTags'
+      'processTags',
+      'concat:dts',
+      'replace:dts'
     ]);
   });
 
@@ -290,6 +294,8 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('publish', [
+    'concat:dts',
+    'replace:dts',
     'release'
   ]);
 
