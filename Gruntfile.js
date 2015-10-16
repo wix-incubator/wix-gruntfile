@@ -189,8 +189,7 @@ module.exports = function (grunt, options) {
       'uglify',
       'cdnify',
       'usemin',
-      'processTags',
-      'clean:index'
+      'processTags'
     ]);
   });
 
