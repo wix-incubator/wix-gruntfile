@@ -5,6 +5,7 @@ module.exports = function (grunt, options) {
   var extend = require('util')._extend;
   var shell = require('shelljs');
   var featureDetector = require('./feature-detector');
+  var path = require('path');
 
   var packageJson = grunt.file.readJSON('package.json');
   if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release) {
@@ -68,7 +69,7 @@ module.exports = function (grunt, options) {
                      'grunt-newer', 'grunt-force-task'];
   if (process.argv[2] === 'lint') {
     lintPlugins.forEach(function (name) {
-      grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
+      grunt.loadNpmTasks(getRelativePluginPath(name));
     });
   } else if (process.argv[2] === 'serve' || process.argv[2] === 'serve:clean') {
     var plugins = lintPlugins.concat([
@@ -83,13 +84,19 @@ module.exports = function (grunt, options) {
     plugins = plugins.concat(featureDetector.isTypescriptEnabled() ? ['grunt-ts'] : []);
     plugins = plugins.concat(featureDetector.isHamlEnabled() ? ['grunt-haml2html-shahata'] : []);
     plugins.forEach(function (name) {
-      grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
+      grunt.loadNpmTasks(getRelativePluginPath(name));
     });
   } else {
     require('load-grunt-tasks')({loadNpmTasks: function (name) {
-      grunt.loadNpmTasks('wix-gruntfile/node_modules/' + name);
+      grunt.loadNpmTasks(getRelativePluginPath(name));
     }}, {config: require('./package.json')});
     require('time-grunt')(grunt);
+  }
+
+  function getRelativePluginPath(name) {
+    var pluginPath = require.resolve(name + '/package.json').replace('/package.json', '');
+    var relativePath = path.relative(process.cwd() + '/node_modules', pluginPath);
+    return relativePath;
   }
 
   var optionalTasks = ['petriExperiments', 'manifestPackager'];

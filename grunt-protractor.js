@@ -2,7 +2,7 @@
 
 var spawn = require('child_process').spawn;
 var grunt = require('grunt');
-var protractorDir = 'node_modules/wix-gruntfile/node_modules/protractor/bin';
+var protractorDir = require.resolve('protractor/bin/elementexplorer.js').replace('elementexplorer.js', '');
 
 module.exports = {
   updateWebdriver: function (done) {
