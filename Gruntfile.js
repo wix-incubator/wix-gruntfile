@@ -7,6 +7,9 @@ module.exports = function (grunt, options) {
   var featureDetector = require('./feature-detector');
 
   var packageJson = grunt.file.readJSON('package.json');
+
+  grunt.loadNpmTasks('wix-gruntfile/node_modules/grunt-sass');
+
   if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release) {
     packageJson.scripts = packageJson.scripts || {};
     packageJson.scripts.build = packageJson.scripts.build || 'node_modules/wix-gruntfile/scripts/build.sh';
@@ -41,7 +44,8 @@ module.exports = function (grunt, options) {
     svgFontName: null,
     autoprefixer: true,
     inline: false,
-    enableAngularMigration: false
+    enableAngularMigration: false,
+    useNodeSass: false
   }, options);
 
   if (options.version.split('.')[0] > 0) {
@@ -110,6 +114,7 @@ module.exports = function (grunt, options) {
 
     autoprefixer:           require('./grunt-sections/transform-css')(grunt, options).autoprefixer,
     compass:                require('./grunt-sections/transform-css')(grunt, options).compass,
+    sass:                   require('./grunt-sections/transform-css')(grunt, options).sass,
     traceur:                require('./grunt-sections/transform-js')(grunt, options).traceur,
     ts:                     require('./grunt-sections/transform-js')(grunt, options).typescript,
     replace:                require('./grunt-sections/transform-html')(grunt, options).replace,
@@ -150,7 +155,7 @@ module.exports = function (grunt, options) {
     shell.exec('npm install; bower install; bundle install', {silent: true});
   });
 
-  grunt.registerTask('pre-build', [
+  var preBuildTasks = [
     'jsstyleIfEnabled',
     'typescriptIfEnabled',
     'traceurIfEnabled',
@@ -167,7 +172,12 @@ module.exports = function (grunt, options) {
     'autoprefixerIfEnabled',
     'styleInlineServeIfEnabled',
     'newer:copy:vm'
-  ]);
+  ];
+
+  if(options.useNodeSass){
+    preBuildTasks.splice(preBuildTasks.indexOf('compass:dist'), 0, 'sass:dist');
+  }
+  grunt.registerTask('pre-build', preBuildTasks);
 
   grunt.registerTask('pre-build:clean', [
     'clean:dist',

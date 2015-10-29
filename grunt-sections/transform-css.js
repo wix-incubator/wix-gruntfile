@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function (grunt, options) {
+  var sassAssetFunctions = require('node-sass-asset-functions');
 
   grunt.registerTask('autoprefixerIfEnabled', function () {
     if (options.autoprefixer) {
@@ -31,6 +32,7 @@ module.exports = function (grunt, options) {
         bundleExec: true,
         sassDir: 'app/' + (options.useModulesStructure ? 'modules' : 'styles'),
         cssDir: '.tmp/' + (options.useModulesStructure ? 'modules' : 'styles'),
+        specify: (options.useNodeSass) ? ('app/' + (options.useModulesStructure ? 'modules' : 'styles') + '/**/*.compass.scss') : undefined,
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: 'app/images',
         javascriptsDir: 'app/scripts',
@@ -46,6 +48,29 @@ module.exports = function (grunt, options) {
         options: {
           debugInfo: true
         }
+      }
+    },
+    sass: {
+      dist: {
+        cwd: 'app',
+        src: [(options.useModulesStructure ? 'modules' : 'styles') + '/**/*.scss', '!' + (options.useModulesStructure ? 'modules' : 'styles') + '/**/*.compass.scss'],
+        dest: '.tmp',
+        expand: true,
+        ext: '.css',
+        options: {
+          outputStyle: 'compact',
+          precision: 5
+        }
+      },
+      options: {
+        includePaths: ['app/bower_components', '.tmp/styles', 'app/styles'],
+        sourceComments: false,
+        functions: sassAssetFunctions({
+          images_path: 'app/images',
+          fonts_path: 'app/fonts',
+          http_images_path: '../images/generated',
+          http_fonts_path: 'fonts'
+        })
       }
     }
   };
