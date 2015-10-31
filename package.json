@@ -43,7 +43,7 @@
     "grunt-karma": "^0.11.0",
     "grunt-newer": "^1.1.0",
     "grunt-ng-annotate": "^1.0.0",
-    "grunt-process-tags": "~0.0.1",
+    "grunt-process-tags": "^1.0.2",
     "grunt-release": "^0.12.0",
     "grunt-scss-lint": "^0.3.3",
     "grunt-svgmin": "^2.0.0",
@@ -67,7 +67,7 @@
     "karma-jasmine1-shim": "git://github.com/donataswix/karma-jasmine1-shim.git",
     "karma-ng-html2js-preprocessor": "^0.1.0",
     "karma-osx-reporter": "^0.2.0",
-    "karma-phantomjs-launcher": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.1",
     "karma-simple-reporter": "^1.0.1",
     "karma-teamcity-reporter": "^0.1.0",
     "load-grunt-tasks": "^3.1.0",
@@ -79,7 +79,11 @@
     "time-grunt": "^1.0.0",
     "tiny-lr": "^0.1.6",
     "tslint": "2.5.0-beta",
-    "typescript": "^1.5.0"
+    "typescript": "^1.5.0",
+    "bower": "^1.3.1",
+    "phantomjs": "^1.9.18",
+    "grunt-cli": "^0.1.13",
+    "grunt": "^0.4.5"
   },
   "optionalDependencies": {
     "grunt-manifest-packager": "^1.0.0",
@@ -102,5 +106,9 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "scripts": {}
+  "scripts": {
+    "build": "node_modules/wix-gruntfile/scripts/build.sh",
+    "release": "node_modules/wix-gruntfile/scripts/release.sh"
+  },
+  "devDependencies": {}
 }
