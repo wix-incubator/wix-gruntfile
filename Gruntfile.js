@@ -8,10 +8,12 @@ module.exports = function (grunt, options) {
   var path = require('path');
 
   var packageJson = grunt.file.readJSON('package.json');
-  if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release) {
+  if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.release) {
     packageJson.scripts = packageJson.scripts || {};
     packageJson.scripts.build = packageJson.scripts.build || 'node_modules/wix-gruntfile/scripts/build.sh';
     packageJson.scripts.release = packageJson.scripts.release || 'node_modules/wix-gruntfile/scripts/release.sh';
+    packageJson.scripts.test = packageJson.scripts.test || '#tbd';
+    packageJson.scripts.start = packageJson.scripts.start || 'grunt serve';
     grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
   }
 
