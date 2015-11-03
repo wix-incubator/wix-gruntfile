@@ -20,7 +20,7 @@ module.exports = function (grunt, options) {
     }
   });
 
-  return {
+  var config = {
     options: {
       nospawn: true
     },
@@ -82,7 +82,7 @@ module.exports = function (grunt, options) {
       tasks: ['jsstyleIfEnabled', 'traceur', 'triggerLivereload', 'karma:unit:run']
     },
     compass: {
-      files: ['app/{styles,modules}/**/*.{scss,sass}'],
+      files: [(options.useNodeSass) ? 'app/{styles,modules}/**/*.compass.{scss,sass}' : 'app/{styles,modules}/**/*.{scss,sass}'],
       tasks: ['scssstyleIfEnabled', 'compass:server', 'autoprefixerIfEnabled', 'replace', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
     },
     styles: {
@@ -101,4 +101,13 @@ module.exports = function (grunt, options) {
       tasks: ['triggerLivereload']
     }
   };
+
+  if(options.useNodeSass){
+    config.sass = {
+      files: ['app/{styles,modules}/**/*.{scss,sass}'],
+      tasks: ['scssstyleIfEnabled', 'sass', 'autoprefixerIfEnabled', 'replace', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
+    };
+  }
+
+  return config;
 };
