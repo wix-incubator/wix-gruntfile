@@ -7,7 +7,11 @@ module.exports = function (grunt, options) {
   grunt.registerTask('typescriptIfEnabled', function () {
     if (grunt.task.exists('ts') && featureDetector.isTypescriptEnabled()) {
       grunt.file.write('app/scripts/reference.ts', '/// <reference path="../../reference.ts" />');
-      grunt.file.write('test/reference.ts', '/// <reference path="../reference.ts" />');
+      if (featureDetector.isTestInAppFolderEnabled()) {
+        grunt.file.write('app/test/reference.ts', '/// <reference path="../../reference.ts" />');
+      } else {
+        grunt.file.write('test/reference.ts', '/// <reference path="../reference.ts" />');
+      }
       grunt.task.run('tsWithHack:copy');
     }
   });
@@ -60,7 +64,7 @@ module.exports = function (grunt, options) {
     },
     typescript: {
       build: {
-        src: ['app/' + (options.useModulesStructure ? 'modules' : 'scripts') + '/**/*.ts', featureDetector.isTestInAppFolderEnabled() ? 'app/test/**/*.ts' : 'test/**/*.ts'],
+        src: ['app/' + (options.useModulesStructure ? 'modules' : 'scripts') + '/**/*.ts', 'app/test/**/*.ts', 'test/**/*.ts'],
         outDir: '.tmp/',
         reference: 'reference.ts',
         options: {

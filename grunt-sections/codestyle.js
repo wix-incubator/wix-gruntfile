@@ -80,7 +80,7 @@ module.exports = function (grunt) {
           jshintrc: featureDetector.isTestInAppFolderEnabled() ? 'app/test/.jshintrc' : 'test/.jshintrc'
         },
         files: [{
-          src: ['test/{spec,mock,e2e}/**/*.js', 'app/modules/**/*.test.js', 'app/test/**/*.js']
+          src: ['test/{spec,mock,e2e}/**/*.js', 'app/modules/**/*.test.js', 'app/test/{spec,mock,e2e}/**/*.js']
         }]
       }
     },
