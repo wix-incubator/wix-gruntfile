@@ -11,7 +11,6 @@ module.exports = function (grunt, options) {
   grunt.loadNpmTasks('wix-gruntfile/node_modules/grunt-sass');
 
   if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test) {
-
     packageJson.scripts = packageJson.scripts || {};
     packageJson.scripts.build = packageJson.scripts.build || 'node_modules/wix-gruntfile/scripts/build.sh';
     packageJson.scripts.release = packageJson.scripts.release || 'node_modules/wix-gruntfile/scripts/release.sh';
