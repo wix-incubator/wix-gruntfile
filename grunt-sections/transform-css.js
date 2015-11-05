@@ -4,7 +4,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('autoprefixerIfEnabled', function () {
     if (options.autoprefixer) {
-      grunt.task.run(['newer:autoprefixer']);
+      grunt.task.run(['replace:wixStyleToBrackets', 'newer:autoprefixer', 'replace:wixStyleToCurlies']);
     }
   });
 

@@ -50,13 +50,13 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('styleInlineDistIfEnabled', function () {
     if (options.inline) {
-      grunt.task.run(['copy:vmTmp', 'extractStyles:wixStyle', 'inline:wixStyle', 'copy:vmDist']);
+      grunt.task.run(['copy:vmTmp', 'replace:wixStyleToBrackets', 'extractStyles:wixStyle', 'replace:wixStyleToCurlies', 'inline:wixStyle', 'copy:vmDist']);
     }
   });
 
   grunt.registerTask('styleInlineServeIfEnabled', function () {
     if (options.inline) {
-      grunt.task.run(['extractStyles:wixStyle', 'copy:vm', 'inline:wixStyle']);
+      grunt.task.run(['replace:wixStyleToBrackets', 'extractStyles:wixStyle', 'replace:wixStyleToCurlies', 'copy:vm', 'inline:wixStyle']);
     }
   });
 
@@ -216,18 +216,6 @@ module.exports = function (grunt, options) {
       wixStyle: {
         options: {
           pattern: /\[\[[^\]]+\]\]/,
-          preProcess: function (css) {
-            // wix tpa params uses {{}}, this breaks the parsers. convert them to [[]].
-            var ret = css.replace(/font: ?; ?{{([^}]+)}};/g, 'font: [[$1]];');
-            ret = ret.replace(/{{([^}]+)}}/g, '[[$1]]');
-            return ret;
-          },
-          postProcess: function (css) {
-            // wix tpa params uses {{}}, convert back the [[]] to {{}}.
-            var ret = css.replace(/font: \[\[([^\]]+)\]\];/g, 'font:;{{$1}};');
-            ret = ret.replace(/\[\[([^\]}]+)\]\]/g, '{{$1}}');
-            return ret;
-          },
           linkIdentifier: '?__wixStyleInline',
           remainSuffix: '.remain',
           extractedSuffix: '?__inline=true',
