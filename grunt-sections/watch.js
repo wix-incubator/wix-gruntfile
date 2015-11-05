@@ -20,7 +20,7 @@ module.exports = function (grunt, options) {
     }
   });
 
-  return {
+  var config = {
     options: {
       nospawn: true
     },
@@ -101,4 +101,12 @@ module.exports = function (grunt, options) {
       tasks: ['triggerLivereload']
     }
   };
+
+  if(options.useNodeSass){
+    config.sass = {
+      files: ['app/{styles,modules}/**/*.{scss,sass}'],
+      tasks: ['scssstyleIfEnabled', 'sass', 'autoprefixerIfEnabled', 'replace', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
+    };
+  }
+  return config;
 };
