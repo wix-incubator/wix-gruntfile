@@ -153,7 +153,7 @@ try {
 ```
 
 ## WixStyle inline
-To enable the wixStyle inline feature, `inline` property of the Gruntfile options sould be `true`.
+To enable the wixStyle inline feature, `inline` property of the Gruntfile options should be `true`.
 
 Common use of the inline:
 ####index.vm
@@ -167,8 +167,7 @@ Common use of the inline:
 **Notes:**
 
 1. `wixStyleInline` task will add the `remain` file to the concat of the first **CSS** usemin block, The VM file should have at least one usemin css block, otherwise the remain file will not concatenated & minified.
-2. When the **inline** property is `ON` the **autoprefixer** is `OFF`
-3. The task will extract wix style params from `mixed-css-file-with-wix-params.css` and generate 2 files: `inline.css`(the file that will be inlined) and `mixed-css-file-with-wix-params.remain.css`(the file that will be minified & concatenated)
-4. Wix style implements **fonts** as malformed CSS declaration (`{{Body-M}};`, without attribute). 
+2. The task will extract wix style params from `mixed-css-file-with-wix-params.css` and generate 2 files: `inline.css`(the file that will be inlined) and `mixed-css-file-with-wix-params.remain.css`(the file that will be minified & concatenated)
+3. Wix style implements **fonts** as malformed CSS declaration (`{{Body-M}};`, without attribute). 
 In order to keep POSTCSS parser intact, you should add a `font` attribute and semicolon before the wix style param, something like `font:;{{Body-M}};`- this is valid wix style param, and the parser will not break on it. 
 The extractStyles task will eventually convert it to `{{Body-M}};`.

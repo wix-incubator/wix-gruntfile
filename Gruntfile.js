@@ -51,10 +51,6 @@ module.exports = function (grunt, options) {
     options.cdnify = 'vm';
   }
 
-  if (options.inline) {
-    options.autoprefixer = false;
-  }
-
   if (!options.preloadModule) {
     options.preloadModule = options.translationsModule || 'wixAppPreload';
   }

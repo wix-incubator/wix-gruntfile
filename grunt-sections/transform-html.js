@@ -50,6 +50,28 @@ module.exports = function (grunt) {
         src: ['app/*.vm'],
         dest: '.tmp/',
         replacements: loadReplacements()
+      },
+      wixStyleToBrackets: {
+        src: ['.tmp/{styles,modules}/**/*.css'],
+        overwrite: true,
+        replacements: [{
+          from: /font: ?; ?{{([^}]+)}};/g,
+          to: 'font: [[$1]];'
+        }, {
+          from: /{{([^}]+)}}/g,
+          to: '[[$1]]'
+        }]
+      },
+      wixStyleToCurlies: {
+        src: ['.tmp/{styles,modules}/**/*.css'],
+        overwrite: true,
+        replacements: [{
+          from: /font: \[\[([^\]]+)\]\];/g,
+          to: 'font:;{{$1}};'
+        }, {
+          from: /\[\[([^\]}]+)\]\]/g,
+          to: '{{$1}}'
+        }]
       }
     },
 
