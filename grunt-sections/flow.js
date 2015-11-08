@@ -120,6 +120,19 @@ module.exports = function (grunt, options) {
           dest: 'dist/.sadignore'
         }]
       },
+      images: {
+        files: [{
+          expand: true,
+          cwd: 'app/images',
+          src: '{,*/**/}*.{png,jpg,jpeg,gif}',
+          dest: 'dist/images'
+        }, {
+          expand: true,
+          cwd: '.tmp/images',
+          src: '{,*/**/}*.{png,jpg,jpeg}',
+          dest: 'dist/images'
+        }]
+      },
       styles: {
         expand: true,
         cwd: 'app',

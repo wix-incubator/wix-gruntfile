@@ -8,7 +8,7 @@ module.exports = function (grunt, options) {
   var path = require('path');
 
   var packageJson = grunt.file.readJSON('package.json');
-  
+
   grunt.loadNpmTasks('wix-gruntfile/node_modules/grunt-sass');
 
   if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test) {
@@ -181,8 +181,8 @@ module.exports = function (grunt, options) {
     'styleInlineServeIfEnabled',
     'newer:copy:vm'
   ];
-  
-  if(options.useNodeSass){
+
+  if (options.useNodeSass) {
     preBuildTasks.splice(preBuildTasks.indexOf('compass:dist'), 0, 'sass:dist');
   }
   grunt.registerTask('pre-build', preBuildTasks);
@@ -196,7 +196,8 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('package', function () {
     grunt.task.run([
-      'imagemin',
+      // 'imagemin',
+      'copy:images',
       'copy:dist',
       'manifestPackager',
       'useminPrepare',
