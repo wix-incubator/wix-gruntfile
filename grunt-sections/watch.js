@@ -107,6 +107,9 @@ module.exports = function (grunt, options) {
       files: ['app/{styles,modules}/**/*.{scss,sass}'],
       tasks: ['scssstyleIfEnabled', 'sass', 'autoprefixerIfEnabled', 'replace', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
     };
+
+    config.compass.files = ['app/{styles,modules}/**/*.compass.{scss,sass}'];
+
   }
   return config;
 };
