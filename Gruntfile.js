@@ -20,6 +20,11 @@ module.exports = function (grunt, options) {
     grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
   }
 
+  if (!packageJson.publishConfig && packageJson.private !== true) {
+    packageJson.private = true;
+    grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
+  }
+
   Array.prototype.replace = function (j, k) {
     this.splice(Math.min(j, k), 0, this.splice(Math.max(j, k), 1)[0]);
     return this;
