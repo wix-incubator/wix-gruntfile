@@ -9,7 +9,7 @@ module.exports = function (grunt, options) {
 
   var packageJson = grunt.file.readJSON('package.json');
 
-  grunt.loadNpmTasks('wix-gruntfile/node_modules/grunt-sass');
+  grunt.loadNpmTasks(getRelativePluginPath('grunt-sass'));
 
   if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test) {
     packageJson.scripts = packageJson.scripts || {};
