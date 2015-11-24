@@ -97,16 +97,32 @@ config.onPrepare = function () {
     });
   };
 
+  var disableTimeouts = function () {
+    angular.module('disableTimeouts', [])
+      .config(function ($provide) {
+        $provide.decorator('$timeout', function ($delegate) {
+          var mockTimeout = function () {
+            arguments[typeof arguments[0] === 'function' ? 1 : 0] = 0;
+            return $delegate.apply(this, arguments);
+          };
+          angular.extend(mockTimeout, $delegate);
+          return mockTimeout;
+        });
+      });
+  };
+
   beforeEach(function () {
     browser.addMockModule('disableNgAnimate', disableNgAnimate);
     browser.addMockModule('disableCssAnimate', disableCssAnimate);
     browser.addMockModule('biLoggerDryRun', biLoggerDryRun);
+    browser.addMockModule('disableTimeouts', disableTimeouts);
   });
 
   afterEach(function () {
     browser.removeMockModule('disableNgAnimate');
     browser.removeMockModule('disableCssAnimate');
     browser.removeMockModule('biLoggerDryRun');
+    browser.removeMockModule('disableTimeouts');
   });
 
   // Store the name of the browser that's currently being used.
