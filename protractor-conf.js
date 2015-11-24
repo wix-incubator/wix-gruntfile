@@ -60,6 +60,7 @@ if (useJasmine2) {
 
 var onPrepare = config.onPrepare || function () {};
 config.onPrepare = function () {
+  require('babel/register');
 
   if (useJasmine2) {
     require('karma-jasmine1-shim/lib/shim');
