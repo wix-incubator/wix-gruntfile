@@ -101,7 +101,7 @@ module.exports = function (grunt, options) {
   }
 
   function getRelativePluginPath(name) {
-    var pluginPath = require.resolve(name + '/package.json').replace('/package.json', '');
+    var pluginPath = require.resolve(name + '/package.json').replace(path.sep + 'package.json', '');
     var relativePath = path.relative(process.cwd() + '/node_modules', pluginPath);
     return relativePath;
   }
