@@ -47,7 +47,7 @@ function warn(message) {
   console.log('\x1b[33m%s\x1b[0m', message);
 }
 
-if(hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm)) {
+if (hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm)) {
   config.capabilities.shardTestFiles = false;
   warn('Protractor sharding is disabled due to presence of focused tests.');
 }
@@ -61,6 +61,7 @@ if (useJasmine2) {
 var onPrepare = config.onPrepare || function () {};
 config.onPrepare = function () {
   require('babel/register');
+  console.log('onPrepare!!!');
 
   if (useJasmine2) {
     require('karma-jasmine1-shim/lib/shim');

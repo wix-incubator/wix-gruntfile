@@ -1,5 +1,6 @@
 'use strict';
 
+var terminate = require('terminate');
 var spawn = require('child_process').spawn;
 var grunt = require('grunt');
 var protractorDir = require.resolve('protractor/bin/elementexplorer.js').replace('elementexplorer.js', '');
@@ -35,13 +36,31 @@ module.exports = {
     }));
 
     var p = spawn('node', args);
+    var killed = false;
+    var self = this;
+    var retry = setTimeout(function () {
+      console.log('RETRY!!!');
+      killed = true;
+      terminate(p.pid, function () {
+        console.log('TERMINATED!!!');
+        self.startProtractor(config, done);
+      });
+    }, 20000);
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);
-    p.on('exit', function (code) {
-      if (code !== 0) {
-        grunt.fail.warn('Protractor test(s) failed. Exit code: ' + code);
+    p.stdout.on('data', function (data) {
+      if (data.indexOf('onPrepare!!!') > -1) {
+        console.log('YAY!!!');
+        clearTimeout(retry);
       }
-      done();
+    });
+    p.on('exit', function (code) {
+      if (!killed) {
+        if (code !== 0) {
+          grunt.fail.warn('Protractor test(s) failed. Exit code: ' + code);
+        }
+        done();
+      }
     });
   }
 };

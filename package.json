@@ -82,6 +82,7 @@
     "q": "^1.4.1",
     "semver": "^4.3.6",
     "shelljs": "^0.3.0",
+    "terminate": "^1.0.6",
     "time-grunt": "^1.0.0",
     "tiny-lr": "^0.1.6",
     "tslint": "2.5.0-beta",
