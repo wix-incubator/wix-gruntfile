@@ -54,7 +54,7 @@
     "grunt-text-replace": "^0.4.0",
     "grunt-traceur-latest": "~0.0.4",
     "grunt-ts": "^5.2.0",
-    "grunt-tslint": "^2.5.0-beta",
+    "grunt-tslint": "^3.0.0",
     "grunt-usemin": "^2.6.2",
     "grunt-velocity-debug": "^0.1.0",
     "grunt-webfont": "^0.4.8",
@@ -85,7 +85,7 @@
     "terminate": "^1.0.6",
     "time-grunt": "^1.0.0",
     "tiny-lr": "^0.1.6",
-    "tslint": "2.5.0-beta",
+    "tslint": "^3.1.1",
     "typescript": "^1.5.0"
   },
   "optionalDependencies": {
