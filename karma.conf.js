@@ -66,6 +66,7 @@ module.exports = function (config) {
     reporters: ['coverage', 'growl', 'karmaSimpleReporter'].concat(isOsx ? ['osx'] : []),
 
     specReporter: {
+      suppressSkipped: true,
       suppressPassed: true,
       suppressErrorSummary: true
     },
