@@ -50,7 +50,6 @@ module.exports = {
     p.stderr.pipe(process.stderr);
     p.stdout.on('data', function (data) {
       if (data.indexOf('onPrepare!!!') > -1) {
-        console.log('YAY!!!');
         clearTimeout(retry);
       }
     });
