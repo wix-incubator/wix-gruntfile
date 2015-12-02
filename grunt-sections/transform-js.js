@@ -6,11 +6,13 @@ var featureDetector = require('../feature-detector');
 module.exports = function (grunt, options) {
   grunt.registerTask('typescriptIfEnabled', function () {
     if (grunt.task.exists('ts') && featureDetector.isTypescriptEnabled()) {
-      grunt.file.write('app/scripts/reference.ts', '/// <reference path="../../reference.ts" />');
-      if (featureDetector.isTestInAppFolderEnabled()) {
-        grunt.file.write('app/test/reference.ts', '/// <reference path="../../reference.ts" />');
-      } else {
-        grunt.file.write('test/reference.ts', '/// <reference path="../reference.ts" />');
+      if (!featureDetector.isTSConfigEnabled()) {
+        grunt.file.write('app/scripts/reference.ts', '/// <reference path="../../reference.ts" />');
+        if (featureDetector.isTestInAppFolderEnabled()) {
+          grunt.file.write('app/test/reference.ts', '/// <reference path="../../reference.ts" />');
+        } else {
+          grunt.file.write('test/reference.ts', '/// <reference path="../reference.ts" />');
+        }
       }
       grunt.task.run('tsWithHack:copy');
     }
@@ -36,6 +38,29 @@ module.exports = function (grunt, options) {
     }
   });
   var createDeclaration = options.bowerComponent;
+
+  var typeScriptConfig;
+  if (featureDetector.isTSConfigEnabled()) {
+    typeScriptConfig = {
+      outDir: '.tmp',
+      tsconfig: {
+        tsconfig: 'app/tsconfig.json',
+        ignoreFiles: true,
+        ignoreSettings: false,
+        overwriteFilesGlob: false,
+        updateFiles: true,
+        passThrough: false
+      }
+    };
+  } else {
+    typeScriptConfig = {
+      src: ['app/' + (options.useModulesStructure ? 'modules' : 'scripts') + '/**/*.ts',
+        'app/test/**/*.ts', 'test/**/*.ts'
+      ],
+      reference: 'reference.ts',
+      outDir: '.tmp/'
+    };
+  }
 
   return {
     traceur: {
@@ -63,20 +88,17 @@ module.exports = function (grunt, options) {
         }]
       }
     },
+
     typescript: {
-      build: {
-        src: ['app/' + (options.useModulesStructure ? 'modules' : 'scripts') + '/**/*.ts', 'app/test/**/*.ts', 'test/**/*.ts'],
-        outDir: '.tmp/',
-        reference: 'reference.ts',
-        options: {
-          target: 'es5',
-          sourceMap: false,
-          declaration: createDeclaration,
-          removeComments: false,
-          experimentalDecorators: true,
-          module: 'commonjs'
-        }
-      }
+      options: {
+        target: 'es5',
+        sourceMap: false,
+        declaration: createDeclaration,
+        removeComments: false,
+        experimentalDecorators: true,
+        module: 'commonjs'
+      },
+      build: typeScriptConfig
     }
   };
 };
