@@ -1,5 +1,6 @@
 'use strict';
 
+var path = require('path');
 var shell = require('shelljs');
 var featureDetector = require('../feature-detector');
 
@@ -20,6 +21,10 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('tsWithHack', function (param) {
     grunt.task.run('ts');
+    if (grunt.option('enableCoverage')){
+      grunt.task.run('copy:ts');
+    }
+    grunt.task.run('sourceMapBasename');
     grunt.task.run('theTsHack:' + param);
   });
 
@@ -30,6 +35,16 @@ module.exports = function (grunt, options) {
       shell.cp('-Rf', '.tmp/app/*', '.tmp/');
     }
     grunt.file.delete('.tmp/app');
+  });
+
+  grunt.registerMultiTask('sourceMapBasename', function () {
+    this.filesSrc.forEach(function (source) {
+      var jsMap = grunt.file.readJSON(source);
+      jsMap.sources = jsMap.sources.map(function (relativePath) {
+        return path.basename(relativePath);
+      });
+      grunt.file.write(source, JSON.stringify(jsMap));
+    });
   });
 
   grunt.registerTask('traceurIfEnabled', function () {
@@ -92,7 +107,7 @@ module.exports = function (grunt, options) {
     typescript: {
       options: {
         target: 'es5',
-        sourceMap: false,
+        sourceMap: true,
         declaration: createDeclaration,
         removeComments: false,
         experimentalDecorators: true,
