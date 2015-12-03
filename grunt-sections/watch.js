@@ -61,11 +61,11 @@ module.exports = function (grunt, options) {
         '!test/spec/e2e/**/*.js',
         '!test/e2e/**/*.js'
       ],
-      tasks: ['jsstyleIfEnabled', 'triggerLivereload', 'karma:unit:run']
+      tasks: ['jsstyleIfEnabled', 'triggerLivereload', 'karma:unit:run', 'remapIstanbul', 'remapIstanbulJsAndReport']
     },
     ts: {
       files: ['{test,app/scripts,app/modules,app/test}/**/*.ts', 'app/tsconfig.json'],
-      tasks: ['jsstyleIfEnabled', 'tsWithHack:copy', 'triggerLivereload', 'karma:unit:run'],
+      tasks: ['jsstyleIfEnabled', 'tsWithHack:copy', 'triggerLivereload', 'karma:unit:run', 'remapIstanbul', 'remapIstanbulJsAndReport'],
       options: {
         event: ['changed', 'added']
       }

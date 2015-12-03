@@ -79,7 +79,7 @@ module.exports = function (grunt, options) {
     require('time-grunt')(grunt);
   }
 
-  loadPlugins(grunt, ['grunt-sass']);
+  loadPlugins(grunt, ['remap-istanbul', 'grunt-sass']);
 
   if (process.argv[2] === 'lint') {
     loadPlugins(grunt, lintPlugins);

@@ -92,7 +92,8 @@ module.exports = function (grunt, options) {
     typescript: {
       options: {
         target: 'es5',
-        sourceMap: false,
+        sourceRoot: process.cwd(),
+        sourceMap: true,
         declaration: createDeclaration,
         removeComments: false,
         experimentalDecorators: true,
