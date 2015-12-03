@@ -54,6 +54,11 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [ ],
 
+    // A map of path-proxy pairs.
+    proxies: {
+      '/images/': '/base/app/images/'
+    },
+
     // list of files / patterns to exclude
     exclude: [
       '{,.tmp/}test/spec/e2e/**/*.js',
