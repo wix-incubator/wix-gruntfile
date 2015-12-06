@@ -39,12 +39,14 @@ module.exports = {
     var killed = false;
     var self = this;
     var retry = setTimeout(function () {
-      console.log('RETRY!!!');
-      killed = true;
-      terminate(p.pid, function () {
-        console.log('TERMINATED!!!');
-        self.startProtractor(config, done);
-      });
+      if (process.env.IS_BUILD_AGENT) {
+        console.log('RETRY!!!');
+        killed = true;
+        terminate(p.pid, function () {
+          console.log('TERMINATED!!!');
+          self.startProtractor(config, done);
+        });
+      }
     }, 20000);
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);
