@@ -70,8 +70,20 @@ module.exports = function (grunt, options) {
         }, {
           expand: true,
           cwd: '.tmp',
-          src: ['*.js', 'scripts/**/locale/**/*.js', '*.html', '{views,modules}/**/*.{html,html.js}', 'styles/svg-font/*'],
+          src: [
+            '*.js',
+            'scripts/**/locale/**/*.js',
+            '*.html',
+            '{views,modules}/**/*.{html,html.js}',
+            'styles/svg-font/*',
+            'test/lib/**'
+          ],
           dest: 'dist'
+        }, {
+          expand: true,
+          cwd: 'test',
+          src: ['lib/**/*.js'],
+          dest: 'dist/test'
         }, {
           expand: true,
           dot: true,
