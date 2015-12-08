@@ -1,20 +1,8 @@
 'use strict';
 
 var path = require('path');
-var featureDetector = require('../feature-detector');
 
 module.exports = function (grunt, options) {
-
-  function getPetriExperimentsOptions() {
-    var options = {json: 'dist/petri-experiments.json'};
-    if (featureDetector.isTypescriptEnabled()) {
-      options.ts = 'app/specs.ts';
-    } else {
-      options.js = 'app/specs.js';
-    }
-    return options;
-  }
-
   grunt.registerMultiTask('webfontIfEnabled', function () {
     if (options.svgFontName && this.files.length) {
       grunt.task.run('webfont');
@@ -29,7 +17,10 @@ module.exports = function (grunt, options) {
         'app/petri-experiments/*.json',
         'app/bower_components/*/dist/petri-experiments.json'
       ],
-      options: getPetriExperimentsOptions()
+      options: {
+        json: 'dist/petri-experiments.json',
+        js: '.tmp/petri-experiments.js'
+      }
     },
     manifestPackager: {
       all: {
