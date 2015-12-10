@@ -1,9 +1,9 @@
 'use strict';
-module.exports = function (grunt, options) {
+module.exports = function () {
   return {
     replace: {
       dts: {
-        src: ['dist/types.d.ts'],
+        src: ['dist/types.d.ts', 'dist/test/lib/**/*.d.ts'],
         overwrite: true,
         replacements: [{
           from: /^\/\/\/+\s(<reference path=).*$/mg,
