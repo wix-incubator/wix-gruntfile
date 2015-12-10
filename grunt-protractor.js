@@ -38,20 +38,31 @@ module.exports = {
     var p = spawn('node', args);
     var killed = false;
     var self = this;
-    var retry = setTimeout(function () {
-      if (process.env.IS_BUILD_AGENT) {
-        console.log('RETRY!!!');
-        killed = true;
-        terminate(p.pid, function () {
-          console.log('TERMINATED!!!');
-          self.startProtractor(config, done);
-        });
-      }
-    }, 20000);
+    var retry;
+
+    function scheduleRetry() {
+      retry = setTimeout(function () {
+        if (process.env.IS_BUILD_AGENT) {
+          console.log('RETRY!!!');
+          killed = true;
+          terminate(p.pid, function () {
+            console.log('TERMINATED!!!');
+            self.startProtractor(config, done);
+          });
+        }
+      }, 20000);
+    }
+
+    scheduleRetry();
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);
     p.stdout.on('data', function (data) {
-      if (data.indexOf('onPrepare!!!') > -1) {
+      if (data.indexOf('beforeLaunch: start') > -1) {
+        clearTimeout(retry);
+      } else if (data.indexOf('beforeLaunch: done') > -1) {
+        clearTimeout(retry);
+        scheduleRetry();
+      } else if (data.indexOf('onPrepare!!!') > -1) {
         console.log('YAY!!!');
         clearTimeout(retry);
       }
