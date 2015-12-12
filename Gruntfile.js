@@ -9,6 +9,7 @@ module.exports = function (grunt, options) {
 
   var packageJson = grunt.file.readJSON('package.json');
 
+  grunt.loadNpmTasks(getRelativePluginPath('remap-istanbul'));
   grunt.loadNpmTasks(getRelativePluginPath('grunt-sass'));
 
   if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test) {
@@ -160,7 +161,8 @@ module.exports = function (grunt, options) {
 
     karma:                  require('./grunt-sections/test-runners')(grunt, options).karma,
     protractor:             require('./grunt-sections/test-runners')(grunt, options).protractor,
-    concat:                 require('./grunt-sections/export-dts')(grunt, options).concat
+    concat:                 require('./grunt-sections/export-dts')(grunt, options).concat,
+    remapIstanbul:          require('./grunt-sections/remap')(grunt, options).remapIstanbul
   });
 
   grunt.registerTask('wix-install', function () {
@@ -249,7 +251,8 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('test', [
     'pre-build:clean',
-    'karma:single'
+    'karma:single',
+    'remapIstanbul'
   ]);
 
   grunt.registerTask('test:e2e', function (type) {
