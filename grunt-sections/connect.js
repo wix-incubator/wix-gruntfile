@@ -96,11 +96,10 @@ module.exports = function (grunt, options) {
             }),
             mountFolder(connect, '.tmp'),
             mountFolder(connect, 'test'),
-            mountFolder(connect, 'app'),
-            connect.urlencoded()
-            ]).concat(grunt.config('yeoman').e2eTestServer ?
-                [proxyFolder('/_api/', '<%= yeoman.e2eTestServer %>')] : [])
-              .concat(getProxies('proxies'));
+            mountFolder(connect, 'app')
+          ]).concat(grunt.config('yeoman').e2eTestServer ? [proxyFolder('/_api/', '<%= yeoman.e2eTestServer %>')] : [])
+            .concat([connect.urlencoded()])
+            .concat(getProxies('proxies'));
         }
       }
     },
