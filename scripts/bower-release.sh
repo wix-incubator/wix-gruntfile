@@ -20,6 +20,8 @@ rm -rf !(.git)
 cp -r $PROJECT_DIR/!(.git) .
 
 grep -ve "^\(dist\|/.*\.js\)$" .gitignore > .gitignore.new
+echo hmmm
+grep -ve "^\(dist\|/.*\.js\)$" .gitignore
 mv -f .gitignore.new .gitignore
 git add --all .
 git reset HEAD bower.json
