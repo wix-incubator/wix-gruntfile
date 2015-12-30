@@ -19,7 +19,7 @@ shopt -s extglob dotglob
 rm -rf !(.git)
 cp -r $PROJECT_DIR/!(.git) .
 
-grep -v dist .gitignore > .gitignore.new
+grep -ve "^\(dist\|/.*\.js\)$" .gitignore > .gitignore.new
 mv -f .gitignore.new .gitignore
 git add --all .
 git reset HEAD bower.json
