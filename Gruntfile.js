@@ -160,8 +160,10 @@ module.exports = function (grunt, options) {
 
     karma:                  require('./grunt-sections/test-runners')(grunt, options).karma,
     protractor:             require('./grunt-sections/test-runners')(grunt, options).protractor,
-    concat:                 require('./grunt-sections/export-dts')(grunt, options).concat
-  });
+    concat:                 require('./grunt-sections/export-dts')(grunt, options).concat,
+
+    verifyNpm:              require('./grunt-sections/verify-npm')(grunt, options)
+});
 
   grunt.registerTask('wix-install', function () {
     shell.exec('npm install; bower install; bundle install', {silent: true});
@@ -290,7 +292,8 @@ module.exports = function (grunt, options) {
     'pre-build:clean',
     'karma:single',
     'package',
-    'e2eIfEnabled:normal'
+    'e2eIfEnabled:normal',
+    'verify-npm'
   ]);
 
   grunt.registerTask('build:ci', [
