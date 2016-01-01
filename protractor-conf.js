@@ -52,7 +52,7 @@ if (hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm))
   warn('Protractor sharding is disabled due to presence of focused tests.');
 }
 
-var useJasmine2 = config.framework === 'jasmine' && !!process.env.USE_JASMINE2;
+var useJasmine2 = config.framework === 'jasmine' && process.env.USE_JASMINE2 && process.env.USE_JASMINE2 !== 'false';
 if (useJasmine2) {
   config.framework = 'jasmine2';
   warn('Forcing protractor to use jasmine2 testing framework.');
@@ -63,7 +63,7 @@ config.onPrepare = function () {
   require('babel/register');
   console.log('onPrepare!!!');
 
-  if (useJasmine2) {
+  if (useJasmine2 && process.env.USE_JASMINE2 === 'shim') {
     require('karma-jasmine1-shim/lib/shim');
   }
 
