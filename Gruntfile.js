@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function (grunt, options) {
+  process.env.USE_JASMINE2 = process.env.USE_JASMINE2 || 'shim';
 
   var extend = require('util')._extend;
   var shell = require('shelljs');
