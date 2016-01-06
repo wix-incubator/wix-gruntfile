@@ -63,7 +63,6 @@ module.exports = {
         clearTimeout(retry);
         scheduleRetry();
       } else if (data.indexOf('onPrepare!!!') > -1) {
-        console.log('YAY!!!');
         clearTimeout(retry);
       }
     });
