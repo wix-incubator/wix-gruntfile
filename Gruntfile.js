@@ -287,6 +287,8 @@ module.exports = function (grunt, options) {
     'e2eIfEnabled:teamcity_same_server_tunnel'
   ]);
 
+  require('./grunt-sections/verify-npm')(grunt);
+
   grunt.registerTask('build', [
     'verify-npm',
     'pre-build:clean',
