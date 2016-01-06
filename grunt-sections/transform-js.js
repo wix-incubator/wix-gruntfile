@@ -96,7 +96,8 @@ module.exports = function (grunt, options) {
         declaration: createDeclaration,
         removeComments: false,
         experimentalDecorators: true,
-        module: 'commonjs'
+        module: 'commonjs',
+        fast: 'never'
       },
       build: typeScriptConfig
     }
