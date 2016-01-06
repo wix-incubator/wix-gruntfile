@@ -10,6 +10,12 @@ module.exports = function (grunt, options) {
 
   var packageJson = grunt.file.readJSON('package.json');
 
+  function getRelativePluginPath(name) {
+    var pluginPath = require.resolve(name + '/package.json').replace(path.sep + 'package.json', '');
+    var relativePath = path.relative(process.cwd() + '/node_modules', pluginPath);
+    return relativePath;
+  }
+
   grunt.loadNpmTasks(getRelativePluginPath('grunt-sass'));
 
   if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test) {
@@ -99,12 +105,6 @@ module.exports = function (grunt, options) {
       grunt.loadNpmTasks(getRelativePluginPath(name));
     }}, {config: require('./package.json')});
     require('time-grunt')(grunt);
-  }
-
-  function getRelativePluginPath(name) {
-    var pluginPath = require.resolve(name + '/package.json').replace(path.sep + 'package.json', '');
-    var relativePath = path.relative(process.cwd() + '/node_modules', pluginPath);
-    return relativePath;
   }
 
   var optionalTasks = ['petriExperiments', 'manifestPackager'];
@@ -288,6 +288,7 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('build', [
+    'verify-npm',
     'pre-build:clean',
     'karma:single',
     'package',
