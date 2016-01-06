@@ -1,18 +1,10 @@
 'use strict';
 
-module.exports = function register(grunt, options) {
+module.exports = function register(grunt) {
 
-  grunt.registerTask('verify-npm', function() {
-
-    var done = this.async(),
-      satisfaction = queryStatisfaction();
-
-    if (satisfaction.satisfied) {
-      info('\nNo outdated npm modules, yay!');
-      done();
-    } else {
-      var question = ppViolationsMessage(satisfaction.violations);
-      prompt(question, onPromptAnswer);
+  grunt.registerTask('verify-npm', function () {
+    if (!process.env.VERIFY_NPM) {
+      return;
     }
 
     function queryStatisfaction() {
@@ -24,7 +16,7 @@ module.exports = function register(grunt, options) {
     }
 
     function ppViolationsMessage(violations) {
-      var pLine = '\n' + Array(55).join('*') + '\n';
+      var pLine = '\n' + new Array(55).join('*') + '\n';
       return '\nWhoa there cowboy! The following NPM dependencies are outdated:' +
         pLine + violations + pLine +
         'Do you want to install outdated npm modules? (Y/n): ';
@@ -35,7 +27,7 @@ module.exports = function register(grunt, options) {
         input: process.stdin,
         output: process.stdout
       });
-      rl.question(question, function(answer) {
+      rl.question(question, function (answer) {
         rl.close();
         answerCallback(answer);
       });
@@ -60,8 +52,17 @@ module.exports = function register(grunt, options) {
       console.log('\x1b[33m%s\x1b[0m', msg); // ... and it was all yellow
     }
 
+    var done = this.async(),
+      satisfaction = queryStatisfaction();
+
+    if (satisfaction.satisfied) {
+      info('\nNo outdated npm modules, yay!');
+      done();
+    } else {
+      var question = ppViolationsMessage(satisfaction.violations);
+      prompt(question, onPromptAnswer);
+    }
+
   });
-
-
 
 };
