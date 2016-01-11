@@ -73,10 +73,15 @@ module.exports = function (grunt, options) {
 
   if (options.karmaConf) {
     options.karmaConf({set: function (karmaConf) {
-      options.unitTestFiles = karmaConf.files.filter(function (value) {
-        return typeof value !== 'string' || value.indexOf('bower_component') !== -1;
-      });
+      options.karmaConf = {
+        files: karmaConf.files.filter(function (value) {
+          return typeof value !== 'string' || value.indexOf('bower_component') !== -1;
+        }),
+        proxies: karmaConf.proxies
+      };
     }});
+  } else {
+    options.karmaConf = {files: options.unitTestFiles};
   }
 
   var lintPlugins = ['grunt-contrib-jshint', 'grunt-jscs', 'grunt-tslint', 'grunt-scss-lint',

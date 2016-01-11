@@ -16,7 +16,7 @@ module.exports = function (grunt, options) {
     unitTestWildCards.replace(1, 2);
   }
 
-  options.unitTestFiles = options.karmaTestFiles || options.unitTestFiles.concat(unitTestWildCards);
+  options.karmaConf.files = options.karmaTestFiles || options.karmaConf.files.concat(unitTestWildCards);
 
   grunt.registerTask('webdriver', 'Update webdriver', function () {
     protractorUtil.updateWebdriver.call(protractorUtil, this.async());
@@ -85,31 +85,25 @@ module.exports = function (grunt, options) {
 
   return {
     karma: {
-      options: {
+      options: Object.assign({
+        configFile: path.join(__dirname, '../karma.conf.js'),
         basePath: process.cwd(),
         ngHtml2JsPreprocessor: {
           stripPrefix: '(app|.tmp)/',
           moduleName: options.preloadModule
         }
-      },
+      }, options.karmaConf),
       teamcity: {
         options: {
-          configFile: path.join(__dirname, '../karma.conf.js'),
-          files: options.unitTestFiles,
           reporters: ['teamcity', 'coverage'],
           coverageReporter: { type: 'teamcity' }
         }
       },
       single: {
-        options: {
-          configFile: path.join(__dirname, '../karma.conf.js'),
-          files: options.unitTestFiles
-        }
+        options: {}
       },
       unit: {
         options: {
-          configFile: path.join(__dirname, '../karma.conf.js'),
-          files: options.unitTestFiles,
           preprocessors: {
             '{app,.tmp}/**/*.html': 'ng-html2js',
             '{app,.tmp}/images/**/*.svg': 'ng-html2js'
