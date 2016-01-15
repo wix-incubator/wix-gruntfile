@@ -33,5 +33,8 @@ module.exports = {
   },
   isJscsEnabled: function () {
     return isFeaturePresent('/.jscsrc');
+  },
+  isVelocityEnabled: function () {
+    return isFeaturePresent('/velocity.data.js');
   }
 };

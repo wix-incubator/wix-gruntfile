@@ -102,6 +102,7 @@ module.exports = function (grunt, options) {
     plugins = plugins.concat(featureDetector.isTraceurEnabled() ? ['grunt-traceur-latest'] : []);
     plugins = plugins.concat(featureDetector.isTypescriptEnabled() ? ['grunt-ts'] : []);
     plugins = plugins.concat(featureDetector.isHamlEnabled() ? ['grunt-haml2html-shahata'] : []);
+    plugins = plugins.concat(featureDetector.isVelocityEnabled() ? ['grunt-velocity-parser'] : []);
     plugins.forEach(function (name) {
       grunt.loadNpmTasks(getRelativePluginPath(name));
     });
@@ -136,6 +137,7 @@ module.exports = function (grunt, options) {
     replace:                extend(require('./grunt-sections/transform-html')(grunt, options).replace,
                                    require('./grunt-sections/export-dts')(grunt, options).replace),
     haml:                   require('./grunt-sections/transform-html')(grunt, options).haml,
+    velocity:                   require('./grunt-sections/transform-html')(grunt, options).velocity,
 
     petriExperiments:       require('./grunt-sections/generators')(grunt, options).petriExperiments,
     manifestPackager:       require('./grunt-sections/generators')(grunt, options).manifestPackager,
@@ -183,7 +185,8 @@ module.exports = function (grunt, options) {
     'newer:webfontIfEnabled',
     'hamlIfEnabled',
     'compass:dist',
-    'replace:dist',
+    'replaceDistIfNoVelocityEnabled',
+    'velocityIfEnabled',
     'newer:copy:styles',
     'newer:jsonAngularTranslate',
     'newer:ngtemplates:single',
