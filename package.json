@@ -56,6 +56,7 @@
     "grunt-ts": "^5.2.0",
     "grunt-tslint": "^3.0.0",
     "grunt-usemin": "^2.6.2",
+    "grunt-velocity-parser": "sarunas/grunt-velocity",
     "grunt-velocity-debug": "^0.1.0",
     "grunt-webfont": "^0.4.8",
     "inquirer": "^0.11.1",
