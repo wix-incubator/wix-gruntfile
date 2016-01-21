@@ -36,12 +36,12 @@ module.exports = function (grunt, options) {
       files: ['app/{views,modules}/**/*.html'],
       tasks: ['newer:ngtemplates:single', 'triggerLivereload', 'karma:unit:run']
     },
-    replace: {
+    replaceOrVelocity: {
       files: ['app/**/*.vm'],
-      tasks: ['replace:dist', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
+      tasks: ['replaceOrVelocity', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
     },
-    replaceConf: {
-      files: ['replace.conf.js', 'replace.private.conf.js'],
+    replaceOrVelocityConf: {
+      files: ['replace.*.js', 'velocity.*.js'],
       tasks: ['replace:dist', 'newer:copy:vm', 'triggerLivereload'],
       options: {reload: true}
     },
@@ -102,7 +102,7 @@ module.exports = function (grunt, options) {
     }
   };
 
-  if(options.useNodeSass){
+  if (options.useNodeSass) {
     config.sass = {
       files: ['app/{styles,modules}/**/*.{scss,sass}'],
       tasks: ['scssstyleIfEnabled', 'sass', 'autoprefixerIfEnabled', 'replace', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
