@@ -36,13 +36,18 @@ module.exports = function (grunt, options) {
       files: ['app/{views,modules}/**/*.html'],
       tasks: ['newer:ngtemplates:single', 'triggerLivereload', 'karma:unit:run']
     },
-    replace: {
+    replaceOrVelocity: {
       files: ['app/**/*.vm'],
-      tasks: ['replace:dist', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
+      tasks: ['replaceOrVelocity', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
     },
     replaceConf: {
       files: ['replace.conf.js', 'replace.private.conf.js'],
       tasks: ['replace:dist', 'newer:copy:vm', 'triggerLivereload'],
+      options: {reload: true}
+    },
+    velocityData: {
+      files: ['velocity.data.js', 'velocity.private.data.js'],
+      tasks: ['replaceOrVelocity', 'newer:copy:vm', 'triggerLivereload'],
       options: {reload: true}
     },
     locale: {
