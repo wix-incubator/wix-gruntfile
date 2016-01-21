@@ -2,11 +2,6 @@
 
 var extend = require('util')._extend;
 var featureDetector = require('../feature-detector');
-var glob = require('glob');
-
-function fileExists(file) {
-  return glob.sync(process.cwd() + file).length !== 0;
-}
 
 module.exports = function (grunt) {
   function arrayToObj(arr) {
@@ -59,14 +54,10 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('replaceDistIfNoVelocityEnabled', function () {
+  grunt.registerTask('replaceOrVelocity', function () {
     if (grunt.task.exists('replace') && !featureDetector.isVelocityEnabled()) {
       grunt.task.run('replace:dist');
-    }
-  });
-
-  grunt.registerTask('velocityIfEnabled', function () {
-    if (grunt.task.exists('velocity') && featureDetector.isVelocityEnabled()) {
+    } else {
       grunt.task.run('velocity:dist');
     }
   });
