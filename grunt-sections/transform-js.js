@@ -97,7 +97,8 @@ module.exports = function (grunt, options) {
         removeComments: false,
         experimentalDecorators: true,
         module: 'commonjs',
-        fast: 'never'
+        fast: 'never',
+        stripInternal: true
       },
       build: typeScriptConfig
     }
