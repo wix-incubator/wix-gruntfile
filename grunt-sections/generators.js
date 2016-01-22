@@ -8,9 +8,9 @@ module.exports = function (grunt, options) {
   function getPetriExperimentsOptions() {
     var options = {json: 'dist/petri-experiments.json'};
     if (featureDetector.isTypescriptEnabled()) {
-      options.ts = 'app/specs.ts';
+      options.ts = 'app/scripts/specs.ts';
     } else {
-      options.js = 'app/specs.js';
+      options.js = 'app/scripts/specs.js';
     }
     return options;
   }
