@@ -45,6 +45,11 @@ module.exports = function (grunt, options) {
       tasks: ['replace:dist', 'newer:copy:vm', 'triggerLivereload'],
       options: {reload: true}
     },
+    velocityData: {
+      files: ['velocity.data.js', 'velocity.private.data.js'],
+      tasks: ['replaceOrVelocity', 'newer:copy:vm', 'triggerLivereload'],
+      options: {reload: true}
+    },
     locale: {
       files: ['app/scripts/**/locale/**/*.*'],
       tasks: ['newer:jsonAngularTranslate', 'jsstyleIfEnabled', 'triggerLivereload', 'karma:unit:run']
