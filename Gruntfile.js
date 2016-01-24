@@ -362,4 +362,6 @@ module.exports = function (grunt, options) {
     require('./grunt-sections/angular-migration')(grunt, options).addMigration();
   }
 
+  require('./grunt-sections/flag-nokarma')(grunt, options);
+
 };
