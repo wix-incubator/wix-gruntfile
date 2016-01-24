@@ -113,8 +113,10 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "node_modules/wix-gruntfile/scripts/build.sh",
-    "release": "node_modules/wix-gruntfile/scripts/release.sh"
+    "build": ":",
+    "release": "wnpm-release --no-shrinkwrap"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "wnpm-ci": "^6.0.60"
+  }
 }
