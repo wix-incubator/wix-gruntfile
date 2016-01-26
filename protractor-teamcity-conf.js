@@ -108,5 +108,13 @@ var capabilities2 = capabilities.slice(indexArr);
 // config.getPageTimeout = 30;
 
 config.seleniumPort = 4445;
+
+if (process.env.WIX_SAUCE) {
+  var seleniunGrid = 'app56.aus.wixpress.com';
+  config.multiCapabilities = [{'browserName': 'firefox', platform: 'LINUX'}];
+  config.seleniumAddress = 'https://' + seleniunGrid + ':4444/wd/hub/';
+  config.baseUrl = 'https://' + process.env.EXTERNAL_IP + ':' + process.env.EXTERNAL_UI_TEST_PORT + '/';
+}
+
 exports.config = config;
 exports.arrays = {cap1: capabilities1, cap2: capabilities2};
