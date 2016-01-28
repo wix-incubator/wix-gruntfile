@@ -26,16 +26,17 @@ module.exports = function (grunt) {
   }
 
   function loadReplacements() {
-    var preserve, replacements = {};
-    try {
-      extend(replacements, arrayToObj(require(process.cwd() + '/replace.conf.js')));
-      preserve = replacements.$$preserve;
-      extend(replacements, arrayToObj(require(process.cwd() + '/replace.private.conf.js')));
-      replacements.$$preserve = preserve.concat(replacements.$$preserve);
-    } catch (e) {
-
-    }
-    return objToArray(replacements);
+    return [];
+    //var preserve, replacements = {};
+    //try {
+    //  extend(replacements, arrayToObj(require(process.cwd() + '/replace.conf.js')));
+    //  preserve = replacements.$$preserve;
+    //  extend(replacements, arrayToObj(require(process.cwd() + '/replace.private.conf.js')));
+    //  replacements.$$preserve = preserve.concat(replacements.$$preserve);
+    //} catch (e) {
+		//
+    //}
+    //return objToArray(replacements);
   }
 
   grunt.registerTask('hamlIfEnabled', function () {
