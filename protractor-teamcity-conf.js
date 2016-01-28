@@ -10,7 +10,8 @@ try {
 var config = require('./protractor-conf').config;
 
 if (process.env.IS_BUILD_AGENT) {
-  var onPrepare = config.onPrepare || function () {};
+  var onPrepare = config.onPrepare || function () {
+    };
   config.capabilities.maxInstances = parseInt(process.env.PROTRACTOR_SHARDS, 10) || 1;
   if (config.capabilities.maxInstances === 1) {
     config.capabilities.shardTestFiles = false;
@@ -109,11 +110,19 @@ var capabilities2 = capabilities.slice(indexArr);
 
 config.seleniumPort = 4445;
 
-if (process.env.WIX_SAUCE) {
+if (process.env.WIX_SAUCE === 'true') {
   var seleniunGrid = 'app56.aus.wixpress.com';
-  config.multiCapabilities = [{'browserName': 'firefox', platform: 'LINUX'}];
+  config.multiCapabilities = [{
+    browserName: 'firefox',
+    platform: 'LINUX'
+  }, {
+    browserName: 'chrome',
+    platform: 'LINUX'
+  }, {
+    browserName: 'internet explorer',
+    platform: 'WINDOWS'
+  }];
   config.seleniumAddress = 'https://' + seleniunGrid + ':4444/wd/hub/';
-  config.baseUrl = 'https://' + process.env.EXTERNAL_IP + ':' + process.env.EXTERNAL_UI_TEST_PORT + '/';
 }
 
 exports.config = config;
