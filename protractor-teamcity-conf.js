@@ -10,8 +10,7 @@ try {
 var config = require('./protractor-conf').config;
 
 if (process.env.IS_BUILD_AGENT) {
-  var onPrepare = config.onPrepare || function () {
-    };
+  var onPrepare = config.onPrepare || function () {};
   config.capabilities.maxInstances = parseInt(process.env.PROTRACTOR_SHARDS, 10) || 1;
   if (config.capabilities.maxInstances === 1) {
     config.capabilities.shardTestFiles = false;
