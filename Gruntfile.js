@@ -1,5 +1,4 @@
 'use strict';
-var extend = require('util')._extend;
 
 module.exports = function (grunt, options) {
   process.env.USE_JASMINE2 = process.env.USE_JASMINE2 || 'shim';
