@@ -136,7 +136,8 @@ module.exports = function (grunt, options) {
   grunt.registerTask('build:ci', [
     'pre-build:clean',
     'karma:teamcity',
-    'package'
+    'package',
+    'copy:sadignore'
   ]);
 
   grunt.registerTask('publish', [

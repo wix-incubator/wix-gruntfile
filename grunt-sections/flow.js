@@ -127,7 +127,10 @@ module.exports = function (grunt, options) {
           cwd: 'app/styles/',
           src: ['**/*.css', 'svg-font/*'],
           dest: 'dist/_debug_styles'
-        }, {
+        }]
+      },
+      sadignore: {
+        files: [{
           src: 'node_modules/wix-gruntfile/.sadignore',
           dest: 'dist/.sadignore'
         }]
