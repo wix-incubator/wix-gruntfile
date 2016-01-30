@@ -8,9 +8,9 @@ module.exports = function (config) {
   var os = require('os');
   var isOsx = os.platform()  === 'darwin';
 
-  var frameworks = ['jasmine'],
+  var frameworks = ['jasmine2'],
       plugins = [
-        'karma-jasmine',
+        'karma-jasmine2',
         'karma-coverage',
         'karma-phantomjs-launcher',
         'karma-growl-reporter',
@@ -19,17 +19,6 @@ module.exports = function (config) {
         'karma-ng-html2js-preprocessor',
         'karma-chrome-launcher',
         'karma-simple-reporter'];
-
-  if (process.env.USE_JASMINE2 && process.env.USE_JASMINE2 !== 'false') {
-    frameworks.shift();
-    plugins.shift();
-    if (process.env.USE_JASMINE2 === 'shim') {
-      frameworks.unshift('jasmine1-shim');
-      plugins.unshift('karma-jasmine1-shim');
-    }
-    frameworks.unshift('jasmine2');
-    plugins.unshift('karma-jasmine2');
-  }
 
   config.set({
     plugins: plugins,

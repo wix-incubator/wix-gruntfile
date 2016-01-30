@@ -22,7 +22,7 @@ config.specs = [
   process.cwd() + '/app/test/e2e/spec/**/*.js'
 ];
 
-config.framework = 'jasmine';
+config.framework = 'jasmine2';
 
 config.capabilities = {
   browserName: 'chrome',
@@ -47,25 +47,15 @@ function warn(message) {
   console.log('\x1b[33m%s\x1b[0m', message);
 }
 
-if (hasFocusedTests(config.specs, /^\s*\b(iit|fit|ddescribe|fdescribe)\s*\(/gm)) {
+if (hasFocusedTests(config.specs, new RegExp('^\\s*\\b(iit|fit|ddescribe|fdescribe|tthey|fthey)\\s*\\(', 'gm'))) {
   config.capabilities.shardTestFiles = false;
   warn('Protractor sharding is disabled due to presence of focused tests.');
-}
-
-var useJasmine2 = config.framework === 'jasmine' && process.env.USE_JASMINE2 && process.env.USE_JASMINE2 !== 'false';
-if (useJasmine2) {
-  config.framework = 'jasmine2';
-  warn('Forcing protractor to use jasmine2 testing framework.');
 }
 
 var onPrepare = config.onPrepare || function () {};
 config.onPrepare = function () {
   require('babel/register');
   console.log('onPrepare!!!');
-
-  if (useJasmine2 && process.env.USE_JASMINE2 === 'shim') {
-    require('karma-jasmine1-shim/lib/shim');
-  }
 
   // Disable animations so e2e tests run more quickly
   var disableNgAnimate = function () {
