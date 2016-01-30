@@ -11,6 +11,7 @@
             <directory>${project.basedir}/dist</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
+                <include>.sadignore</include>
                 <include>*.vm</include>
                 <include>*/**/*.vm</include>
             </includes>
