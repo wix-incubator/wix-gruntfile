@@ -22,33 +22,20 @@ module.exports = function (grunt) {
 
   function verifyVmsArtifactConfiguration(grunt) {
     var pomXml = grunt.file.read('pom.xml');
-    if (pomXml.indexOf('node_modules/wix-gruntfile/vms.tar.gz.xml') !== -1) {
-      return; // section already found
-    }
-
-    grunt.log.writeln('=== PATCHING YOUR POM.XML ===');
-
-    var existingAriftactIndex = pomXml.indexOf('/tar.gz.xml');
-    if (existingAriftactIndex === -1) {
-      grunt.log.writeln('I couldn\'t find pom.xml entry for tar.gz artifact :(');
-      return; // couldn't find original artifact so why continue
-    }
-
-    var endMarker = '</plugin>';
-    var endPluginIndex = pomXml.indexOf(endMarker, existingAriftactIndex);
-    if (endPluginIndex === -1) {
-      grunt.log.writeln('I couldn\'t find pom.xml\'s entry closure for tar.gz artifcat :(');
-      // pom.xml fucked?
-      return;
-    }
-
-    var insertIndex = endPluginIndex + endMarker.length;
     var vmsArtifactXml = grunt.file.read('node_modules/wix-gruntfile/grunt-helpers/data/vms-artifact-plugin.xml');
-    var modifiedPomXml = pomXml.slice(0, insertIndex) +
-      vmsArtifactXml +
-      pomXml.slice(insertIndex);
 
-    grunt.file.write('pom.xml', modifiedPomXml); // overwrite
+    if (pomXml.indexOf('node_modules/wix-gruntfile/vms.tar.gz.xml') !== -1) {
+      var posixNewLine = pomXml.indexOf('\r\n') === -1;
+      pomXml = pomXml.split(/\r?\n/g).join('\n');
+      grunt.log.writeln('=== UNPATCHING YOUR POM.XML ===');
+
+      var modifiedPomXml = pomXml.replace(vmsArtifactXml, '');
+      if (modifiedPomXml.indexOf('node_modules/wix-gruntfile/vms.tar.gz.xml') !== -1) {
+        grunt.log.writeln('=== FAILED UNPATCHING!!! ===');
+      } else {
+        grunt.file.write('pom.xml', modifiedPomXml.split('\n').join(posixNewLine ? '\n' : '\r\n'));
+      }
+    }
   }
 
   verifyNpmScripts(grunt);
