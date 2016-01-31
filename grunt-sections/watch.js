@@ -64,7 +64,7 @@ module.exports = function (grunt, options) {
       tasks: ['jsstyleIfEnabled', 'triggerLivereload', 'karma:unit:run']
     },
     ts: {
-      files: ['{test,app/scripts,app/modules,app/test}/**/*.ts'],
+      files: ['{test,app/scripts,app/modules,app/test}/**/*.ts', 'app/tsconfig.json'],
       tasks: ['jsstyleIfEnabled', 'tsWithHack:copy', 'triggerLivereload', 'karma:unit:run'],
       options: {
         event: ['changed', 'added']

@@ -8,7 +8,7 @@ module.exports = function (grunt, options) {
     '{app,.tmp}/*.js',
     '{app,.tmp}/{scripts,modules}/*.js', //do not move - position 1
     '{app,.tmp}/{scripts,modules}/*/**/*.js', //do not move - position 2
-    '{,.tmp/}test/**/*.js',
+    '{,app/,.tmp/}test/**/*.js',
     '{app,.tmp}/{views,modules}/**/*.html'
   ];
 

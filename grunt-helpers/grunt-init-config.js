@@ -2,9 +2,10 @@
 var extend = require('util')._extend;
 
 module.exports = function (grunt, options) {
+	var convertTsConfig = require('../grunt-sections/convert-tsconfig')(grunt);
 	grunt.initConfig({
 		yeoman:                 require('../grunt-sections/flow')(grunt, options).yeoman,
-		clean:                  require('../grunt-sections/flow')(grunt, options).clean,
+		clean:                  extend(require('../grunt-sections/flow')(grunt, options).clean, convertTsConfig.clean),
 
 		jshint:                 require('../grunt-sections/codestyle')(grunt, options).jshint,
 		tslint:                 require('../grunt-sections/codestyle')(grunt, options).tslint,
@@ -17,7 +18,7 @@ module.exports = function (grunt, options) {
 		traceur:                require('../grunt-sections/transform-js')(grunt, options).traceur,
 		ts:                     require('../grunt-sections/transform-js')(grunt, options).typescript,
 		replace:                extend(require('../grunt-sections/transform-html')(grunt, options).replace,
-																	 require('../grunt-sections/export-dts')(grunt, options).replace),
+																		extend(require('../grunt-sections/export-dts')(grunt, options).replace, convertTsConfig.replace)),
 		haml:                   require('../grunt-sections/transform-html')(grunt, options).haml,
 		velocity:               require('../grunt-sections/transform-html')(grunt, options).velocity,
 
@@ -46,10 +47,10 @@ module.exports = function (grunt, options) {
 		inline:                 require('../grunt-sections/build-html')(grunt, options).inline,
 
 		release:                require('../grunt-sections/flow')(grunt, options).release,
-		copy:                   require('../grunt-sections/flow')(grunt, options).copy,
+		copy:                   extend(require('../grunt-sections/flow')(grunt, options).copy, convertTsConfig.copy),
 
 		karma:                  require('../grunt-sections/test-runners')(grunt, options).karma,
 		protractor:             require('../grunt-sections/test-runners')(grunt, options).protractor,
-		concat:                 require('../grunt-sections/export-dts')(grunt, options).concat
+		concat:                 extend(require('../grunt-sections/export-dts')(grunt, options).concat, convertTsConfig.concat)
 	});
 };
