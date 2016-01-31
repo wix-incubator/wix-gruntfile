@@ -133,4 +133,6 @@ module.exports = function (grunt, options) {
   grunt.registerTask('default', function () {
     grunt.task.run(['build']);
   });
+
+  grunt.registerTask('convert-tsconfig', require('../grunt-sections/convert-tsconfig')(grunt).convertToTsConfig);
 };

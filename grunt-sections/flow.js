@@ -76,6 +76,7 @@ module.exports = function (grunt, options) {
             '*.html',
             '{views,modules}/**/*.{html,html.js}',
             'styles/svg-font/*',
+            'app/test/lib/**',
             'test/lib/**'
           ],
           dest: 'dist'
@@ -94,6 +95,8 @@ module.exports = function (grunt, options) {
             '.htaccess',
             'bower_components/**/*',
             'images/**/*.{webp,ico,svg}',
+            'test/lib/**/*',
+            'test/mock/**/*',
             'fonts/**/*',
             'videos/**/*'
           ]
