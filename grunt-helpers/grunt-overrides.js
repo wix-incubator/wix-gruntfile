@@ -30,14 +30,14 @@ module.exports = function (grunt) {
 
     var existingAriftactIndex = pomXml.indexOf('/tar.gz.xml');
     if (existingAriftactIndex === -1) {
-      grunt.warn('I couldn\'t find pom.xml entry for tar.gz artifact :(');
+      grunt.log.writeln('I couldn\'t find pom.xml entry for tar.gz artifact :(');
       return; // couldn't find original artifact so why continue
     }
 
     var endMarker = '</plugin>';
     var endPluginIndex = pomXml.indexOf(endMarker, existingAriftactIndex);
     if (endPluginIndex === -1) {
-      grunt.warn('I couldn\'t find pom.xml\'s entry closure for tar.gz artifcat :(');
+      grunt.log.writeln('I couldn\'t find pom.xml\'s entry closure for tar.gz artifcat :(');
       // pom.xml fucked?
       return;
     }
