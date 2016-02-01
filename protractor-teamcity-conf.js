@@ -16,13 +16,8 @@ if (process.env.IS_BUILD_AGENT) {
     config.capabilities.shardTestFiles = false;
   }
   config.onPrepare = function () {
-    if (config.framework === 'jasmine2') {
-      var reporters = require('jasmine-reporters2');
-      jasmine.getEnv().addReporter(new reporters.TeamCityReporter());
-    } else {
-      require('jasmine-reporters');
-      jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
-    }
+    var reporters = require('jasmine-reporters');
+    jasmine.getEnv().addReporter(new reporters.TeamCityReporter());
     onPrepare.apply(this, arguments);
   };
 }
