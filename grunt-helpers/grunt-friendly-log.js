@@ -6,6 +6,7 @@ module.exports = function (grunt) {
     'jshint:test': 'Running Linters',
     'tslint:all': 'Running Linters',
     'ts:build': 'Transpiling Typescript',
+    'traceur': 'Traspiling ES6',
     'webfont:icons': 'Building Font icons',
     'haml:dist': 'Compiling Haml',
     'compass:dist': 'Runing Compass',
@@ -21,9 +22,9 @@ module.exports = function (grunt) {
 
   function silence() {
     var hooks = {};
-    ['header', 'writeln', 'write', 'ok'].forEach(function (x) {
+    ['header', 'writeln', 'write', 'ok'].forEach(x => {
       hooks[x] = grunt.log[x];
-      grunt.log[x] = function () {};
+      grunt.log[x] = () => ({success: () => undefined});
     });
     grunt.log.header = function () {
       Object.assign(grunt.log, hooks);
@@ -31,7 +32,8 @@ module.exports = function (grunt) {
     };
   }
 
-  if (process.argv[2] === 'serve' || process.argv[2] === 'serve:clean') {
+  let friendlyTasks = ['serve', 'serve:clean', 'serve:coverage', 'lint'];
+  if (friendlyTasks.indexOf(process.argv[2]) !== -1) {
     var chalk = require('chalk');
     grunt.log.header = function (x) {
       var match = x.match(/Running "([^"]*)"/);

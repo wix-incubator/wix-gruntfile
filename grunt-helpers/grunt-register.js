@@ -9,9 +9,9 @@ module.exports = function (grunt, options) {
 
   var preBuildTasks = [
     'jsstyleIfEnabled',
+    'scssstyleIfEnabled',
     'typescriptIfEnabled',
     'traceurIfEnabled',
-    'scssstyleIfEnabled',
     'mkdirTmpStyles',
     'newer:webfontIfEnabled',
     'hamlIfEnabled',
