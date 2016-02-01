@@ -42,7 +42,7 @@ module.exports = function (grunt, options) {
     },
     replaceOrVelocityConf: {
       files: ['replace.*.js', 'velocity.*.js'],
-      tasks: ['replace:dist', 'newer:copy:vm', 'triggerLivereload'],
+      tasks: ['replaceOrVelocity', 'newer:copy:vm', 'triggerLivereload'],
       options: {reload: true}
     },
     locale: {

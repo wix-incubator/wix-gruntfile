@@ -9,7 +9,9 @@ module.exports = function (grunt) {
     'traceur': 'Traspiling ES6',
     'webfont:icons': 'Building Font icons',
     'haml:dist': 'Compiling Haml',
+    'sass:dist': 'Running Sass',
     'compass:dist': 'Runing Compass',
+    'compass:server': 'Runing Compass',
     'replaceOrVelocity': 'Rendering Velocity',
     'jsonAngularTranslate:server': 'Generating Translations',
     'ngtemplates:single': 'Preloading Templates',
@@ -33,7 +35,7 @@ module.exports = function (grunt) {
   }
 
   let friendlyTasks = ['serve', 'serve:clean', 'serve:coverage', 'lint'];
-  if (friendlyTasks.indexOf(process.argv[2]) !== -1) {
+  if (process.env.GRUNT_FRIENDLY_LOG && friendlyTasks.indexOf(process.argv[2]) !== -1) {
     var chalk = require('chalk');
     grunt.log.header = function (x) {
       var match = x.match(/Running "([^"]*)"/);
