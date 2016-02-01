@@ -58,6 +58,10 @@ module.exports = function (grunt, options) {
     ]);
   });
 
+  grunt.registerTask('serve:verbose', [
+    'serve'
+  ]);
+
   grunt.registerTask('serve', [
     'ignore-code-style-checks',
     'karma:unit',
