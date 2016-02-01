@@ -8,9 +8,9 @@ module.exports = function (config) {
   var os = require('os');
   var isOsx = os.platform()  === 'darwin';
 
-  var frameworks = ['jasmine2'],
+  var frameworks = ['jasmine'],
       plugins = [
-        'karma-jasmine2',
+        'karma-jasmine',
         'karma-coverage',
         'karma-phantomjs-launcher',
         'karma-growl-reporter',

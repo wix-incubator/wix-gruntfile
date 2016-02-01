@@ -20,5 +20,5 @@ module.exports = function () {
         dest: 'dist/types.d.ts'
       }
     }
-  }
+  };
 };

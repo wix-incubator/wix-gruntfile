@@ -1,3 +1,4 @@
+/* global afterEach, browser */
 'use strict';
 
 var spawn = require('child_process').spawn;

@@ -25,7 +25,7 @@ module.exports = function register(grunt) {
         'Do you want to update outdated npm modules?';
     }
 
-    function onPromptAnswer(answer) {
+    function onPromptAnswer(answer, done) {
       if (answer) {
         grunt.log.ok('executing \'npm update\' ...');
         shell.exec('npm update');
@@ -45,7 +45,7 @@ module.exports = function register(grunt) {
     } else {
       var question = ppViolationsMessage(result.violations);
       inquirer.prompt([{type: 'confirm', name: 'update', message: question}], function (answers) {
-        onPromptAnswer(answers.update);
+        onPromptAnswer(answers.update, done);
       });
     }
 

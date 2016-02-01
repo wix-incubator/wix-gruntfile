@@ -103,26 +103,6 @@ module.exports = function (grunt, options) {
     'e2eIfEnabled:teamcity'
   ]);
 
-  grunt.registerTask('test:ci_parallel_main_server', [
-    'e2eIfEnabled:teamcity_main_server_parallel'
-  ]);
-
-  grunt.registerTask('test:ci_parallel_diff_server_diff_tunnel', [
-    'e2eIfEnabled:teamcity_diff_server_diff_tunnel'
-  ]);
-
-  grunt.registerTask('test:ci_parallel_same_tunnel', [
-    'e2eIfEnabled:teamcity_diff_server_diff_tunnel'
-  ]);
-
-  grunt.registerTask('test:ci_parallel_same_server', [
-    'e2eIfEnabled:teamcity_same_server'
-  ]);
-
-  grunt.registerTask('test:ci_parallel_same_server_tunnel', [
-    'e2eIfEnabled:teamcity_same_server_tunnel'
-  ]);
-
   require('../grunt-sections/verify-npm')(grunt);
 
   grunt.registerTask('build', [
