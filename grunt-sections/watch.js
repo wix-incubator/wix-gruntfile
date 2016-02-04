@@ -83,7 +83,7 @@ module.exports = function (grunt, options) {
     },
     compass: {
       files: ['app/{styles,modules}/**/*.{scss,sass}'],
-      tasks: ['scssstyleIfEnabled', 'compass:server', 'autoprefixerIfEnabled', 'replace', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
+      tasks: ['scssstyleIfEnabled', 'compass:server', 'autoprefixerIfEnabled', 'replaceOrVelocity', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
     },
     styles: {
       files: ['app/{styles,modules}/**/*.css'],
@@ -105,7 +105,7 @@ module.exports = function (grunt, options) {
   if (options.useNodeSass) {
     config.sass = {
       files: ['app/{styles,modules}/**/*.{scss,sass}'],
-      tasks: ['scssstyleIfEnabled', 'sass', 'autoprefixerIfEnabled', 'replace', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
+      tasks: ['scssstyleIfEnabled', 'sass', 'autoprefixerIfEnabled', 'replaceOrVelocity', 'styleInlineServeIfEnabled', 'newer:copy:vm', 'triggerLivereload']
     };
 
     config.compass.files = ['app/{styles,modules}/**/*.compass.{scss,sass}'];
