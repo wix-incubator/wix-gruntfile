@@ -20,17 +20,6 @@ module.exports = function (config) {
         'karma-chrome-launcher',
         'karma-simple-reporter'];
 
-  if (process.env.USE_JASMINE2 && process.env.USE_JASMINE2 !== 'false') {
-    frameworks.shift();
-    plugins.shift();
-    if (process.env.USE_JASMINE2 === 'shim') {
-      frameworks.unshift('jasmine1-shim');
-      plugins.unshift('karma-jasmine1-shim');
-    }
-    frameworks.unshift('jasmine2');
-    plugins.unshift('karma-jasmine2');
-  }
-
   config.set({
     plugins: plugins,
 

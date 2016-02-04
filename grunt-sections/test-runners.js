@@ -48,41 +48,6 @@ module.exports = function (grunt, options) {
     }
   });
 
-  grunt.registerTask('e2eIfEnabled:teamcity_main_server_parallel', function () {
-    if (options.protractor) {
-      grunt.task.run('connect:test');
-      grunt.task.run('protractor:teamcity_main_server_parallel');
-    }
-  });
-
-  grunt.registerTask('e2eIfEnabled:teamcity_diff_server_diff_tunnel', function () {
-    if (options.protractor) {
-      grunt.task.run('connect:testSecondaryServer');
-      grunt.task.run('protractor:teamcity_diff_server_diff_tunnel');
-    }
-  });
-
-  grunt.registerTask('e2eIfEnabled:teamcity_same_server_tunnel', function () {
-    if (options.protractor) {
-      grunt.task.run('connect:testSecondaryServer');
-      grunt.task.run('protractor:teamcity_same_server_tunnel');
-    }
-  });
-
-  grunt.registerTask('e2eIfEnabled:teamcity_same_server', function () {
-    if (options.protractor) {
-      grunt.task.run('connect:testSecondaryServer');
-      grunt.task.run('protractor:teamcity_same_server');
-    }
-  });
-
-  grunt.registerTask('e2eIfEnabled:teamcity_same_tunnel', function () {
-    if (options.protractor) {
-      grunt.task.run('connect:testSecondaryServer');
-      grunt.task.run('protractor:teamcity_same_tunnel');
-    }
-  });
-
   return {
     karma: {
       options: Object.assign({
@@ -125,41 +90,6 @@ module.exports = function (grunt, options) {
           configFile: path.join(__dirname, '../protractor-teamcity-conf.js'),
           baseUrl: 'http://localhost:9876/',
           sauceSeleniumAddress: 'localhost:4445/wd/hub'
-        }
-      },
-      teamcity_main_server_parallel: {
-        options: {
-          configFile: path.join(__dirname, '../protractor-teamcity-conf-part1-tunnel1.js'),
-          baseUrl: 'http://localhost:9876/',
-          sauceSeleniumAddress: 'localhost:4445/wd/hub'
-        }
-      },
-      teamcity_diff_server_diff_tunnel: {
-        options: {
-          configFile: path.join(__dirname, '../protractor-teamcity-conf-part2-tunnel2.js'),
-          baseUrl: 'http://localhost:9877/',
-          sauceSeleniumAddress: 'localhost:4446/wd/hub'
-        }
-      },
-      teamcity_same_server_tunnel: {
-        options: {
-          configFile: path.join(__dirname, '../protractor-teamcity-conf-part2-tunnel1.js'),
-          baseUrl: 'http://localhost:9876/',
-          sauceSeleniumAddress: 'localhost:4445/wd/hub'
-        }
-      },
-      teamcity_same_tunnel: {
-        options: {
-          configFile: path.join(__dirname, '../protractor-teamcity-conf-part2-tunnel1.js'),
-          baseUrl: 'http://localhost:9877/',
-          sauceSeleniumAddress: 'localhost:4445/wd/hub'
-        }
-      },
-      teamcity_same_server: {
-        options: {
-          configFile: path.join(__dirname, '../protractor-teamcity-conf-part2-tunnel2.js'),
-          baseUrl: 'http://localhost:9876/',
-          sauceSeleniumAddress: 'localhost:4446/wd/hub'
         }
       }
     }

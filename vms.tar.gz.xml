@@ -11,8 +11,8 @@
             <directory>${project.basedir}/dist</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
-                <include>*.vm</include>
-                <include>*/**/*.vm</include>
+                <include>*</include>
+                <include>*/**</include>
             </includes>
         </fileSet>
     </fileSets>
