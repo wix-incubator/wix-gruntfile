@@ -24,6 +24,10 @@ git add --all .
 git reset HEAD bower.json
 git diff --exit-code --cached --stat
 
+if type "wnpm-release" &> /dev/null; then
+    wnpm-release --no-shrinkwrap
+fi
+
 if [ $? -ne 0 ]; then
     $(npm bin)/grunt publish
 fi
