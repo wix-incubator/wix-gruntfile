@@ -14,6 +14,11 @@ module.exports = function (grunt, options) {
           fail: false
         }
       }
+    },
+    sourceMapBasename: {
+      build:{
+        src: ['.tmp/**/*.js.map']
+      }
     }
   };
 };

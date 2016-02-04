@@ -52,6 +52,7 @@ module.exports = function (grunt, options) {
 		karma:                  require('../grunt-sections/test-runners')(grunt, options).karma,
 		protractor:             require('../grunt-sections/test-runners')(grunt, options).protractor,
 		concat:                 extend(require('../grunt-sections/export-dts')(grunt, options).concat, convertTsConfig.concat),
-		remapIstanbul:          require('../grunt-sections/remap')(grunt, options).remapIstanbul
+		remapIstanbul:          require('../grunt-sections/remap')(grunt, options).remapIstanbul,
+		sourceMapBasename:      require('../grunt-sections/remap')(grunt, options).sourceMapBasename
 	});
 };
