@@ -7,7 +7,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # publish to npm
-wnpm-release --no-shrinkwrap
+$(npm bin)/wnpm-release --no-shrinkwrap
 
 PROJECT_DIR=$(pwd)
 cd /tmp
