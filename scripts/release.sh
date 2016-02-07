@@ -6,6 +6,9 @@ if [ $? -ne 0 ]; then
     exit 0
 fi
 
+# publish to npm
+wnpm-release --no-shrinkwrap
+
 PROJECT_DIR=$(pwd)
 cd /tmp
 rm -rf bower_component
@@ -23,9 +26,6 @@ mv -f .gitignore.new .gitignore
 git add --all .
 git reset HEAD bower.json
 git diff --exit-code --cached --stat
-
-# publish to npm
-#wnpm-release --no-shrinkwrap
 
 if [ $? -ne 0 ]; then
     $(npm bin)/grunt publish
