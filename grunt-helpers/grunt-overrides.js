@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = function (grunt) {
+module.exports = function (grunt, options) {
 
-  function verifyNpmScripts(grunt) {
+  function verifyNpmScripts(grunt, options) {
     var packageJson = grunt.file.readJSON('package.json');
 
     if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test) {
@@ -14,10 +14,16 @@ module.exports = function (grunt) {
       grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
     }
 
-    if (!packageJson.publishConfig && packageJson.private !== true) {
+    if (!packageJson.publishConfig) {
+      if (options.bowerComponent) {
+        packageJson.private = false;
+        packageJson.publishConfig = {registry: 'http://repo.dev.wix/artifactory/api/npm/npm-local/'};
+        grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
+      } else if (packageJson.private !== true) {
       packageJson.private = true;
       grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
     }
+  }
   }
 
   function verifyVmsArtifactConfiguration(grunt) {
@@ -38,6 +44,6 @@ module.exports = function (grunt) {
     }
   }
 
-  verifyNpmScripts(grunt);
+  verifyNpmScripts(grunt, options);
   verifyVmsArtifactConfiguration(grunt);
 };

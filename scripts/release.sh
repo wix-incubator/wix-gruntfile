@@ -6,6 +6,9 @@ if [ $? -ne 0 ]; then
     exit 0
 fi
 
+# publish to npm
+$(npm bin)/wnpm-release --no-shrinkwrap
+
 PROJECT_DIR=$(pwd)
 cd /tmp
 rm -rf bower_component
