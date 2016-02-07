@@ -25,7 +25,7 @@ git reset HEAD bower.json
 git diff --exit-code --cached --stat
 
 # publish to npm
-wnpm-release --no-shrinkwrap
+#wnpm-release --no-shrinkwrap
 
 if [ $? -ne 0 ]; then
     $(npm bin)/grunt publish
