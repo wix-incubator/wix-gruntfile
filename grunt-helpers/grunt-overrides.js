@@ -20,10 +20,10 @@ module.exports = function (grunt, options) {
         packageJson.publishConfig = {registry: 'http://repo.dev.wix/artifactory/api/npm/npm-local/'};
         grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
       } else if (packageJson.private !== true) {
-      packageJson.private = true;
-      grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
+        packageJson.private = true;
+        grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
+      }
     }
-  }
   }
 
   function verifyVmsArtifactConfiguration(grunt) {
