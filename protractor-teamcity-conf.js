@@ -105,18 +105,21 @@ var capabilities2 = capabilities.slice(indexArr);
 config.seleniumPort = 4445;
 
 if (process.env.WIX_SAUCE === 'true') {
-  var seleniunGrid = 'app56.aus.wixpress.com';
+  var seleniumGrid = 'app56.aus.wixpress.com';
   config.multiCapabilities = [{
     browserName: 'firefox',
     platform: 'LINUX'
   }, {
     browserName: 'chrome',
-    platform: 'LINUX'
+    platform: 'LINUX',
+    chromeOptions: {
+      args: ['--test-type']
+    }
   }, {
     browserName: 'internet explorer',
     platform: 'WINDOWS'
   }];
-  config.seleniumAddress = 'https://' + seleniunGrid + ':4444/wd/hub/';
+  config.seleniumAddress = 'https://' + seleniumGrid + ':4444/wd/hub/';
 }
 
 exports.config = config;
