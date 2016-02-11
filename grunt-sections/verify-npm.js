@@ -1,27 +1,47 @@
 'use strict';
 
-var shell = require('shelljs');
-var semver = require('semver');
-var inquirer = require('inquirer');
-var fs = require('fs');
-var jsonminify = require("jsonminify");
-var _ = require('lodash');
-
 module.exports = function register(grunt) {
 
   grunt.registerTask('verify-npm', function () {
 
     if (!process.env.VERIFY_NPM) {
+      grunt.log.write('verify-npm task is deactivated. please set \'VERIFY_NPM\' environment variable if you wish to enable it.');
       return;
     }
 
-    const RESULT_FILE_NAME = process.cwd() + '/.npm-outdated';
-    const UPDATING_DEPENDENCIES_CMD = 'npm update';
+    const RESULT_FILE_NAME = process.cwd() + '/node_modules/.npm-outdated';
     const FS_ENCODING = 'utf-8';
+    const OUTDATED_CMD_TOKENS = 'outdated --json'.split(' ');
 
-    var outdatedModule = null;
+    function formatOutdatedPackages(outdated) {
+      return outdated.map((pkg) => `(${pkg.name}) ${pkg.current} -> ${pkg.update}`).join('\n');
+    }
 
-    (function() {
+    function ppViolationsMessage(outdated) {
+      let line = `\n****\n`;
+      let outdatedPkg = line + formatOutdatedPackages(outdated) + line;
+      return `\nWhoa there cowboy! The following NPM modules are outdated:${outdatedPkg}Do you want to update outdated npm modules?`;
+    }
+
+    function toUpdateCmd(modules) {
+      let pkgs = (modules || []).map((mdl) => mdl.name);
+      return `npm update ${pkgs}`
+    }
+
+    function onPromptAnswer(answer, cmd) {
+      if (answer) {
+        grunt.log.ok(`executing 'npm update' ...`);
+        require('shelljs').exec(cmd);
+      } else {
+        grunt.log.subhead('Skipping updating outdated NPM modules...');
+      }
+    }
+
+    function fetchOutdatedModules() {
+
+      require("jsonminify"); // sets JSON.minify
+      let semver = require('semver');
+      let fs = require('fs');
 
       let outdated = {};
 
@@ -43,77 +63,47 @@ module.exports = function register(grunt) {
       }
 
       function execNpmVerify() {
-        let cmd = require('child_process').spawn('npm', ['outdated', '--json'], {detached: true});
+        let cmd = require('child_process').spawn('npm', OUTDATED_CMD_TOKENS, {detached: true});
         let result = '';
         cmd.stdout.on('data', (output) => {
           result += output;
         });
         cmd.on('close', (code) => {
           if (code === 0) {
-            outdated = JSON.parse(result || {});
+            outdated = JSON.parse(result || '[]');
             let res = Object.keys(outdated).filter(isReallyOutdated).map(toDto);
             writeToFs(RESULT_FILE_NAME, toFileFormat(res));
           }
         });
       }
 
-      let fetchOutdated = () => {
-        try {
-          let file = fs.readFileSync(RESULT_FILE_NAME, {encoding : FS_ENCODING});
-          return _.isEmpty(file) ? [] : JSON.parse(file);
-        } catch (er) {
-          execNpmVerify();
-          return null;
-        }
-      };
-
-      outdatedModule = fetchOutdated();
-
-    })();
-
-    function formatOutdatedPackages(outdated) {
-      return outdated.map((pkg) => `(${pkg.name}) ${pkg.current} -> ${pkg.update}`).join('\n');
-    }
-
-    function ppViolationsMessage(outdated) {
-      var pLine = '\n' + new Array(55).join('*') + '\n';
-      return '\nWhoa there cowboy! The following NPM dependencies are outdated:' +
-        pLine + formatOutdatedPackages(outdated) + pLine +
-        'Do you want to update outdated npm modules? ';
-    }
-
-    function onPromptAnswer(answer) {
-      if (answer) {
-        grunt.log.ok('executing \'npm update\' ...');
-        shell.exec(UPDATING_DEPENDENCIES_CMD);
-      } else {
-        grunt.log.subhead('Skipping updating outdated NPM dependencies...');
+      try {
+        let file = fs.readFileSync(RESULT_FILE_NAME, {encoding : FS_ENCODING});
+        fs.unlinkSync(RESULT_FILE_NAME);
+        return file ? JSON.parse(file) : [];
+      } catch (er) {
+        execNpmVerify();
+        return null;
       }
     }
 
     let done = this.async();
 
-    let main = () => {
-      if (outdatedModule) {
-        fs.unlinkSync(RESULT_FILE_NAME);
-        if (outdatedModule.length === 0) {
-          grunt.log.ok('\nNo outdated npm modules, yay!');
-          done();
-        } else {
-          var question = ppViolationsMessage(outdatedModule);
-          inquirer.prompt([{type: 'confirm', name: 'update', message: question}], function (answers) {
-            onPromptAnswer(answers.update);
-            done();
-          });
-        }
-      } else {
-        grunt.log.write('A possible error occurred, this might be due a problem when verifying outdated npm modules.' +
-          '\nIf this message repeats again - please contact admin');
-        done();
-      }
-    };
+    let outdatedModule = fetchOutdatedModules();
 
-    main();
+    if (outdatedModule === null) {
+      grunt.log.write('Outdated npm modules result is not available yet. If you are seeing this messages repeatedly, please contact admin');
+      done();
+    } else if (outdatedModule.length === 0) {
+      grunt.log.ok('\nNo outdated npm modules, yay!');
+      done();
+    } else {
+      let question = ppViolationsMessage(outdatedModule);
+      require('inquirer').prompt([{type: 'confirm', name: 'update', message: question}], (answers) => {
+        onPromptAnswer(answers.update, toUpdateCmd(outdatedModule));
+        done();
+      });
+    }
 
   });
 
