@@ -61,6 +61,19 @@ module.exports = function (grunt, options) {
       }
     },
     copy: {
+      ts: {
+        files: [{
+          expand: true,
+          cwd: 'app',
+          dest: '.tmp/app',
+          src: '**/*.ts'
+        }, {
+          expand: true,
+          cwd: 'test',
+          dest: '.tmp/test',
+          src: '**/*.ts'
+        }]
+      },
       dist: {
         files: [{
           expand: true,

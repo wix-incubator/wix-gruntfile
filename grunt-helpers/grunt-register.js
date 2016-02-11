@@ -1,6 +1,7 @@
 'use strict';
 
 var shell = require('shelljs');
+var path = require('path');
 
 module.exports = function (grunt, options) {
   grunt.registerTask('wix-install', function () {
@@ -69,7 +70,7 @@ module.exports = function (grunt, options) {
     'pre-build',
     'livereloadServer',
     'connect:livereload',
-    'force:karma:unit:run',
+    'force:runKarma',
     'watch'
   ]);
 
@@ -134,5 +135,61 @@ module.exports = function (grunt, options) {
     grunt.task.run(['build']);
   });
 
+  grunt.registerTask('runKarma', function () {
+    if (grunt.option('enableCoverage')){
+      grunt.task.run('karma:single');
+      grunt.task.run('remapIstanbul');
+      grunt.task.run('remapIstanbulJsAndReport');
+    } else {
+      grunt.task.run('karma:unit:run');
+    }
+  });
+
   grunt.registerTask('convert-tsconfig', require('../grunt-sections/convert-tsconfig')(grunt).convertToTsConfig);
+
+  // remapIstanbul skips the non-mapped entries in coverage.json and
+  // doesn't update their path to relative path
+  // This also uses istanbul report method instead of creating another task
+  grunt.registerTask('remapIstanbulJsAndReport', function(){
+    var istanbul = require('istanbul');
+    var collector = new istanbul.Collector();
+    var collectorOutput = new istanbul.Collector();
+    var report = istanbul.Report.create('html', {dir: './coverage/report'});
+    var coverage = {};
+
+    collector.add(grunt.file.readJSON('./coverage/coverage-ts.json'));
+
+    collector.files().forEach(function(file) {
+      var fileCoverage = collector.fileCoverageFor(file);
+      var filePath = fileCoverage.path;
+      if (path.extname(file) === '.js'){
+        filePath = path.relative(process.cwd(), file);
+      }
+      coverage[shiftLeftDirectory(filePath)] = fileCoverage;
+    });
+
+    collectorOutput.add(coverage);
+    report.writeReport(collectorOutput, true);
+  });
+
+  grunt.registerMultiTask('sourceMapBasename', function () {
+    this.filesSrc.forEach(function (file) {
+      sourceMapBasename(file);
+    });
+  });
+
+  function shiftLeftDirectory(filePath) {
+    var splitPath = filePath.split(path.sep);
+    splitPath.shift();
+    filePath = splitPath.join(path.sep);
+    return filePath;
+  }
+
+  function sourceMapBasename(source) {
+    var jsMap = grunt.file.readJSON(source);
+    jsMap.sources = jsMap.sources.map(function (relativePath) {
+      return path.basename(relativePath)
+    });
+    grunt.file.write(source, JSON.stringify(jsMap));
+  }
 };

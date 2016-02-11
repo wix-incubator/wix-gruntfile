@@ -20,6 +20,10 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('tsWithHack', function (param) {
     grunt.task.run('ts');
+    if (grunt.option('enableCoverage')){
+      grunt.task.run('copy:ts');
+    }
+    grunt.task.run('sourceMapBasename');
     grunt.task.run('theTsHack:' + param);
   });
 
@@ -92,7 +96,7 @@ module.exports = function (grunt, options) {
     typescript: {
       options: {
         target: 'es5',
-        sourceMap: false,
+        sourceMap: true,
         declaration: createDeclaration,
         removeComments: false,
         experimentalDecorators: true,
