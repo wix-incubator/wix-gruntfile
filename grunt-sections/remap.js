@@ -6,7 +6,6 @@ module.exports = function (grunt, options) {
     remapIstanbul: {
       build: {
         src: './coverage/coverage-js.json',
-        cwd: process.cwd(),
         options: {
           reports: {
             json: './coverage/coverage-ts.json'

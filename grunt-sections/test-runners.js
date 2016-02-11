@@ -27,10 +27,10 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('enableCoverage', function () {
+    grunt.option('enableCoverage', true);
+
     var karma = grunt.config('karma');
     delete karma.unit.options.preprocessors;
-    karma.unit.background = false;
-    karma.unit.singleRun = true;
     grunt.config('karma', karma);
   });
 
@@ -63,7 +63,7 @@ module.exports = function (grunt, options) {
       teamcity: {
         options: {
           reporters: ['teamcity', 'coverage'],
-          coverageReporter: { type: 'teamcity' }
+          coverageReporter: {type: 'teamcity'}
         }
       },
       single: {

@@ -70,9 +70,7 @@ module.exports = function (grunt, options) {
     'pre-build',
     'livereloadServer',
     'connect:livereload',
-    'force:karma:unit:run',
-    'remapIstanbul',
-    'remapIstanbulJsAndReport',
+    'force:runKarma',
     'watch'
   ]);
 
@@ -135,6 +133,16 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('default', function () {
     grunt.task.run(['build']);
+  });
+
+  grunt.registerTask('runKarma', function () {
+    if (grunt.option('enableCoverage')){
+      grunt.task.run('karma:single');
+      grunt.task.run('remapIstanbul');
+      grunt.task.run('remapIstanbulJsAndReport');
+    } else {
+      grunt.task.run('karma:unit:run');
+    }
   });
 
   grunt.registerTask('convert-tsconfig', require('../grunt-sections/convert-tsconfig')(grunt).convertToTsConfig);

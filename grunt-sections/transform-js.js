@@ -20,7 +20,9 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('tsWithHack', function (param) {
     grunt.task.run('ts');
-    grunt.task.run('copy:ts');
+    if (grunt.option('enableCoverage')){
+      grunt.task.run('copy:ts');
+    }
     grunt.task.run('sourceMapBasename');
     grunt.task.run('theTsHack:' + param);
   });

@@ -26,7 +26,7 @@ module.exports = function (grunt, options) {
     },
     haml: {
       files: ['app/{views,modules}/**/*.haml'],
-      tasks: ['newer:haml', 'newer:ngtemplates:single', 'triggerLivereload', 'karma:unit:run']
+      tasks: ['newer:haml', 'newer:ngtemplates:single', 'triggerLivereload', 'runKarma']
     },
     svgFont: {
       files: ['app/images/svg-font-icons/*.*'],
@@ -34,7 +34,7 @@ module.exports = function (grunt, options) {
     },
     html: {
       files: ['app/{views,modules}/**/*.html'],
-      tasks: ['newer:ngtemplates:single', 'triggerLivereload', 'karma:unit:run']
+      tasks: ['newer:ngtemplates:single', 'triggerLivereload', 'runKarma']
     },
     replaceOrVelocity: {
       files: ['app/**/*.vm'],
@@ -47,7 +47,7 @@ module.exports = function (grunt, options) {
     },
     locale: {
       files: ['app/scripts/**/locale/**/*.*'],
-      tasks: ['newer:jsonAngularTranslate', 'jsstyleIfEnabled', 'triggerLivereload', 'karma:unit:run']
+      tasks: ['newer:jsonAngularTranslate', 'jsstyleIfEnabled', 'triggerLivereload', 'runKarma']
     },
     experiments: {
       files: ['app/petri-experiments/*.json'],
@@ -61,25 +61,25 @@ module.exports = function (grunt, options) {
         '!test/spec/e2e/**/*.js',
         '!test/e2e/**/*.js'
       ],
-      tasks: ['jsstyleIfEnabled', 'triggerLivereload', 'karma:unit:run', 'remapIstanbul', 'remapIstanbulJsAndReport']
+      tasks: ['jsstyleIfEnabled', 'triggerLivereload', 'runKarma']
     },
     ts: {
       files: ['{test,app/scripts,app/modules,app/test}/**/*.ts', 'app/tsconfig.json'],
-      tasks: ['jsstyleIfEnabled', 'tsWithHack:copy', 'triggerLivereload', 'karma:unit:run', 'remapIstanbul', 'remapIstanbulJsAndReport'],
+      tasks: ['jsstyleIfEnabled', 'tsWithHack:copy', 'triggerLivereload', 'runKarma'],
       options: {
         event: ['changed', 'added']
       }
     },
     tsDelete: {
       files: ['{test,app/scripts,app/modules}/**/*.ts'],
-      tasks: ['clean:ts', 'tsWithHack:copy', 'triggerLivereload', 'karma:unit:run'],
+      tasks: ['clean:ts', 'tsWithHack:copy', 'triggerLivereload', 'runKarma'],
       options: {
         event: ['deleted']
       }
     },
     es6: {
       files: ['{test,app/scripts,app/modules}/**/*.es6'],
-      tasks: ['jsstyleIfEnabled', 'traceur', 'triggerLivereload', 'karma:unit:run']
+      tasks: ['jsstyleIfEnabled', 'traceur', 'triggerLivereload', 'runKarma']
     },
     compass: {
       files: ['app/{styles,modules}/**/*.{scss,sass}'],

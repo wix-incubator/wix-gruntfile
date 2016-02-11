@@ -93,8 +93,7 @@ module.exports = function (config) {
     coverageReporter: {
          type: 'json',
          subdir : '.',
-         file : 'coverage-js.json',
-         root: process.cwd()
+         file : 'coverage-js.json'
     }
   });
 };
