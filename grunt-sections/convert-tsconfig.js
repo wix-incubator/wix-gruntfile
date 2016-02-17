@@ -34,6 +34,8 @@ module.exports = function (grunt) {
 
   function convertToTsConfig() {
     grunt.task.run([
+      'replace:dontIgnoreReference',
+      'replace:updateTsdJson',
       'replace:referencesFromTest',
       'concat:referenceFiles',
       'copy:testToApp',
@@ -75,6 +77,25 @@ module.exports = function (grunt) {
       }
     },
     replace: {
+      dontIgnoreReference: {
+        src: ['.gitignore'],
+        overwrite: true,
+        replacements: [{
+          from: /^reference.ts$\s*/m,
+          to: null
+        }]
+      },
+      updateTsdJson: {
+        src: ['tsd.json'],
+        overwrite: true,
+        replacements: [{
+          from: 'scripts/typings',
+          to: 'typings'
+        }, {
+          from: /^.*(bundle).*(tsd.d.ts).*$\n*/m,
+          to: null
+        }]
+      },
       dtsBower: {
         src: ['app/typings/tsd.d.ts'],
         overwrite: true,
@@ -140,6 +161,5 @@ module.exports = function (grunt) {
         }]
       }
     }
-
   };
 };
