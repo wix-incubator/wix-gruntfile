@@ -8,7 +8,7 @@ module.exports = function (grunt) {
     filesGlob: [
       'scripts/**/*.ts',
       'test/**/*.ts',
-      'typings/tsd.d.ts'
+      'typings/**/*.d.ts'
     ],
     files: []
   };
@@ -133,6 +133,7 @@ module.exports = function (grunt) {
             'test',
             'app/scripts/**/reference.ts',
             'app/test/**/reference.ts',
+            'app/typings/tsd.d.ts',
             'reference.ts',
             'app/scripts/typings'
           ]
