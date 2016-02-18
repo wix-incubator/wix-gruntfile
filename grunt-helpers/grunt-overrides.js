@@ -14,12 +14,18 @@ module.exports = function (grunt, options) {
       grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
     }
 
-    if (!packageJson.publishConfig) {
+    const hasOldRegistry = !!packageJson.publishConfig && !!packageJson.publishConfig.registry &&
+      packageJson.publishConfig.registry.indexOf('repo.dev.wix') >= 0;
+
+    if (!packageJson.publishConfig || hasOldRegistry) {
       if (options.bowerComponent) {
+        packageJson.name = getPackageNameWithWixScope(packageJson.name);
         packageJson.private = false;
-        packageJson.publishConfig = {registry: 'http://repo.dev.wix/artifactory/api/npm/npm-local/'};
+        packageJson.publishConfig = {
+          registry: 'https://registry.npmjs.org/'
+        };
         grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
-      } else if (packageJson.private !== true) {
+      } else if (packageJson.private !== true && !hasOldRegistry) {
         packageJson.private = true;
         grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
       }
@@ -42,6 +48,14 @@ module.exports = function (grunt, options) {
         grunt.file.write('pom.xml', modifiedPomXml.split('\n').join(posixNewLine ? '\n' : '\r\n'));
       }
     }
+  }
+
+  function getPackageNameWithWixScope(packageName) {
+    const wixScope = '@wix/';
+    if (packageName.indexOf(wixScope) !== 0) {
+      packageName = wixScope + packageName;
+    }
+    return packageName;
   }
 
   verifyNpmScripts(grunt, options);

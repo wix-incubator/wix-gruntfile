@@ -97,7 +97,7 @@
     "grunt-petri-experiments": "^1.0.0",
     "grunt-extract-styles": "^1.1.0",
     "grunt-wix-inline": "^0.3.3",
-    "wnpm-ci": "*"
+    "@wix/wnpm-ci": "*"
   },
   "peerDependencies": {
     "bower": "^1.3.1",
