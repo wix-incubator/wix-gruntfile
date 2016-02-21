@@ -2,7 +2,7 @@
 
 module.exports = function (grunt, options) {
 
-  function verifyNpmScripts(grunt, options) {
+  function verifyNpmScripts() {
     var packageJson = grunt.file.readJSON('package.json');
 
     if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test) {
@@ -26,7 +26,7 @@ module.exports = function (grunt, options) {
     }
   }
 
-  function verifyVmsArtifactConfiguration(grunt) {
+  function verifyVmsArtifactConfiguration() {
     var pomXml = grunt.file.read('pom.xml');
     var vmsArtifactXml = grunt.file.read('node_modules/wix-gruntfile/grunt-helpers/data/vms-artifact-plugin.xml');
 
@@ -44,6 +44,18 @@ module.exports = function (grunt, options) {
     }
   }
 
-  verifyNpmScripts(grunt, options);
-  verifyVmsArtifactConfiguration(grunt);
+  function fixTslintJson() {
+    if (grunt.file.exists('tslint.json')) {
+      let tslint = grunt.file.readJSON('tslint.json');
+      if (tslint.rules && tslint.rules['no-trailing-comma']) {
+        delete tslint.rules['no-trailing-comma'];
+        tslint.rules['trailing-comma'] = [true, {singleline: 'never', multiline: 'never'}];
+        grunt.file.write('tslint.json', JSON.stringify(tslint, null, 2));
+      }
+    }
+  }
+
+  fixTslintJson();
+  verifyNpmScripts();
+  verifyVmsArtifactConfiguration();
 };
