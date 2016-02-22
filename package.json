@@ -54,7 +54,7 @@
     "grunt-svgmin": "^2.0.0",
     "grunt-text-replace": "^0.4.0",
     "grunt-traceur-latest": "~0.0.4",
-    "grunt-ts": "^5.2.0",
+    "grunt-ts": "^5.3.0",
     "grunt-tslint": "^3.0.0",
     "grunt-usemin": "^2.6.2",
     "grunt-velocity-debug": "^0.1.0",
