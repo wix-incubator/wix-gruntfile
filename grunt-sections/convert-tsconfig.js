@@ -45,6 +45,7 @@ module.exports = function (grunt) {
       'clean:tsconfigConvert',
       'replace:karmaAfterMovingTest',
       'replace:updateReferenceInVms',
+      'replace:updateFakeServerRef',
       'create-ts-config']);
   }
 
@@ -143,6 +144,14 @@ module.exports = function (grunt) {
         }, {
           from: "src='mock",
           to: "src='test/mock"
+        }]
+      },
+      updateFakeServerRef: {
+        src: ['protractor*.*'],
+        overwrite: true,
+        replacements: [{
+          from: "'test/e2e/lib/fake-server.js'",
+          to: "'app/test/e2e/lib/fake-server.js'"
         }]
       }
     },
