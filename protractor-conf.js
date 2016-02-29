@@ -57,6 +57,11 @@ config.onPrepare = function () {
   require('babel/register');
   console.log('onPrepare!!!');
 
+  if (process.env.SCREEN_SHOT_REPORTER) {
+    var ScreenshotReporter = require('screenshot-reporter');
+    jasmine.getEnv().addReporter(new ScreenshotReporter());
+  }
+
   // Disable animations so e2e tests run more quickly
   var disableNgAnimate = function () {
     angular.module('disableNgAnimate', []).run(function ($animate) {
