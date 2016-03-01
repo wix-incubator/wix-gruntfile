@@ -82,7 +82,6 @@
     "proxy-middleware": "^0.11.0",
     "q": "^1.4.1",
     "remap-istanbul": "^0.5.1",
-    "screenshot-reporter": "^1.0.0",    
     "satisfaction": "^1.0.2",
     "semver": "^4.3.6",
     "shelljs": "^0.3.0",
@@ -98,6 +97,7 @@
     "grunt-petri-experiments": "^1.0.0",
     "grunt-extract-styles": "^1.1.0",
     "grunt-wix-inline": "^0.3.3",
+    "screenshot-reporter": "^1.0.0",
     "wnpm-ci": "*"
   },
   "peerDependencies": {
