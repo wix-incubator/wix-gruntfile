@@ -8,9 +8,7 @@ module.exports = function (grunt, options) {
     '{app,.tmp}/*.js',
     '{app,.tmp}/{scripts,modules}/*.js', //do not move - position 1
     '{app,.tmp}/{scripts,modules}/*/**/*.js', //do not move - position 2
-    '{,.tmp/}test/**/*.js',
-    {pattern: '.tmp/**/*.js.map', included: false},
-    {pattern: '.tmp/**/*.ts', included: false},
+    '{,app/,.tmp/}test/**/*.js',
     '{app,.tmp}/{views,modules}/**/*.html'
   ];
 
@@ -75,8 +73,7 @@ module.exports = function (grunt, options) {
         options: {
           preprocessors: {
             '{app,.tmp}/**/*.html': 'ng-html2js',
-            '{app,.tmp}/images/**/*.svg': 'ng-html2js',
-            '.tmp/**/*.js': ['sourcemap']
+            '{app,.tmp}/images/**/*.svg': 'ng-html2js'
           },
           singleRun: false,
           background: true

@@ -7,20 +7,19 @@ var process = require('process');
 
 module.exports = function (config) {
   var os = require('os');
-  var isOsx = os.platform() === 'darwin';
+  var isOsx = os.platform()  === 'darwin';
 
   var frameworks = ['jasmine'],
-    plugins = [
-      'karma-jasmine',
-      'karma-coverage',
-      'karma-phantomjs-launcher',
-      'karma-growl-reporter',
-      'karma-sourcemap-loader',
-      'karma-osx-reporter',
-      'karma-teamcity-reporter',
-      'karma-ng-html2js-preprocessor',
-      'karma-chrome-launcher',
-      'karma-simple-reporter'];
+      plugins = [
+        'karma-jasmine',
+        'karma-coverage',
+        'karma-phantomjs-launcher',
+        'karma-growl-reporter',
+        'karma-osx-reporter',
+        'karma-teamcity-reporter',
+        'karma-ng-html2js-preprocessor',
+        'karma-chrome-launcher',
+        'karma-simple-reporter'];
 
   config.set({
     plugins: plugins,
@@ -39,7 +38,7 @@ module.exports = function (config) {
     frameworks: frameworks,
 
     // list of files / patterns to load in the browser
-    files: [],
+    files: [ ],
 
     // list of files / patterns to exclude
     exclude: [
@@ -92,9 +91,9 @@ module.exports = function (config) {
     // if true, it capture browsers, run tests and exit
     singleRun: true,
     coverageReporter: {
-      type: 'json',
-      subdir: '.',
-      file: 'coverage-js.json'
+         type: 'json',
+         subdir : '.',
+         file : 'coverage-js.json'
     }
   });
 };
