@@ -26,24 +26,6 @@ module.exports = function (grunt, options) {
     }
   }
 
-  function verifyVmsArtifactConfiguration() {
-    var pomXml = grunt.file.read('pom.xml');
-    var vmsArtifactXml = grunt.file.read('node_modules/wix-gruntfile/grunt-helpers/data/vms-artifact-plugin.xml');
-
-    if (pomXml.indexOf('node_modules/wix-gruntfile/vms.tar.gz.xml') !== -1) {
-      var posixNewLine = pomXml.indexOf('\r\n') === -1;
-      pomXml = pomXml.split(/\r?\n/g).join('\n');
-      grunt.log.writeln('=== UNPATCHING YOUR POM.XML ===');
-
-      var modifiedPomXml = pomXml.replace(vmsArtifactXml, '');
-      if (modifiedPomXml.indexOf('node_modules/wix-gruntfile/vms.tar.gz.xml') !== -1) {
-        grunt.log.writeln('=== FAILED UNPATCHING!!! ===');
-      } else {
-        grunt.file.write('pom.xml', modifiedPomXml.split('\n').join(posixNewLine ? '\n' : '\r\n'));
-      }
-    }
-  }
-
   function fixTslintJson() {
     if (grunt.file.exists('tslint.json')) {
       let tslint = grunt.file.readJSON('tslint.json');
@@ -57,5 +39,4 @@ module.exports = function (grunt, options) {
 
   fixTslintJson();
   verifyNpmScripts();
-  verifyVmsArtifactConfiguration();
 };
