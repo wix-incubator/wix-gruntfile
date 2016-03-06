@@ -54,7 +54,7 @@
               <configuration>
                 <descriptor>node_modules/wix-gruntfile/vm-only.tar.gz.xml</descriptor>
                 <appendAssemblyId>true</appendAssemblyId>
-                <finalName>${project.artifactId}-vms-${project.version}</finalName>
+                <finalName>${project.artifactId}-${project.version}</finalName>
               </configuration>
             </execution>
           </executions>
