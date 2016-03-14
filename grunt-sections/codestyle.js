@@ -30,6 +30,10 @@ module.exports = function (grunt) {
     if (featureDetector.isTslintEnabled()) {
       var config = grunt.config('tslint');
       config.options.configuration = grunt.file.readJSON('tslint.json');
+      if (config.options.configuration.rulesDirectory) {
+        // copy the rules directory to the options (This is how the Linter works)
+        config.options.rulesDirectory = config.options.configuration.rulesDirectory;
+      }
       grunt.config('tslint', config);
       grunt.task.run(tslint);
     }
