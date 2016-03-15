@@ -44,7 +44,6 @@ module.exports = function (config) {
     exclude: [
       '{,app/,.tmp/}test/spec/e2e/**/*.js',
       '{,app/,.tmp/}test/e2e/**/*.js',
-      '{app,.tmp}/scripts/locale/*_!(en).js',
       '{app,.tmp}/scripts/locale/**/*_!(en).js'
     ],
 
