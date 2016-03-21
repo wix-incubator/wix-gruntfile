@@ -98,7 +98,8 @@
     "grunt-extract-styles": "^1.1.0",
     "grunt-wix-inline": "^0.3.3",
     "screenshot-reporter": "^1.0.0",
-    "wnpm-ci": "*"
+    "wnpm-ci": "*",
+    "wix-statics-parent": "*"
   },
   "peerDependencies": {
     "bower": "^1.3.1",
