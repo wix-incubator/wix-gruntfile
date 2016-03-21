@@ -30,14 +30,17 @@ module.exports = function (grunt, options) {
     var pomXml = grunt.file.read('pom.xml');
     var vmsArtifactXml = grunt.file.read('node_modules/wix-gruntfile/grunt-helpers/data/vms-artifact-plugin.xml');
 
-    if (pomXml.indexOf('node_modules/wix-gruntfile/vms.tar.gz.xml') !== -1) {
+    if (pomXml.indexOf('node_modules/wix-gruntfile/tar.gz.xml') !== -1) {
       var posixNewLine = pomXml.indexOf('\r\n') === -1;
       pomXml = pomXml.split(/\r?\n/g).join('\n');
-      grunt.log.writeln('=== UNPATCHING YOUR POM.XML ===');
+      grunt.log.writeln('=== PATCHING YOUR POM.XML ===');
 
-      var modifiedPomXml = pomXml.replace(vmsArtifactXml, '');
-      if (modifiedPomXml.indexOf('node_modules/wix-gruntfile/vms.tar.gz.xml') !== -1) {
-        grunt.log.writeln('=== FAILED UNPATCHING!!! ===');
+      var modifiedPomXml = pomXml.replace(/<parent>[^]*<\/parent>/, '')
+                                 .replace(/<build>[^]*<\/build>/, '')
+                                 .replace(/<\/developers>/, '</developers>\n' + vmsArtifactXml)
+                                 .replace(/^\s*\n/gm, '');
+      if (modifiedPomXml.indexOf('wix-statics-parent') === -1 || modifiedPomXml.match(/<(build|parent)>/g).length !== 2) {
+        grunt.log.writeln('=== FAILED PATCHING!!! ===');
       } else {
         grunt.file.write('pom.xml', modifiedPomXml.split('\n').join(posixNewLine ? '\n' : '\r\n'));
       }
@@ -57,5 +60,7 @@ module.exports = function (grunt, options) {
 
   fixTslintJson();
   verifyNpmScripts();
-  verifyVmsArtifactConfiguration();
+  if (process.env.PATCH_POM_XML) {
+    verifyVmsArtifactConfiguration();
+  }
 };
