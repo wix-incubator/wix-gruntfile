@@ -5,11 +5,9 @@ module.exports = function (grunt, options) {
   function verifyNpmScripts() {
     var packageJson = grunt.file.readJSON('package.json');
 
-    if (process.env.PATCH_POM_XML) {
-      if (!packageJson.devDependencies['wix-statics-parent']) {
-        packageJson.devDependencies['wix-statics-parent'] = '*';
-        grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
-      }
+    if (!packageJson.devDependencies['wix-statics-parent']) {
+      packageJson.devDependencies['wix-statics-parent'] = '*';
+      grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
     }
 
     if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test) {
