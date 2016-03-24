@@ -15,6 +15,7 @@ module.exports = function (config) {
         'karma-coverage',
         'karma-phantomjs-launcher',
         'karma-growl-reporter',
+        'karma-sourcemap-loader',
         'karma-osx-reporter',
         'karma-teamcity-reporter',
         'karma-ng-html2js-preprocessor',
