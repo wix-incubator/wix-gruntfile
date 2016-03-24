@@ -15,6 +15,7 @@ module.exports = function (config) {
         'karma-coverage',
         'karma-phantomjs-launcher',
         'karma-growl-reporter',
+        'karma-sourcemap-loader',
         'karma-osx-reporter',
         'karma-teamcity-reporter',
         'karma-ng-html2js-preprocessor',
@@ -28,7 +29,8 @@ module.exports = function (config) {
       '{app,.tmp}/scripts/{,!(lib)/**/}*.js': 'coverage',
       '{app,.tmp}/modules/{,/**/}!(*.test).js': 'coverage',
       '{app,.tmp}/**/*.html': 'ng-html2js',
-      '{app,.tmp}/images/**/*.svg': 'ng-html2js'
+      '{app,.tmp}/images/**/*.svg': 'ng-html2js',
+      '.tmp/**/*.js': ['sourcemap']
     },
 
     // base path, that will be used to resolve files and exclude
