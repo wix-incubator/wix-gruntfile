@@ -65,7 +65,5 @@ module.exports = function (grunt, options) {
 
   fixTslintJson();
   verifyNpmScripts();
-  if (process.env.PATCH_POM_XML) {
-    verifyVmsArtifactConfiguration();
-  }
+  verifyVmsArtifactConfiguration();
 };
