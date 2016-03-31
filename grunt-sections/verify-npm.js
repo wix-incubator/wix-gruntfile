@@ -15,20 +15,19 @@ module.exports = function register(grunt) {
       return;
     }
 
-    var RESULT_FILE_NAME = process.cwd() + '/.npm-outdated';
-    var UPDATING_DEPENDENCIES_CMD = 'npm update';
-    var FS_ENCODING = 'utf-8';
+    const RESULT_FILE_NAME = process.cwd() + '/.npm-outdated';
+    const UPDATING_DEPENDENCIES_CMD = 'npm update';
+    const FS_ENCODING = 'utf-8';
+
+    var outdatedModule = null;
 
     (function() {
 
-      var outdated = {};
-
-      function getPackagesNames() {
-        return Object.getOwnPropertyNames(outdated);
-      }
+      let outdated = {};
 
       function isReallyOutdated(pkg) {
-        return semver.valid(outdated[pkg].wanted) && semver.lt(outdated[pkg].current, outdated[pkg].wanted);
+        return semver.valid(outdated[pkg].wanted && outdated[pkg].current)
+          && semver.lt(outdated[pkg].current, outdated[pkg].wanted);
       }
 
       function toDto(pkg) {
@@ -43,39 +42,37 @@ module.exports = function register(grunt) {
         return JSON.minify(JSON.stringify(obj));
       }
 
-      function verifyOutdated() {
-        try {
-          fs.statSync(RESULT_FILE_NAME).isFile();
-        } catch (er) {
-          var spawn = require('child_process').spawn;
-          var cmd = spawn('npm', ['outdated', '--json'], {detached : true});
-          cmd.stdout.on('data', function(output) {
-            outdated = JSON.parse(output || {});
-            var res = getPackagesNames()
-              .filter(isReallyOutdated)
-              .map(toDto);
+      function execNpmVerify() {
+        let cmd = require('child_process').spawn('npm', ['outdated', '--json'], {detached: true});
+        let result = '';
+        cmd.stdout.on('data', (output) => {
+          result += output;
+        });
+        cmd.on('close', (code) => {
+          if (code === 0) {
+            outdated = JSON.parse(result || {});
+            let res = Object.keys(outdated).filter(isReallyOutdated).map(toDto);
             writeToFs(RESULT_FILE_NAME, toFileFormat(res));
-          });
-        }
+          }
+        });
       }
 
-      verifyOutdated();
+      let fetchOutdated = () => {
+        try {
+          let file = fs.readFileSync(RESULT_FILE_NAME, {encoding : FS_ENCODING});
+          return _.isEmpty(file) ? [] : JSON.parse(file);
+        } catch (er) {
+          execNpmVerify();
+          return null;
+        }
+      };
+
+      outdatedModule = fetchOutdated();
 
     })();
 
-    function queryOutdated() {
-      try {
-        var file = fs.readFileSync(RESULT_FILE_NAME, {encoding : FS_ENCODING});
-        return _.isEmpty(file) ? [] : JSON.parse(file);
-      } catch (err) {
-        return null;
-      }
-    }
-
     function formatOutdatedPackages(outdated) {
-      return outdated.map(function (pkg) {
-        return '(' + pkg.name + ') ' + pkg.current + ' -> ' + pkg.update;
-      }).join('\n');
+      return outdated.map((pkg) => `(${pkg.name}) ${pkg.current} -> ${pkg.update}`).join('\n');
     }
 
     function ppViolationsMessage(outdated) {
@@ -94,16 +91,16 @@ module.exports = function register(grunt) {
       }
     }
 
-    function main(context) {
-      var done = context.async(), result = queryOutdated();
+    let done = this.async();
 
-      if (result) {
+    let main = () => {
+      if (outdatedModule) {
         fs.unlinkSync(RESULT_FILE_NAME);
-        if (result.length === 0) {
+        if (outdatedModule.length === 0) {
           grunt.log.ok('\nNo outdated npm modules, yay!');
           done();
         } else {
-          var question = ppViolationsMessage(result);
+          var question = ppViolationsMessage(outdatedModule);
           inquirer.prompt([{type: 'confirm', name: 'update', message: question}], function (answers) {
             onPromptAnswer(answers.update);
             done();
@@ -114,9 +111,9 @@ module.exports = function register(grunt) {
           '\nIf this message repeats again - please contact admin');
         done();
       }
-    }
+    };
 
-    main(this);
+    main();
 
   });
 
