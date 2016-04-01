@@ -5,6 +5,7 @@ var protractorUtil = require('../grunt-protractor');
 
 module.exports = function (grunt, options) {
   var unitTestWildCards = [
+    {pattern: 'app/images/**/*.*', watched: false, included: false, served: true},
     '{app,.tmp}/*.js',
     '{app,.tmp}/{scripts,modules}/*.js', //do not move - position 1
     '{app,.tmp}/{scripts,modules}/*/**/*.js', //do not move - position 2
