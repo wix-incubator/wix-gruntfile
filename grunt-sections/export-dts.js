@@ -16,7 +16,7 @@ module.exports = function () {
     },
     concat: {
       dts: {
-        src: ['.tmp/scripts/**/*.d.ts'],
+        src: ['.tmp/{scripts,modules}/**/*.d.ts'],
         dest: 'dist/types.d.ts'
       }
     }
