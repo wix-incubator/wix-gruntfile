@@ -35,7 +35,7 @@ module.exports = function (grunt, options) {
     var pomXml = grunt.file.read('pom.xml');
     var vmsArtifactXml = grunt.file.read('node_modules/wix-gruntfile/grunt-helpers/data/vms-artifact-plugin.xml');
 
-    if (pomXml.indexOf('node_modules/wix-gruntfile/tar.gz.xml') !== -1) {
+    if (pomXml.indexOf('node_modules/wix-gruntfile/tar.gz.xml') !== -1 || pomXml.indexOf('maven/assembly/tar.gz.xml') !== -1) {
       var posixNewLine = pomXml.indexOf('\r\n') === -1;
       pomXml = pomXml.split(/\r?\n/g).join('\n');
       grunt.log.writeln('=== PATCHING YOUR POM.XML ===');
