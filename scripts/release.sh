@@ -6,7 +6,7 @@ if [ $? -ne 0 ]; then
     exit 0
 fi
 
-# publish to npm
+# bump package.json
 $(npm bin)/wnpm-release --no-shrinkwrap
 
 PROJECT_DIR=$(pwd)
