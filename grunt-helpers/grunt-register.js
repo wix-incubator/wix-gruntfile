@@ -63,6 +63,7 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('serve', [
+    'verify-npm',
     'ignore-code-style-checks',
     'karma:unit',
     'clean:ts',

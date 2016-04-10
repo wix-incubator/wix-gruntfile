@@ -4,11 +4,6 @@ module.exports = function register(grunt) {
 
   grunt.registerTask('verify-npm', function () {
 
-    if (!process.env.VERIFY_NPM) {
-      grunt.log.write('verify-npm task is deactivated. please set \'VERIFY_NPM\' environment variable if you wish to enable it.');
-      return;
-    }
-
     const RESULT_FILE_NAME = process.cwd() + '/node_modules/.npm-outdated';
     const FS_ENCODING = 'utf-8';
     const OUTDATED_CMD_TOKENS = 'outdated --json'.split(' ');
@@ -24,8 +19,8 @@ module.exports = function register(grunt) {
     }
 
     function toUpdateCmd(modules) {
-      let pkgs = (modules || []).map((mdl) => mdl.name);
-      return `npm update ${pkgs}`
+      let pkgs = (modules || []).map((mdl) => mdl.name).join(' ');
+      return `npm update ${pkgs}`;
     }
 
     function onPromptAnswer(answer, cmd) {
@@ -39,19 +34,19 @@ module.exports = function register(grunt) {
 
     function fetchOutdatedModules() {
 
-      require("jsonminify"); // sets JSON.minify
+      require('jsonminify'); // sets JSON.minify
       let semver = require('semver');
       let fs = require('fs');
 
       let outdated = {};
 
       function isReallyOutdated(pkg) {
-        return semver.valid(outdated[pkg].wanted && outdated[pkg].current)
-          && semver.lt(outdated[pkg].current, outdated[pkg].wanted);
+        return semver.valid(outdated[pkg].wanted && outdated[pkg].current) &&
+          semver.lt(outdated[pkg].current, outdated[pkg].wanted);
       }
 
       function toDto(pkg) {
-        return {name: pkg, current: outdated[pkg].current, update: outdated[pkg].wanted}
+        return {name: pkg, current: outdated[pkg].current, update: outdated[pkg].wanted};
       }
 
       function writeToFs(path, data) {
