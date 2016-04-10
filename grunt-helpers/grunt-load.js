@@ -73,7 +73,9 @@ module.exports = function (grunt, options) {
   function loadAllPlugins(grunt) {
     require('load-grunt-tasks')({
       loadNpmTasks : function (name) {
-        grunt.loadNpmTasks(getRelativePluginPath(name));
+        try {
+          grunt.loadNpmTasks(getRelativePluginPath(name));
+        } catch (e) {}
       }
     }, {config : require('../package.json')});
     require('time-grunt')(grunt);

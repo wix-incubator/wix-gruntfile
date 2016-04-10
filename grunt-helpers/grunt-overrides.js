@@ -4,8 +4,11 @@ module.exports = function (grunt, options) {
 
   function verifyNpmScripts() {
     var packageJson = grunt.file.readJSON('package.json');
+    var deps = [].concat(packageJson.dependencies)
+                 .concat(packageJson.devDependencies)
+                 .concat(packageJson.optionalDependencies);
 
-    if (!packageJson.devDependencies['wix-statics-parent']) {
+    if (!deps['wix-statics-parent']) {
       packageJson.devDependencies['wix-statics-parent'] = '*';
       grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
     }
