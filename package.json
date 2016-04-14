@@ -81,7 +81,7 @@
     "node-sass-asset-functions": "0.0.9",
     "phantomjs": "^1.9.18",
     "protractor": "3.0.0",
-    "protractor-browser-logs": "git+https://github.com/mastertheblaster/protractor-browser-logs.git",
+    "protractor-browser-logs": "^1.0.0",
     "proxy-middleware": "^0.11.0",
     "q": "^1.4.1",
     "remap-istanbul": "^0.5.1",
