@@ -105,7 +105,6 @@ var capabilities2 = capabilities.slice(indexArr);
 config.seleniumPort = 4445;
 
 if (process.env.WIX_SAUCE === 'true') {
-  var seleniunGrid = 'app56.aus.wixpress.com';
   config.multiCapabilities = [{
     browserName: 'firefox',
     platform: 'LINUX'
@@ -116,7 +115,7 @@ if (process.env.WIX_SAUCE === 'true') {
     browserName: 'internet explorer',
     platform: 'WINDOWS'
   }];
-  config.seleniumAddress = 'https://' + seleniunGrid + ':4444/wd/hub/';
+  config.seleniumAddress = process.env.SELENIUM_HUB_URL;
 }
 
 exports.config = config;
