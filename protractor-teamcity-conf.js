@@ -116,6 +116,7 @@ if (process.env.WIX_SAUCE === 'true') {
     platform: 'WINDOWS'
   }];
   config.seleniumAddress = process.env.SELENIUM_HUB_URL;
+  config.baseUrl = process.env.SERVER_UNDER_TEST_URL;
 }
 
 exports.config = config;
