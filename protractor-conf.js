@@ -134,4 +134,34 @@ config.jasmineNodeOpts = {
   isVerbose: true
 };
 
+if (process.env.VERIFY_CONSOLE_LOGS) {
+
+  config.capabilities.loggingPrefs = {
+    browser: 'ALL'
+  };
+
+  var originalOnPrepare = config.onPrepare;
+  config.onPrepare = function () {
+    var browserLogs = require('protractor-browser-logs'),
+        logs = browserLogs(browser);
+
+    global.logs = logs;
+
+    beforeEach(function () {
+      logs.reset();
+
+      logs.ignore(logs.DEBUG);
+      logs.ignore(logs.INFO);
+      logs.ignore(logs.LOG);
+
+      logs.ignore('favicon.ico');
+      logs.ignore('cast_sender.js');
+    });
+    afterEach(logs.verify);
+
+    originalOnPrepare.apply(this, arguments);
+  };
+
+}
+
 module.exports.config = config;
