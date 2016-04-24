@@ -1,5 +1,6 @@
 'use strict';
 module.exports = function (grunt) {
+  var _ = require('lodash');
 
   var baseTsConfig = {
     compilerOptions: {
@@ -8,7 +9,8 @@ module.exports = function (grunt) {
     filesGlob: [
       'scripts/**/*.ts',
       'test/**/*.ts',
-      'typings/**/*.d.ts'
+      'typings/**/*.d.ts',
+      'modules/**/*.ts'
     ],
     files: []
   };
@@ -17,11 +19,7 @@ module.exports = function (grunt) {
     var lineReader = grunt.file.read(process.cwd() + '/.tmp/convert-reference.ts.tmp').split('\n');
     if (grunt.file.exists(process.cwd() + '/app/tsconfig.json')) {
       var currentTsConfig = grunt.file.readJSON(process.cwd() + '/app/tsconfig.json');
-      currentTsConfig.filesGlob.forEach(function (file) {
-        if (file.indexOf('bower_components') > -1) {
-          baseTsConfig.filesGlob.push(file);
-        }
-      });
+      baseTsConfig.filesGlob = _.union(baseTsConfig.filesGlob, currentTsConfig.filesGlob);
     }
     lineReader.forEach(function (line) {
       var bowerIndex = line.indexOf('bower_components');
