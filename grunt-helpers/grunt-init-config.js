@@ -11,6 +11,7 @@ module.exports = function (grunt, options) {
 		tslint:                 require('../grunt-sections/codestyle')(grunt, options).tslint,
 		jscs:                   require('../grunt-sections/codestyle')(grunt, options).jscs,
 		scsslint:               require('../grunt-sections/codestyle')(grunt, options).scsslint,
+		eslint:                 require('../grunt-sections/codestyle')(grunt, options).eslint,
 
 		autoprefixer:           require('../grunt-sections/transform-css')(grunt, options).autoprefixer,
 		compass:                require('../grunt-sections/transform-css')(grunt, options).compass,
