@@ -90,9 +90,7 @@ module.exports = function (grunt, options) {
       },
       teamcity: {
         options: {
-          configFile: path.join(__dirname, '../protractor-teamcity-conf.js'),
-          baseUrl: 'http://localhost:9876/',
-          sauceSeleniumAddress: 'localhost:4445/wd/hub'
+          configFile: path.join(__dirname, '../protractor-teamcity-conf.js')
         }
       }
     }
