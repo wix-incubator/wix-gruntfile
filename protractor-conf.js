@@ -13,7 +13,7 @@ try {
 
 config.allScriptsTimeout = 120000;
 
-config.baseUrl = 'http://localhost:9000/';
+config.baseUrl = 'http://localhost:9876/';
 
 config.specs = [
   process.cwd() + '/test/spec/e2e/**/*.js',
