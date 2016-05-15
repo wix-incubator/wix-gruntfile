@@ -52,7 +52,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app/scripts/locale',
-          src: '*/*.{json,new_json}',
+          src: '**/*.{json,new_json}',
           flatten: true,
           dest: '.tmp/scripts/locale',
           ext: '.js'
