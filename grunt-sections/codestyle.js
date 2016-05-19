@@ -11,7 +11,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('ignore-code-style-checks', function () {
     tslint = 'force:newer:tslint';
-    ['jshint', 'jscs', 'scsslint', 'tslint'].forEach(function (section) {
+    ['jshint', 'jscs', 'scsslint', 'tslint', 'eslint'].forEach(function (section) {
       var config = grunt.config(section);
       config.options.force = true;
       grunt.config(section, config);
@@ -20,12 +20,20 @@ module.exports = function (grunt) {
 
   grunt.registerTask('lint', ['newer-clean', 'jsstyleIfEnabled', 'scssstyleIfEnabled']);
 
+  function isTaskForced(name) {
+    return (grunt.config(name).options || {}).force || false;
+  }
+
   grunt.registerTask('jsstyleIfEnabled', function () {
-    if (featureDetector.isJshintEnabled()) {
-      grunt.task.run('newer:jshint');
-    }
-    if (featureDetector.isJscsEnabled()) {
-      grunt.task.run('newer:jscs');
+    if (featureDetector.isEslintEnabled()) {
+      grunt.task.run(isTaskForced('eslint') ? 'force:newer:eslint' : 'newer:eslint');
+    } else {
+      if (featureDetector.isJshintEnabled()) {
+        grunt.task.run('newer:jshint');
+      }
+      if (featureDetector.isJscsEnabled()) {
+        grunt.task.run('newer:jscs');
+      }
     }
     if (featureDetector.isTslintEnabled()) {
       var config = grunt.config('tslint');
@@ -46,6 +54,21 @@ module.exports = function (grunt) {
   });
 
   return {
+    eslint: {
+      options: {
+        configFile: '.eslintrc'
+      },
+      all: {
+        files: [{
+          src: [
+            'Gruntfile.js',
+            'app/{scripts,modules,test}/**/*.js',
+            '!app/scripts/lib/**/*.js',
+            'test/{spec,mock,e2e}/**/*.js',
+          ]
+        }]
+      }
+    },
     tslint: {
       options: {
       },
