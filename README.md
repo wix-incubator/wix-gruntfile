@@ -62,7 +62,6 @@ Here is a list of available options:
 
 ```js
 {
-wixpress.com/_api)
   port: 9000,                              //port used for local server
   livereload: 35729,                       //port used for livereload server
   preloadModule: 'myAppInternal',          //module name for preload html
