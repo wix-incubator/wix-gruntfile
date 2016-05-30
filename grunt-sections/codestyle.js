@@ -25,7 +25,7 @@ module.exports = function (grunt) {
   }
 
   grunt.registerTask('jsstyleIfEnabled', function () {
-    if (process.env.USE_ESLINT && featureDetector.isEslintEnabled()) {
+    if (featureDetector.isEslintEnabled()) {
       grunt.task.run(isTaskForced('eslint') ? 'force:newer:eslint' : 'newer:eslint');
     } else {
       if (featureDetector.isJshintEnabled()) {
