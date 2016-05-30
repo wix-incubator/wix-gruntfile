@@ -10,6 +10,7 @@ Array.prototype.replace = function (j, k) {
 module.exports = function (grunt, options) {
   var lintPlugins = [
     'grunt-contrib-jshint',
+    'grunt-eslint',
     'grunt-jscs',
     'grunt-tslint',
     'grunt-scss-lint',
