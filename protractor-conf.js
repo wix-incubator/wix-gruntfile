@@ -47,7 +47,7 @@ function warn(message) {
   console.log('\x1b[33m%s\x1b[0m', message);
 }
 
-if (hasFocusedTests(config.specs, new RegExp('^\\s*\\b(iit|fit|ddescribe|fdescribe|tthey|fthey)\\s*\\(', 'gm'))) {
+if (hasFocusedTests(config.specs, new RegExp('^\\s*\\b(iit|fit|ddescribe|fdescribe|tthey|fthey|eyes\.fit)\\s*\\(', 'gm'))) {
   config.capabilities.shardTestFiles = false;
   warn('Protractor sharding is disabled due to presence of focused tests.');
 }
