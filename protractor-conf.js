@@ -28,7 +28,7 @@ config.capabilities = {
   browserName: 'chrome',
   shardTestFiles: true,
   maxInstances: 6,
-  directConnect: !!process.env.DIRECT_CONNECT
+  directConnect: process.env.DIRECT_CONNECT || true
 };
 
 function hasFocusedTests(patterns, stringsRegex) {
