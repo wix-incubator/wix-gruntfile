@@ -24,11 +24,12 @@ config.specs = [
 
 config.framework = 'jasmine2';
 
+config.directConnect = process.env.DIRECT_CONNECT || true;
+
 config.capabilities = {
   browserName: 'chrome',
   shardTestFiles: true,
-  maxInstances: 6,
-  directConnect: process.env.DIRECT_CONNECT || true
+  maxInstances: 6
 };
 
 function hasFocusedTests(patterns, stringsRegex) {

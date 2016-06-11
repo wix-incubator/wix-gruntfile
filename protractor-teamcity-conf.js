@@ -102,7 +102,7 @@ var capabilities2 = capabilities.slice(indexArr);
 // config.multiCapabilities = capabilities;
 // config.getPageTimeout = 30;
 
-config.seleniumPort = 4445;
+// config.seleniumPort = 4445;
 
 if (process.env.WIX_SAUCE === 'true') {
   config.multiCapabilities = [{
