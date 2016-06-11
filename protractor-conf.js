@@ -24,7 +24,7 @@ config.specs = [
 
 config.framework = 'jasmine2';
 
-config.directConnect = process.env.DIRECT_CONNECT || true;
+config.directConnect = true;
 
 config.capabilities = {
   browserName: 'chrome',
