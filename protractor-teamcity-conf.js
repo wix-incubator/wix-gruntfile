@@ -8,12 +8,13 @@ try {
 
 }
 var config = require('./protractor-conf').config;
+var browserCapabilities = !!process.env.MULTI_BROWSERS ? config.multiCapabilities : config.capabilities;
 
 if (process.env.IS_BUILD_AGENT) {
   var onPrepare = config.onPrepare || function () {};
-  config.capabilities.maxInstances = parseInt(process.env.PROTRACTOR_SHARDS, 10) || 6;
-  if (config.capabilities.maxInstances === 1) {
-    config.capabilities.shardTestFiles = false;
+  browserCapabilities.maxInstances = parseInt(process.env.PROTRACTOR_SHARDS, 10) || 6;
+  if (browserCapabilities.maxInstances === 1) {
+    browserCapabilities.shardTestFiles = false;
   }
   config.onPrepare = function () {
     var reporters = require('jasmine-reporters');
@@ -117,6 +118,14 @@ if (process.env.WIX_SAUCE === 'true') {
   }];
   config.seleniumAddress = process.env.SELENIUM_HUB_URL;
   config.baseUrl = process.env.SERVER_UNDER_TEST_URL;
+}
+
+if (process.env.MULTI_BROWSERS) {
+  config.multiCapabilities = [{
+    browserName: 'firefox'
+  }, {
+    browserName: 'chrome'
+  }];
 }
 
 exports.config = config;
