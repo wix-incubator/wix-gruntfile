@@ -8,13 +8,12 @@ try {
 
 }
 var config = require('./protractor-conf').config;
-var browserCapabilities = !!process.env.MULTI_BROWSERS ? config.multiCapabilities : config.capabilities;
 
 if (process.env.IS_BUILD_AGENT) {
   var onPrepare = config.onPrepare || function () {};
-  browserCapabilities.maxInstances = parseInt(process.env.PROTRACTOR_SHARDS, 10) || 6;
-  if (browserCapabilities.maxInstances === 1) {
-    browserCapabilities.shardTestFiles = false;
+  config.capabilities.maxInstances = parseInt(process.env.PROTRACTOR_SHARDS, 10) || 6;
+  if (config.capabilities.maxInstances === 1) {
+    config.capabilities.shardTestFiles = false;
   }
   config.onPrepare = function () {
     var reporters = require('jasmine-reporters');

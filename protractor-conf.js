@@ -32,14 +32,6 @@ config.capabilities = {
   maxInstances: 6
 };
 
-config.multiCapabilities = [{
-    browserName: 'firefox'
-  }, {
-    browserName: 'chrome',
-    shardTestFiles: true,
-    maxInstances: 6
-}];
-
 function hasFocusedTests(patterns, stringsRegex) {
   var commentsRegex = /(?:\/\*(?:[\s\S]*?)\*\/)|(?:^[\s;]*\/\/.*$)/gm;
 
