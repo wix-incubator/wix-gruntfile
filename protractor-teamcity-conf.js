@@ -120,13 +120,5 @@ if (process.env.WIX_SAUCE === 'true') {
   config.baseUrl = process.env.SERVER_UNDER_TEST_URL;
 }
 
-if (process.env.MULTI_BROWSERS) {
-  config.multiCapabilities = [{
-    browserName: 'firefox'
-  }, {
-    browserName: 'chrome'
-  }];
-}
-
 exports.config = config;
 exports.arrays = {cap1: capabilities1, cap2: capabilities2};
