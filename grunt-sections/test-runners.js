@@ -7,14 +7,14 @@ module.exports = function (grunt, options) {
   var unitTestWildCards = [
     {pattern: 'app/images/**/*.*', watched: false, included: false, served: true},
     '{app,.tmp}/*.js',
-    '{app,.tmp}/{scripts,modules}/*.js', //do not move - position 1
-    '{app,.tmp}/{scripts,modules}/*/**/*.js', //do not move - position 2
+    '{app,.tmp}/{scripts,modules}/*.js', //do not move - position 2
+    '{app,.tmp}/{scripts,modules}/*/**/*.js', //do not move - position 3
     '{,app/,.tmp/}test/**/*.js',
     '{app,.tmp}/{views,modules}/**/*.html'
   ];
 
   if (!options.appFirst) {
-    unitTestWildCards.replace(1, 2);
+    unitTestWildCards.replace(2, 3);
   }
 
   options.karmaConf.files = options.karmaTestFiles || options.karmaConf.files.concat(unitTestWildCards);
