@@ -2,14 +2,19 @@
 
 var path = require('path');
 var protractorUtil = require('../grunt-protractor');
+var featureDetector = require('../feature-detector');
+
 
 module.exports = function (grunt, options) {
+  var folders = (featureDetector.isBabelEnabled() && options.babelEnabled) ?
+    ['.tmp', '{,.tmp}'] : ['{app,.tmp}', '{,app,.tmp}'];
+
   var unitTestWildCards = [
     {pattern: 'app/images/**/*.*', watched: false, included: false, served: true},
-    '{app,.tmp}/*.js',
-    '{app,.tmp}/{scripts,modules}/*.js', //do not move - position 1
-    '{app,.tmp}/{scripts,modules}/*/**/*.js', //do not move - position 2
-    '{,app/,.tmp/}test/**/*.js',
+    `${folders[0]}/*.js`,
+    `${folders[0]}/{scripts,modules}/*.js`, //do not move - position 1
+    `${folders[0]}/{scripts,modules}/*/**/*.js`, //do not move - position 2
+    `${folders[1]}/test/**/*.js`,
     '{app,.tmp}/{views,modules}/**/*.html'
   ];
 

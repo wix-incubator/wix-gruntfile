@@ -81,7 +81,7 @@ module.exports = function (config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: featureDetector.isTraceurEnabled() ? ['chromeHeadless'] : ['PhantomJS'],
+    browsers: ['PhantomJS'],
 
     // browser configuration
     customLaunchers: {

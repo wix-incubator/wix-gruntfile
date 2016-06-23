@@ -61,7 +61,7 @@ module.exports = function (grunt, options) {
         '!test/spec/e2e/**/*.js',
         '!test/e2e/**/*.js'
       ],
-      tasks: ['jsstyleIfEnabled', 'triggerLivereload', 'runKarma']
+      tasks: ['babelIfEnabled', 'jsstyleIfEnabled', 'triggerLivereload', 'runKarma']
     },
     ts: {
       files: ['{test,app/scripts,app/modules,app/test}/**/*.ts', 'app/tsconfig.json'],
@@ -76,10 +76,6 @@ module.exports = function (grunt, options) {
       options: {
         event: ['deleted']
       }
-    },
-    es6: {
-      files: ['{test,app/scripts,app/modules}/**/*.es6'],
-      tasks: ['jsstyleIfEnabled', 'traceur', 'triggerLivereload', 'runKarma']
     },
     compass: {
       files: ['app/{styles,modules}/**/*.{scss,sass}'],
