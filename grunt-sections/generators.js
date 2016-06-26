@@ -81,7 +81,7 @@ module.exports = function (grunt, options) {
     webfont: {
       icons: {
         src: 'app/images/svg-font-icons/*.svg',
-        dest: '.tmp/styles/svg-font',
+        dest: options.useModulesStructure ? '.tmp/modules/svg-font' : '.tmp/styles/svg-font',
         destCss: '.tmp/styles',
         options: {
           htmlDemo: false,
