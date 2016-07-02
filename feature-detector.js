@@ -13,7 +13,6 @@ module.exports = {
   isTSConfigEnabled:        isFeaturePresent('/app/tsconfig.json'),
   isEslintEnabled:          isFeaturePresent('/.eslintrc'),
   isTslintEnabled:          isFeaturePresent('/tslint.json'),
-  isBabelEnabled:           isFeaturePresent('/{app/scripts,app/modules,test}/**/*.js'),
   isHamlEnabled:            isFeaturePresent('/app/{views,modules}/**/*.haml'),
   isScssStyleEnabled:       isFeaturePresent('/.scss-lint.yml'),
   isJshintEnabled:          isFeaturePresent('/.jshintrc'),

@@ -48,7 +48,7 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('babelIfEnabled', 'Transpile ES6 code', function () {
-    if (grunt.task.exists('babel') && options.babelEnabled && featureDetector.isBabelEnabled()) {
+    if (grunt.task.exists('babel') && options.babelEnabled) {
       grunt.task.run('newer:babel');
     }
   });

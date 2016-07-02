@@ -2,11 +2,10 @@
 
 var path = require('path');
 var protractorUtil = require('../grunt-protractor');
-var featureDetector = require('../feature-detector');
 
 
 module.exports = function (grunt, options) {
-  var folders = (featureDetector.isBabelEnabled() && options.babelEnabled) ?
+  var folders = (options.babelEnabled) ?
     ['.tmp', '{,.tmp}'] : ['{app,.tmp}', '{,app,.tmp}'];
 
   var unitTestWildCards = [

@@ -16,7 +16,7 @@ module.exports = function (grunt, options) {
 		autoprefixer:           require('../grunt-sections/transform-css')(grunt, options).autoprefixer,
 		compass:                require('../grunt-sections/transform-css')(grunt, options).compass,
 		sass:                   require('../grunt-sections/transform-css')(grunt, options).sass,
-		babel:									require('../grunt-sections/transform-js')(grunt, options).babel,
+		babel:                  require('../grunt-sections/transform-js')(grunt, options).babel,
 		ts:                     require('../grunt-sections/transform-js')(grunt, options).typescript,
 		replace:                extend(require('../grunt-sections/transform-html')(grunt, options).replace,
 																		extend(require('../grunt-sections/export-dts')(grunt, options).replace, convertTsConfig.replace)),
