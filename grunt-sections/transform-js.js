@@ -47,11 +47,12 @@ module.exports = function (grunt, options) {
     });
   });
 
-  grunt.registerTask('traceurIfEnabled', function () {
-    if (grunt.task.exists('traceur') && featureDetector.isTraceurEnabled()) {
-      grunt.task.run('newer:traceur');
+  grunt.registerTask('babelIfEnabled', 'Transpile ES6 code', function () {
+    if (grunt.task.exists('babel') && options.babelEnabled) {
+      grunt.task.run('newer:babel');
     }
   });
+
   var createDeclaration = options.bowerComponent;
 
   var typeScriptConfig;
@@ -78,32 +79,6 @@ module.exports = function (grunt, options) {
   }
 
   return {
-    traceur: {
-      options: {
-        experimental: true
-      },
-      build: {
-        files: [{
-          expand: true,
-          cwd: 'app',
-          src: ['{modules,scripts}/**/*.es6', '!modules/**/*.test.es6'],
-          dest: '.tmp',
-          ext: '.js',
-          extDot: 'last'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: 'test',
-          src: ['**/*.es6'],
-          dest: '.tmp/test',
-          ext: '.js',
-          extDot: 'last'
-        }]
-      }
-    },
-
     typescript: {
       options: {
         target: 'es5',
@@ -116,6 +91,35 @@ module.exports = function (grunt, options) {
         stripInternal: true
       },
       build: typeScriptConfig
+    },
+
+    babel: {
+      options: {
+        sourceMap: true,
+        presets: ['es2015']
+      },
+      build: {
+        files: [{
+          expand: true,
+          cwd: 'app',
+          src: ['{modules,scripts}/**/*.js'],
+          dest: '.tmp'
+        }]
+      },
+      test: {
+        files: [{
+          expand: true,
+          cwd: 'test',
+          src: ['**/*.js'],
+          dest: '.tmp/test'
+        },
+        {
+          expand: true,
+          cwd: 'app',
+          src: ['test/**/*.js'],
+          dest: '.tmp'
+        }]
+      }
     }
   };
 };

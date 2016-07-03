@@ -26,7 +26,8 @@ module.exports = function (grunt, options) {
     autoprefixer : true,
     inline : false,
     enableAngularMigration : false,
-    useNodeSass : false
+    useNodeSass : false,
+    babelEnabled: false
   }, options);
 
 
