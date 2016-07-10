@@ -15,6 +15,17 @@ if (process.env.IS_BUILD_AGENT) {
   if (config.capabilities.maxInstances === 1) {
     config.capabilities.shardTestFiles = false;
   }
+  if (process.env.MULTI === 'true') {
+    config.multiCapabilities = [{
+      browserName: 'chrome',
+      shardTestFiles: true,
+      maxInstances: parseInt(process.env.PROTRACTOR_SHARDS, 10) || 6
+    }, {
+      browserName: 'firefox',
+      shardTestFiles: true,
+      maxInstances: parseInt(process.env.PROTRACTOR_SHARDS, 10) || 6
+    }];
+  }
   config.onPrepare = function () {
     var reporters = require('jasmine-reporters');
     jasmine.getEnv().addReporter(new reporters.TeamCityReporter());
