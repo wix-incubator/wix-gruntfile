@@ -88,7 +88,7 @@ module.exports = function (grunt, options) {
             'scripts/**/locale/**/*.js',
             '*.html',
             '{views,modules}/**/*.{html,html.js}',
-            'styles/svg-font/*',
+            '{modules,styles}/svg-font/*',
             'app/test/lib/**',
             'test/lib/**'
           ],
@@ -126,7 +126,7 @@ module.exports = function (grunt, options) {
         }, {
           expand: true,
           cwd: '.tmp/modules/',
-          src: ['**/*.js', '**/*.css'],
+          src: ['**/*.js', '**/*.css', 'svg-font/*'],
           dest: 'dist/_debug_modules'
         }, {
           expand: true,
