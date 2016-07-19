@@ -48,6 +48,15 @@ module.exports = function (grunt) {
     return object;
   }
 
+  function tryToLoadReplacements() {
+    var replacements = {};
+    try {
+      extend(replacements, require(process.cwd() + '/replace.conf.js'));
+    } catch (e) {
+    }
+    return replacements;
+  }
+
   grunt.registerTask('hamlIfEnabled', function () {
     if (grunt.task.exists('haml') && featureDetector.isHamlEnabled()) {
       grunt.task.run('newer:haml');
@@ -65,12 +74,12 @@ module.exports = function (grunt) {
   return {
     ejs: {
       serve: {
-        options: require(process.cwd() + '/replace.conf.js'),
+        options: tryToLoadReplacements(),
         src: 'app/index.ejs',
         dest: '.tmp/index.html',
       },
       dist: {
-        options: extend(require(process.cwd() + '/replace.conf.js'), { debug: false }),
+        options: extend(tryToLoadReplacements(), { debug: false }),
         src: 'dist/index.ejs',
         dest: 'dist/index.html',
       }
