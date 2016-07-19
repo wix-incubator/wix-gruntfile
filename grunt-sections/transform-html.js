@@ -12,14 +12,14 @@ module.exports = function (grunt) {
         obj.$$preserve.push(replace);
       }
       return obj;
-    }, {$$preserve: []}) : arr;
+    }, { $$preserve: [] }) : arr;
   }
 
   function objToArray(obj) {
     var arr = obj.$$preserve || [];
     for (var key in obj) {
       if (key !== '$$preserve') {
-        arr.push({from: key, to: obj[key]});
+        arr.push({ from: key, to: obj[key] });
       }
     }
     return arr;
@@ -63,6 +63,18 @@ module.exports = function (grunt) {
   });
 
   return {
+    ejs: {
+      serve: {
+        options: require(process.cwd() + '/replace.conf.js'),
+        src: 'app/index.ejs',
+        dest: '.tmp/index.html',
+      },
+      dist: {
+        options: extend(require(process.cwd() + '/replace.conf.js'), { debug: false }),
+        src: 'dist/index.ejs',
+        dest: 'dist/index.html',
+      }
+    },
     replace: {
       dist: {
         src: ['app/*.vm'],
@@ -76,9 +88,9 @@ module.exports = function (grunt) {
           from: /font: ?; ?{{([^}]+)}};/g,
           to: 'font: [[$1]];'
         }, {
-          from: /{{([^}]+)}}/g,
-          to: '[[$1]]'
-        }]
+            from: /{{([^}]+)}}/g,
+            to: '[[$1]]'
+          }]
       },
       wixStyleToCurlies: {
         src: ['.tmp/{styles,modules}/**/*.css'],
@@ -87,9 +99,9 @@ module.exports = function (grunt) {
           from: /font: \[\[([^\]]+)\]\];/g,
           to: 'font:;{{$1}};'
         }, {
-          from: /\[\[([^\]}]+)\]\]/g,
-          to: '{{$1}}'
-        }]
+            from: /\[\[([^\]}]+)\]\]/g,
+            to: '{{$1}}'
+          }]
       }
     },
     velocity: {

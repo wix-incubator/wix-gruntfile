@@ -20,6 +20,7 @@ module.exports = function (grunt, options) {
 
   var servePlugins = [
     'grunt-text-replace',
+    'grunt-ejs',
     'grunt-contrib-copy',
     'grunt-karma',
     'grunt-contrib-watch',

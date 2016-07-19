@@ -19,12 +19,21 @@ module.exports = function (grunt, options) {
   }
 
   function makeOriginalOrBlock(original, block) {
-    return '' +
-      '<!-- #if( !${debug} ) -->\n' +
-      block + '\n' +
-      '<!-- #else -#if( false )#end->\n' +
-      original +
-      '<!-- #end -->';
+    if (options.templateType === 'ejs') {
+      return '' +
+        '<% if( !debug ) { %>\n' +
+        block + '\n' + 
+        '<% } else { %>\n' + 
+        original + 
+        '\n<% } %>'
+    } else {
+      return '' +
+        '<!-- #if( !${debug} ) -->\n' +
+        block + '\n' +
+        '<!-- #else -#if( false )#end->\n' +
+        original +
+        '<!-- #end -->';
+    }
   }
 
   function originalTagsOnDebug(block, prefixes, fn) {
@@ -113,7 +122,7 @@ module.exports = function (grunt, options) {
       }
     },
     useminPrepare: {
-      html: '{.tmp/manifests,app}/*.{html,vm}',
+      html: '{.tmp/manifests,app}/*.{html,vm,ejs}',
       options: {
         staging: 'dist',
         dest: 'dist',
@@ -148,7 +157,7 @@ module.exports = function (grunt, options) {
       }
     },
     usemin: {
-      html: ['dist/*.{html,vm}'],
+      html: ['dist/*.{html,vm,ejs}'],
       options: {
         assetsDirs: ['dist'],
         blockReplacements: {
@@ -179,7 +188,7 @@ module.exports = function (grunt, options) {
             prefix: function (prefix) {
               return function (string) {
                 string = string + '';
-                if (string.indexOf(prefix) === 0 || string[0] === '$') {
+                if (string.indexOf(prefix) === 0 || string[0] === '$' || string[0] === '<') {
                   return string;
                 }
                 if (string.match(/^([a-z]*:)?\/\//)) {
@@ -194,7 +203,7 @@ module.exports = function (grunt, options) {
           expand: true,
           cwd: 'dist',
           src: [
-            '**/*.{html,vm}',
+            '**/*.{html,vm,ejs}',
             '!bower_components/**/*'
           ],
           dest: 'dist'
@@ -207,7 +216,7 @@ module.exports = function (grunt, options) {
       },
       dist: {
         html: [
-          'dist/**/*.vm',
+          'dist/**/*.{vm,ejs}',
           '!dist/bower_components/**/*'
         ]
       }

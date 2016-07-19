@@ -78,7 +78,7 @@ module.exports = function (grunt, options) {
         files: [{
           expand: true,
           cwd: 'app',
-          src: ['**/*.vm', 'scripts/**/locale/**/*.js', '*.html', '{views,modules}/**/*.html', '*.manifest.json'],
+          src: ['**/*.vm', '**/*.ejs', 'scripts/**/locale/**/*.js', '*.html', '{views,modules}/**/*.html', '*.manifest.json'],
           dest: 'dist'
         }, {
           expand: true,

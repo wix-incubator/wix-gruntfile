@@ -45,6 +45,10 @@ module.exports = function (grunt, options) {
       tasks: ['replaceOrVelocity', 'newer:copy:vm', 'triggerLivereload'],
       options: {reload: true}
     },
+    ejs: {
+      files: ['app/**/*.ejs'],
+      tasks: ['ejs', 'triggerLivereload']
+    },
     locale: {
       files: ['app/scripts/**/locale/**/*.*'],
       tasks: ['newer:jsonAngularTranslate', 'jsstyleIfEnabled', 'triggerLivereload', 'runKarma']

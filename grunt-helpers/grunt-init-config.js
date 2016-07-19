@@ -20,6 +20,7 @@ module.exports = function (grunt, options) {
 		ts:                     require('../grunt-sections/transform-js')(grunt, options).typescript,
 		replace:                extend(require('../grunt-sections/transform-html')(grunt, options).replace,
 																		extend(require('../grunt-sections/export-dts')(grunt, options).replace, convertTsConfig.replace)),
+		ejs:										require('../grunt-sections/transform-html')(grunt, options).ejs,
 		haml:                   require('../grunt-sections/transform-html')(grunt, options).haml,
 		velocity:               require('../grunt-sections/transform-html')(grunt, options).velocity,
 

@@ -4,7 +4,7 @@ var shell = require('shelljs');
 
 module.exports = function (grunt, options) {
   grunt.registerTask('wix-install', function () {
-    shell.exec('npm install; bower install; bundle install', {silent : true});
+    shell.exec('npm install; bower install; bundle install', { silent: true });
   });
 
   var preBuildTasks = [
@@ -17,6 +17,7 @@ module.exports = function (grunt, options) {
     'hamlIfEnabled',
     'compass:dist',
     'replaceOrVelocity',
+    'ejs:serve',
     'newer:copy:styles',
     'newer:jsonAngularTranslate',
     'newer:ngtemplates:single',
@@ -29,6 +30,11 @@ module.exports = function (grunt, options) {
   if (options.useNodeSass) {
     preBuildTasks.splice(preBuildTasks.indexOf('compass:dist'), 0, 'sass:dist');
   }
+
+  if (options.templateType !== 'ejs') {
+    preBuildTasks.splice(preBuildTasks.indexOf('ejs:serve'), 1);
+  }
+
   grunt.registerTask('pre-build', preBuildTasks);
 
   grunt.registerTask('pre-build:clean', [
@@ -37,26 +43,30 @@ module.exports = function (grunt, options) {
     'pre-build'
   ]);
 
-  grunt.registerTask('package', function () {
-    grunt.task.run([
-      // 'imagemin',
-      'copy:images',
-      'copy:dist',
-      'manifestPackager',
-      'useminPrepare',
-      'styleInlineDistIfEnabled',
-      'ngtemplates',
-      'concat',
-      'cssmin',
-      'ngAnnotate',
-      'uglify',
-      'cdnify',
-      'usemin',
-      'processTags',
-      'concat:dts',
-      'replace:dts'
-    ]);
-  });
+  var packageTasks = [
+    'copy:images',
+    'copy:dist',
+    'manifestPackager',
+    'useminPrepare',
+    'styleInlineDistIfEnabled',
+    'ngtemplates',
+    'concat',
+    'cssmin',
+    'ngAnnotate',
+    'uglify',
+    'cdnify',
+    'usemin',
+    'processTags',
+    'concat:dts',
+    'replace:dts',
+    'ejs:dist'
+  ];
+
+  if (options.templateType !== 'ejs') {
+    packageTasks.splice(packageTasks.indexOf('ejs:dist'), 1);
+  }
+
+  grunt.registerTask('package', packageTasks);
 
   grunt.registerTask('serve:verbose', [
     'serve'
@@ -97,7 +107,7 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('test:e2e', function (type) {
     if (type === 'noshard') {
-      grunt.modifyTask('protractor', {normal : {options : {'capabilities.shardTestFiles' : 0}}});
+      grunt.modifyTask('protractor', { normal: { options: { 'capabilities.shardTestFiles': 0 } } });
     }
     grunt.task.run('connect:localTest');
     grunt.task.run('webdriver');
@@ -136,7 +146,7 @@ module.exports = function (grunt, options) {
   });
 
   grunt.registerTask('runKarma', function () {
-    if (grunt.option('enableCoverage')){
+    if (grunt.option('enableCoverage')) {
       grunt.task.run('karma:single');
       grunt.task.run('remapIstanbul');
       grunt.task.run('remapIstanbulJsAndReport');
