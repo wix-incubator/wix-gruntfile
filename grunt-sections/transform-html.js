@@ -1,5 +1,6 @@
 'use strict';
 
+var fs = require('fs');
 var extend = require('util')._extend;
 var featureDetector = require('../feature-detector');
 
@@ -27,13 +28,18 @@ module.exports = function (grunt) {
 
   function loadReplacements() {
     var preserve, replacements = {};
-    try {
-      extend(replacements, arrayToObj(require(process.cwd() + '/replace.conf.js')));
-      preserve = replacements.$$preserve;
-      extend(replacements, arrayToObj(require(process.cwd() + '/replace.private.conf.js')));
-      replacements.$$preserve = preserve.concat(replacements.$$preserve);
-    } catch (e) {
 
+    var replaceConfPath = process.cwd() + '/replace.conf.js';
+    var replacePrivateConfPath = process.cwd() + '/replace.private.conf.js';
+    if (fs.existsSync(replaceConfPath)) {
+      extend(replacements, arrayToObj(require(replaceConfPath)));
+      preserve = replacements.$$preserve;
+      if (fs.existsSync(replacePrivateConfPath)) {
+        extend(replacements, arrayToObj(require(replacePrivateConfPath)));
+        if (preserve) {
+          replacements.$$preserve = preserve.concat(replacements.$$preserve);
+        }
+      }
     }
     return objToArray(replacements);
   }
@@ -50,9 +56,8 @@ module.exports = function (grunt) {
 
   function tryToLoadReplacements() {
     var replacements = {};
-    try {
+    if (fs.existsSync(process.cwd() + '/replace.conf.js')) {
       extend(replacements, require(process.cwd() + '/replace.conf.js'));
-    } catch (e) {
     }
     return replacements;
   }
