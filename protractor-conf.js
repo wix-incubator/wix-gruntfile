@@ -26,12 +26,11 @@ config.framework = 'jasmine2';
 
 config.directConnect = true;
 
-if (!config.capabilities) {
-  config.capabilities = {};
-}
-config.capabilities.browserName = 'chrome';
-config.capabilities.shardTestFiles = true;
-config.capabilities.maxInstances = 6;
+config.capabilities = Object.assign(config.capabilities,  {
+  browserName: 'chrome',
+  shardTestFiles: true,
+  maxInstances: 6
+});
 
 function hasFocusedTests(patterns, stringsRegex) {
   var commentsRegex = /(?:\/\*(?:[\s\S]*?)\*\/)|(?:^[\s;]*\/\/.*$)/gm;
