@@ -10,6 +10,11 @@ try {
 } catch (e) {
 
 }
+try {
+  require('wix-eyes-env');
+} catch (e) {
+
+}
 
 config.allScriptsTimeout = 120000;
 
