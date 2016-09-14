@@ -128,8 +128,8 @@ module.exports = function (grunt, options) {
         dest: 'dist',
         flow: {
           steps: {
-            js: ['concat:dts', 'uglifyjs'], //default
-            css: ['concat:dts', 'cssmin'], //default
+            js: ['concat', 'uglifyjs'], //default
+            css: ['concat', 'cssmin'], //default
             locale: [{ //Usage example: <!--build:locale({.tmp,app}) scripts/locale/messages_${locale}.js-->
               name: 'concat',
               createConfig: function (context, block) {
