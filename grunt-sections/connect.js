@@ -57,6 +57,7 @@ module.exports = function (grunt, options) {
   return {
     options: {
       port: options.port,
+      protocol: options.protocol || 'http',
       // Change this to 'localhost' to block access to the server from outside.
       hostname: '0.0.0.0'
     },
