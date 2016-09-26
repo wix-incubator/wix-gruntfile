@@ -16,7 +16,7 @@ module.exports = function (grunt, options) {
   return {
     autoprefixer: {
       options: {
-        browsers: ['last 3 versions']
+        browsers: ['last 3 versions', 'ie >= 10', 'Safari >= 8']
       },
       dist: {
         files: [{
