@@ -42,7 +42,7 @@ module.exports = {
 
     function scheduleRetry() {
       retry = setTimeout(function () {
-        if (process.env.IS_BUILD_AGENT) {
+        if (process.env.IS_BUILD_AGENT && process.env.SKIP_PROTRACTOR_RETRY !== 'true') {
           console.log('RETRY!!!');
           killed = true;
           terminate(p.pid, function () {
