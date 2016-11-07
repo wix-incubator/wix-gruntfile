@@ -94,7 +94,7 @@ module.exports = function (grunt, options) {
       },
       teamcity: {
         options: {
-          configFile: path.join(__dirname, '../protractor-teamcity-conf.js')
+          configFile: process.env.DOCKER_POC ? 'protractor-teamcity-conf.js' : path.join(__dirname, '../protractor-teamcity-conf.js')
         }
       }
     }
