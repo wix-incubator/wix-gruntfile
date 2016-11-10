@@ -89,7 +89,7 @@ module.exports = function (grunt, options) {
       normal: {
         options: {
           configFile: 'protractor-conf.js',
-          baseUrl: process.env.DOCKER_POC ? 'http://'+ process.env.EXTERNAL_IP + ':9876/' : 'http://localhost:9876/'
+          baseUrl: process.env.DOCKER_POC ? 'http://'+ process.env.EXTERNAL_IP + ':' + process.env.EXTERNAL_UI_TEST_PORT + '/' : 'http://localhost:9876/'
         }
       },
       teamcity: {
