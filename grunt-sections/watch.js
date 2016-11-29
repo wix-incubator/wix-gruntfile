@@ -63,7 +63,9 @@ module.exports = function (grunt, options) {
         'test/**/*.js',
         'karma.conf.js',
         '!test/spec/e2e/**/*.js',
-        '!test/e2e/**/*.js'
+        '!test/e2e/**/*.js',
+        '!app/test/spec/e2e/**/*.js',
+        '!app/test/e2e/**/*.js'
       ],
       tasks: ['babelIfEnabled', 'jsstyleIfEnabled', 'triggerLivereload', 'runKarma']
     },
