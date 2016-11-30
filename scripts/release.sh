@@ -20,7 +20,7 @@ git push origin bower-component
 shopt -s extglob dotglob
 
 rm -rf !(.git)
-cp -r $PROJECT_DIR/!(.git) .
+cp -r $PROJECT_DIR/!(.git|.|..) .
 grep -ve "^\(dist\|/.*\.js\)$" .gitignore > .gitignore.new
 mv -f .gitignore.new .gitignore
 git add --all .
