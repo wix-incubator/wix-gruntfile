@@ -62,7 +62,7 @@
     "grunt-usemin": "^2.6.2",
     "grunt-velocity-debug": "^0.1.0",
     "grunt-velocity-parser": "sarunas/grunt-velocity",
-    "grunt-webfont": "^0.4.8",
+    "grunt-webfont": "borislit/grunt-webfont#winston-version-bump",
     "inquirer": "^0.11.1",
     "istanbul": "^0.4.2",
     "jasmine-core": "^2.3.0",
