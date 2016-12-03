@@ -33,6 +33,14 @@ if (process.env.IS_BUILD_AGENT) {
   };
 }
 
+if (process.env.DOCKER_POC) {
+  config.directConnect = false;
+  config.seleniumAddress = 'http://' + process.env.CHROME_DRIVER_SERVER + ':23456/wd/hub';
+  config.capabilities.chromeOptions = {
+    args: ['disable-dev-tools=true', 'verbose=true']
+  };
+}
+
 var sauceLabsBrowsers = {
   Chrome: {
     browserName: 'chrome',
