@@ -10,15 +10,15 @@ echo "##teamcity[blockClosed name='Bundle Install']"
 if [ -d node_modules/bower ];then
   echo "##teamcity[blockOpened name='Bower Install']"
   rm -rf app/bower_components
-  $(npm bin)/bower cache clean
-  $(npm bin)/bower install
+  node_modules/bower/bin/bower cache clean
+  node_modules/bower/bin/bower install
   echo "##teamcity[blockClosed name='Bower Install']"
 fi
 
 echo "##teamcity[blockOpened name='Grunt Build']"
-$(npm bin)/grunt build:ci
+node_modules/grunt-cli/bin/grunt build:ci
 echo "##teamcity[blockClosed name='Grunt Build']"
 
 echo "##teamcity[blockOpened name='Grunt Test']"
-$(npm bin)/grunt test:ci
+node_modules/grunt-cli/bin/grunt test:ci
 echo "##teamcity[blockClosed name='Grunt Test']"
