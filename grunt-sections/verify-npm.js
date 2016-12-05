@@ -93,11 +93,21 @@ module.exports = function register(grunt) {
       grunt.log.ok('\nNo outdated npm modules, yay!');
       done();
     } else {
+      let userAnswered = false;
       let question = ppViolationsMessage(outdatedModule);
       require('inquirer').prompt([{type: 'confirm', name: 'update', message: question}], (answers) => {
+        userAnswered = true;
         onPromptAnswer(answers.update, toUpdateCmd(outdatedModule));
         done();
       });
+
+      // waiting 5sec for the user to answer, if he didn't we just click Enter (Yes)
+      setTimeout(() => {
+          if (!userAnswered) {
+              process.stdin.emit('keypress', '\n');
+              process.stdin.emit('line');
+          }
+      }, 5000);
     }
 
   });
