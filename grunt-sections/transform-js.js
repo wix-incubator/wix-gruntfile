@@ -88,8 +88,7 @@ module.exports = function (grunt, options) {
         experimentalDecorators: true,
         module: 'commonjs',
         fast: 'never',
-        stripInternal: true,
-        compiler: './node_modules/typescript/bin/tsc'
+        stripInternal: true
       },
       build: typeScriptConfig
     },
