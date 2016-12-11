@@ -103,6 +103,7 @@
     "grunt-petri-experiments": "^1.0.0",
     "grunt-wix-inline": "^0.3.3",
     "screenshot-reporter": "^1.0.0",
+    "screenshot-reporter-env": "^1.0.0",
     "wix-cdn-data": "^0.1.0",
     "wix-eyes-env": "^1.0.0",
     "wix-statics-parent": "*",

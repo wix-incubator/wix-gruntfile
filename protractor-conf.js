@@ -16,6 +16,12 @@ try {
 
 }
 
+try {
+  require('screenshot-reporter-env');
+} catch (e) {
+
+}
+
 config.allScriptsTimeout = 120000;
 
 config.baseUrl = 'http://localhost:9876/';
