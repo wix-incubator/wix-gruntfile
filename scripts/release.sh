@@ -1,13 +1,13 @@
 #!/bin/bash
 
 echo "##teamcity[blockOpened name='Grunt Release']"
-$(npm bin)/grunt checkIfBower
+node_modules/grunt-cli/bin/grunt checkIfBower
 if [ $? -ne 0 ]; then
     exit 0
 fi
 
 # bump package.json
-$(npm bin)/wnpm-release --no-shrinkwrap
+node_modules/wnpm-ci/scripts/wnpm-release.js --no-shrinkwrap
 
 PROJECT_DIR=$(pwd)
 cd /tmp
@@ -28,6 +28,6 @@ git reset HEAD bower.json
 git diff --exit-code --cached --stat
 
 if [ $? -ne 0 ]; then
-    $(npm bin)/grunt publish
+    node_modules/grunt-cli/bin/grunt publish
 fi
 echo "##teamcity[blockClosed name='Grunt Release']"
