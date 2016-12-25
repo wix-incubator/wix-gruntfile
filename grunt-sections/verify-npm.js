@@ -101,13 +101,13 @@ module.exports = function register(grunt) {
         done();
       });
 
-      // waiting 5sec for the user to answer, if he didn't we just click Enter (Yes)
+      // waiting 10sec for the user to answer, if he didn't we just skip
       setTimeout(() => {
           if (!userAnswered) {
-              process.stdin.emit('keypress', '\n');
+              process.stdin.emit('keypress', 'n\n');
               process.stdin.emit('line');
           }
-      }, 5000);
+      }, 10000);
     }
 
   });
