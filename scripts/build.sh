@@ -2,6 +2,7 @@
 set -e
 
 echo "##teamcity[blockOpened name='Bundle Install']"
+node node_modules/wix-gruntfile/hotfix-rainbow.js
 rm -rf .bundle
 rm -rf vendor
 bundle install --path vendor/bundle
