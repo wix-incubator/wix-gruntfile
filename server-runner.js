@@ -1,7 +1,7 @@
 /* global afterEach, browser */
 'use strict';
 
-var spawn = require('child_process').spawn;
+var spawn = require('cross-spawn');
 var q = require('q');
 var serverProcess;
 

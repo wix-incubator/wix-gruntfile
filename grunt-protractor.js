@@ -1,7 +1,7 @@
 'use strict';
 
 var terminate = require('terminate');
-var spawn = require('child_process').spawn;
+var spawn = require('cross-spawn');
 var grunt = require('grunt');
 var protractorDir = require.resolve('protractor/bin/elementexplorer.js').replace('elementexplorer.js', '');
 
