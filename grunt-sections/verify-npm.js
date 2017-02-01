@@ -58,7 +58,8 @@ module.exports = function register(grunt) {
       }
 
       function execNpmVerify() {
-        let cmd = require('child_process').spawn('npm', OUTDATED_CMD_TOKENS, {detached: true});
+        let spawn = require('cross-spawn');
+        let cmd = spawn('npm', OUTDATED_CMD_TOKENS, {detached: true});
         let result = '';
         cmd.stdout.on('data', (output) => {
           result += output;
