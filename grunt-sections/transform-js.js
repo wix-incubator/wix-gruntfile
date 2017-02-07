@@ -57,10 +57,17 @@ module.exports = function (grunt, options) {
 
   var typeScriptConfig;
   if (featureDetector.isTSConfigEnabled()) {
+    var tsConfigJsonPath = 'app/tsconfig.json';
+    var tsConfigJson = grunt.file.readJSON(tsConfigJsonPath);
+    var isUsingTS20Include = !tsConfigJson.filesGlob && !!tsConfigJson.include;
+
     typeScriptConfig = {
       outDir: '.tmp',
-      tsconfig: {
-        tsconfig: 'app/tsconfig.json',
+      tsconfig: isUsingTS20Include ? {
+        tsconfig: 'app/',
+        passThrough: true
+      } : {
+        tsconfig: tsConfigJsonPath,
         ignoreFiles: true,
         ignoreSettings: false,
         overwriteFilesGlob: false,
