@@ -119,13 +119,15 @@ module.exports = function (grunt, options) {
   ]);
 
   require('../grunt-sections/verify-npm')(grunt);
+  require('../grunt-sections/fedops')(grunt);
 
   grunt.registerTask('build', [
     'verify-npm',
     'pre-build:clean',
     'karma:single',
     'package',
-    'e2eIfEnabled:normal'
+    'e2eIfEnabled:normal',
+    'fedops-registration'
   ]);
 
   grunt.registerTask('build:ci', [
