@@ -126,15 +126,15 @@ module.exports = function (grunt, options) {
     'pre-build:clean',
     'karma:single',
     'package',
-    'e2eIfEnabled:normal',
-    'fedops-registration'
+    'e2eIfEnabled:normal'
   ]);
 
   grunt.registerTask('build:ci', [
     'pre-build:clean',
     'karma:teamcity',
     'package',
-    'copy:sadignore'
+    'copy:sadignore',
+    'fedops-registration'
   ]);
 
   grunt.registerTask('publish', [

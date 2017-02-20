@@ -11,11 +11,11 @@ module.exports = function register(grunt) {
           done();
         })
         .catch(function (e) {
-          grunt.log.error('Error: grafana sync failure');
+          grunt.log.write('Error: grafana sync failure: status ', e.status,' message: ' , e.response && e.response.text);
           done();
         });
     } catch (e) {
-      grunt.log.error('Error: fedops.json does not exist or not a valid JSON');
+      grunt.log.write('Error: fedops.json does not exist or not a valid JSON');
       done();
     }
   });
