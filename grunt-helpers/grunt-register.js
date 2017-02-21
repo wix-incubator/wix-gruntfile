@@ -119,6 +119,7 @@ module.exports = function (grunt, options) {
   ]);
 
   require('../grunt-sections/verify-npm')(grunt);
+  require('../grunt-sections/fedops')(grunt);
 
   grunt.registerTask('build', [
     'verify-npm',
@@ -132,7 +133,8 @@ module.exports = function (grunt, options) {
     'pre-build:clean',
     'karma:teamcity',
     'package',
-    'copy:sadignore'
+    'copy:sadignore',
+    'fedops-registration'
   ]);
 
   grunt.registerTask('publish', [
