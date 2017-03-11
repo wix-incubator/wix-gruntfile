@@ -56,6 +56,7 @@ module.exports = {
     scheduleRetry();
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);
+    process.stdin.pipe(p.stdin);
     p.stdout.on('data', function (data) {
       if (data.indexOf('beforeLaunch: start') > -1) {
         clearTimeout(retry);
