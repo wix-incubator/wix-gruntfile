@@ -7,11 +7,13 @@ module.exports = function (grunt, options) {
 
   function getPetriExperimentsOptions() {
     var options = {json: 'dist/petri-experiments.json'};
+    /* -- disabled this since it is kind of useless in old stack
+       -- hopefully will be better in new stack
     if (featureDetector.isTypescriptEnabled()) {
       options.ts = 'app/scripts/specs.ts';
     } else {
       options.js = 'app/scripts/specs.js';
-    }
+    }*/
     return options;
   }
 
