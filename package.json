@@ -46,7 +46,7 @@
     "grunt-contrib-uglify": "^0.7.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-ejs": "^0.3.0",
-    "grunt-eslint": "^18.1.0",
+    "grunt-eslint": "^19.0.0",
     "grunt-force-task": "^1.0.0",
     "grunt-google-cdn-shahata": "^0.2.0",
     "grunt-haml2html-shahata": "^0.3.0",
