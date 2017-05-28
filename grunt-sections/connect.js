@@ -21,6 +21,19 @@ module.exports = function (grunt, options) {
     return proxyMiddleware(proxyOptions);
   }
 
+  function proxyFolderWithWebSocket(src, dest) {
+    var proxyWsMiddleware = require('http-proxy-middleware');
+    return proxyWsMiddleware(src, {
+      target: grunt.template.process(dest),
+      ws: true,
+      pathRewrite: function (path, req) {
+        return path.replace(src, '');
+      }
+    });
+  }
+
+  proxyFolder = options.proxyWebSocket ? proxyFolderWithWebSocket : proxyFolder;
+
   function getProxies(proxyType) {
     var arr = [];
     for (var key in options[proxyType]) {
