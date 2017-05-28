@@ -63,7 +63,7 @@ module.exports = function (grunt, options) {
         }
       },
       options: {
-        includePaths: ['app/bower_components', '.tmp/styles', 'app/styles'],
+        includePaths: ['app/bower_components', '.tmp/styles', 'app/styles', 'node_modules'],
         sourceComments: false,
         functions: sassAssetFunctions({
           images_path: 'app/images',
