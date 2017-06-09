@@ -35,7 +35,7 @@ if (process.env.IS_BUILD_AGENT) {
 
 if (process.env.DOCKER_POC) {
   config.directConnect = false;
-  config.seleniumAddress = 'http://' + process.env.CHROME_DRIVER_SERVER + ':' + process.env.EXTERNAL_UI_TEST_PORT + '/wd/hub';
+  config.seleniumAddress = 'http://' + process.env.CHROME_DRIVER_SERVER + ':' + process.env.SELENIUM_SERVER_PORT + '/wd/hub';
   config.baseUrl = 'http://' + process.env.EXTERNAL_IP + ':' + process.env.EXTERNAL_UI_TEST_PORT + '/';
   config.capabilities.chromeOptions = {
     args: ['disable-dev-tools=true', 'verbose=true']
