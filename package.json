@@ -37,7 +37,7 @@
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-compass": "1.0.4",
     "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-connect": "^0.9.0",
+    "grunt-contrib-connect": "^0.11.0",
     "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-cssmin": "^0.12.0",
     "grunt-contrib-htmlmin": "^0.5.0",
@@ -63,7 +63,7 @@
     "grunt-text-replace": "^0.4.0",
     "grunt-ts": "^5.3.0",
     "grunt-tslint": "^3.0.0",
-    "grunt-usemin": "^2.6.2",
+    "grunt-usemin": "^3.1.0",
     "grunt-velocity-debug": "^0.1.0",
     "grunt-velocity-parser": "sarunas/grunt-velocity",
     "grunt-webfont": "borislit/grunt-webfont#winston-version-bump",
@@ -97,9 +97,10 @@
     "shelljs": "^0.3.0",
     "terminate": "^1.0.6",
     "time-grunt": "^1.0.0",
-    "tiny-lr": "^0.1.6",
+    "tiny-lr": "^1.0.5",
     "tslint": "^3.1.1",
-    "typescript": "~2.3.0"
+    "typescript": "~2.3.0",
+    "snyk": "^1.34.4"
   },
   "optionalDependencies": {
     "grunt-extract-styles": "^1.1.0",
@@ -129,6 +130,9 @@
   },
   "scripts": {
     "build": ":",
-    "release": "wnpm-release --no-shrinkwrap"
-  }
+    "release": "wnpm-release --no-shrinkwrap",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }

@@ -1,0 +1,68 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.7.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:ms:20170412':
+    - grunt-contrib-connect > connect > serve-static > send > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - compression > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > body-parser > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - grunt-contrib-connect > connect > compression > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > compression > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - grunt-contrib-connect > connect > connect-timeout > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > connect-timeout > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - grunt-contrib-connect > connect > express-session > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > express-session > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > finalhandler > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - grunt-contrib-connect > connect > morgan > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > morgan > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - grunt-contrib-connect > connect > serve-index > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > serve-index > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - grunt-contrib-connect > connect > body-parser > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > serve-static > send > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - grunt-contrib-connect > connect > connect-timeout > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > connect-timeout > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - grunt-contrib-connect > connect > serve-static > send > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > serve-static > send > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma > socket.io > socket.io-parser > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma > socket.io > socket.io-adapter > socket.io-parser > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma > socket.io > socket.io-client > socket.io-parser > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - grunt-contrib-connect > connect > serve-favicon > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma-simple-reporter > karma > connect > serve-favicon > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma > socket.io > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma > socket.io > engine.io > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma > socket.io > socket.io-adapter > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma > socket.io > socket.io-client > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
+    - karma > socket.io > socket.io-client > engine.io-client > debug > ms:
+        patched: '2017-06-19T22:55:21.312Z'
