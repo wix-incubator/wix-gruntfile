@@ -83,6 +83,8 @@ module.exports = function (config) {
     // - IE (only Windows)
     browsers: ['PhantomJS'],
 
+    browserNoActivityTimeout: 100000,
+
     // browser configuration
     customLaunchers: {
       chromeHeadless: {
