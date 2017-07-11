@@ -13,12 +13,14 @@ module.exports = function (grunt, options) {
       grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
     }
 
-    if (packageJson.scripts && packageJson.scripts.build === 'node_modules/wix-gruntfile/scripts/build.sh') {
-      delete packageJson.scripts.build;
-    }
+    if (!process.env.IS_BUILD_AGENT) {
+      if (packageJson.scripts && packageJson.scripts.build === 'node_modules/wix-gruntfile/scripts/build.sh') {
+        delete packageJson.scripts.build;
+      }
 
-    if (packageJson.scripts && packageJson.scripts.test === '#tbd') {
-      delete packageJson.scripts.test;
+      if (packageJson.scripts && packageJson.scripts.test === '#tbd') {
+        delete packageJson.scripts.test;
+      }
     }
 
     if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test) {
