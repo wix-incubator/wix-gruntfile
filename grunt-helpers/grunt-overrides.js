@@ -14,6 +14,10 @@ module.exports = function (grunt, options) {
     }
 
     if (!process.env.IS_BUILD_AGENT) {
+      if (packageJson.scripts && packageJson.scripts.build === 'node_modules/wix-gruntfile/scripts/build.sh') {
+        delete packageJson.scripts.build;
+      }
+
       if (packageJson.scripts && packageJson.scripts.test === '#tbd') {
         delete packageJson.scripts.test;
       }
