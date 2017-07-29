@@ -23,7 +23,7 @@ module.exports = function (grunt, options) {
       }
     }
 
-    if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test) {
+    if (!packageJson.scripts || !packageJson.scripts.build || !packageJson.scripts.release || !packageJson.scripts.test || !packageJson.scripts.postinstall || !packageJson.scripts.start) {
       packageJson.scripts = packageJson.scripts || {};
       packageJson.scripts.build = packageJson.scripts.build || ':';
       packageJson.scripts.release = packageJson.scripts.release || 'node_modules/wix-gruntfile/scripts/release.sh';
