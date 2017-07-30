@@ -134,7 +134,8 @@ module.exports = function (grunt, options) {
     'karma:teamcity',
     'package',
     'copy:sadignore',
-    'fedops-registration'
+    'fedops-registration',
+    'fedops-bundle'
   ]);
 
   grunt.registerTask('publish', [

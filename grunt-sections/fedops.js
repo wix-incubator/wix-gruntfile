@@ -2,10 +2,10 @@
 
 module.exports = function register(grunt) {
   grunt.registerTask('fedops-registration', function () {
-    var done = this.async();
-    var fedops = require('fedops-grafana-api');
+    const done = this.async();
+	  const fedops = require('fedops-grafana-api');
     try {
-      var fedopsJson = grunt.file.readJSON('fedops.json');
+	    const fedopsJson = grunt.file.readJSON('fedops.json');
       fedops.sync(fedopsJson)
         .then(function () {
           done();
@@ -19,4 +19,16 @@ module.exports = function register(grunt) {
       done();
     }
   });
+
+	grunt.registerTask('fedops-bundle', function () {
+		const done = this.async();
+		try {
+			const fedopsJson = grunt.file.readJSON('fedops.json');
+			let fedopsBundleSize = require('./fedops-bundle-size');
+			fedopsBundleSize(fedopsJson, done);
+		} catch (e) {
+			grunt.log.write('Error: fedops.json does not exist or not a valid JSON');
+			done();
+		}
+	});
 };
