@@ -18,6 +18,10 @@ module.exports = function (grunt, options) {
         delete packageJson.scripts.build;
       }
 
+      if (packageJson.scripts && packageJson.scripts.postinstall === 'node_modules/wix-gruntfile/scripts/postinstall.sh') {
+        packageJson.scripts.postinstall = 'node_modules/wix-gruntfile/scripts/postinstall.sh || true';
+      }
+
       if (packageJson.scripts && packageJson.scripts.test === '#tbd') {
         delete packageJson.scripts.test;
       }
@@ -28,7 +32,7 @@ module.exports = function (grunt, options) {
       packageJson.scripts.build = packageJson.scripts.build || ':';
       packageJson.scripts.release = packageJson.scripts.release || 'node_modules/wix-gruntfile/scripts/release.sh';
       packageJson.scripts.test = packageJson.scripts.test || 'node_modules/wix-gruntfile/scripts/test.sh';
-      packageJson.scripts.postinstall = packageJson.scripts.postinstall || 'node_modules/wix-gruntfile/scripts/postinstall.sh';
+      packageJson.scripts.postinstall = packageJson.scripts.postinstall || 'node_modules/wix-gruntfile/scripts/postinstall.sh || true';
       packageJson.scripts.start = packageJson.scripts.start || 'grunt serve';
       grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
     }
