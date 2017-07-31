@@ -27,7 +27,7 @@ const globAsync = (patter, options) => new Promise((resolve, reject) => {
 });
 
 const getBundleNames = () => {
-	return globAsync(path.resolve(process.cwd(), 'dist/(scripts|styles)/*.@(js|css)'));
+	return globAsync(path.resolve(process.cwd(), 'dist/@(scripts|styles)/*.@(js|css)'));
 };
 
 const replaceDotsWithUnderscore = str => str.replace(/\./g, '_');
