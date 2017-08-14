@@ -100,7 +100,8 @@
     "time-grunt": "^1.0.0",
     "tiny-lr": "^0.1.6",
     "tslint": "^3.1.1",
-    "typescript": "~2.3.0"
+    "typescript": "~2.3.0",
+    "snyk": "^1.38.1"
   },
   "optionalDependencies": {
     "grunt-extract-styles": "^1.1.0",
@@ -130,6 +131,9 @@
   },
   "scripts": {
     "build": ":",
-    "release": "wnpm-release --no-shrinkwrap"
-  }
+    "release": "wnpm-release --no-shrinkwrap",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
