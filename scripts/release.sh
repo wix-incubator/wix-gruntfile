@@ -9,6 +9,8 @@ fi
 # bump package.json
 node_modules/wnpm-ci/scripts/wnpm-release.js --no-shrinkwrap
 
+node_modules/bower/bin/bower register $(jq .name bower.json -r) $GIT_REMOTE_URL --force
+
 PROJECT_DIR=$(pwd)
 cd /tmp
 rm -rf bower_component
