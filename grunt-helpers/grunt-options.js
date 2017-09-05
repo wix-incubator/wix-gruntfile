@@ -27,6 +27,7 @@ module.exports = function (grunt, options) {
     inline : false,
     enableAngularMigration : false,
     useNodeSass : false,
+    suppressVerifyNpmScripts : false,
     babelEnabled: false
   }, options);
 

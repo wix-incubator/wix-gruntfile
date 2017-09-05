@@ -71,6 +71,7 @@ Here is a list of available options:
   protractor: true                         //should run e2e tests
   proxies: {}, //add more proxies to your connect server: `{'/_test/': 'http://www.wix.com/', ...}`
   beforeProxies: {}, //same as above, only it insert the proxy at the beginning of the list
+  suppressVerifyNpmScripts: false, // if true, will suppress package.json scripts section modifications.
   useModulesStructure: false // if true, will assume project uses a modular file structure (see below for an elaboration)
 }
 ```

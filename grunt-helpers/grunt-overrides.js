@@ -13,7 +13,7 @@ module.exports = function (grunt, options) {
       grunt.file.write('package.json', JSON.stringify(packageJson, null, 2));
     }
 
-    if (!process.env.IS_BUILD_AGENT) {
+    if (!process.env.IS_BUILD_AGENT && !options.suppressVerifyNpmScripts) {
       if (packageJson.scripts && packageJson.scripts.build === 'node_modules/wix-gruntfile/scripts/build.sh') {
         delete packageJson.scripts.build;
       }
