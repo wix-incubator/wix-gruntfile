@@ -10,6 +10,7 @@ echo "##teamcity[blockClosed name='Bundle Install']"
 
 if [ -d node_modules/bower ];then
   echo "##teamcity[blockOpened name='Bower Install']"
+  sed -i -e 's/https:\/\/bower.herokuapp.com/https:\/\/registry.bower.io/g' .bowerrc
   rm -rf app/bower_components
   node_modules/bower/bin/bower cache clean
   node_modules/bower/bin/bower install
