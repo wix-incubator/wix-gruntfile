@@ -1,101 +1,119 @@
 'use strict';
 
 const path = require('path');
-const graphite = require('graphite-tcp');
+const mysql = require('mysql');
 const fs = require('fs');
 const glob = require('glob');
 
 const fsStatP = filePath => new Promise((resolve, reject) => {
-	fs.stat(filePath, (err, stats) => {
-		if (err) {
-			reject(err);
-		} else {
-			resolve(stats);
-		}
-	});
-});
+    fs.stat(filePath, (err, stats) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(stats);
+      }
+    });
+  });
 
 const globAsync = (patter, options) => new Promise((resolve, reject) => {
-	glob(patter, options, (err, matches) => {
-		if (err) {
-			reject(err);
-			return;
-		}
+    glob(patter, options, (err, matches) => {
+      if (err) {
+        reject(err);
+        return;
+      }
 
-		resolve(matches);
-	});
-});
+      resolve(matches);
+    });
+  });
 
 const getBundleNames = () => {
-	return globAsync(path.resolve(process.cwd(), 'dist/@(scripts|styles)/*.@(js|css)'));
+  return globAsync(path.resolve(process.cwd(), 'dist/@(scripts|styles)/*.@(js|css)'));
 };
 
-const replaceDotsWithUnderscore = str => str.replace(/\./g, '_');
+const database = {
+  connection: null,
+  getConnection() {
+    if (!this.connection) {
+      this.connection = mysql.createConnection({
+        host: process.env.FEDOPS_BUILD_REPORT_SQL_HOST,
+        user: process.env.FEDOPS_BUILD_REPORT_SQL_USER,
+        password: process.env.FEDOPS_BUILD_REPORT_SQL_PASS,
+        database: process.env.FEDOPS_BUILD_REPORT_SQL_DB
+      });
+    }
 
-const command = (appName, bundleName) => {
-	const metricNames = {
-		app_name: replaceDotsWithUnderscore(appName), // eslint-disable-line camelcase
-		bundle_name: replaceDotsWithUnderscore(path.relative(path.join(process.cwd(), 'dist/'), bundleName)), // eslint-disable-line camelcase
-	};
+    return this.connection;
+  },
+  end() {
+    if (this.connection) {
+      return new Promise((resolve, reject) => {
+        this.connection.end(err => err ? reject(err) : resolve());
+      });
+    }
 
-	const metricNamesSeparator = '.';
-	const bundleSizeMetricName = 'bundle_size';
-
-	return ''.concat(
-		Object.keys(metricNames).map(key => `${key}=${metricNames[key]}`).join(metricNamesSeparator),
-		metricNamesSeparator,
-		`${bundleSizeMetricName}`
-	);
+    return Promise.resolve();
+  }
 };
 
 const reportBundleSize = params => {
-	return new Promise(resolve => {
-		return fsStatP(path.resolve(process.cwd(), params.bundleName))
-			.then(stats => {
-				const metric = graphite.createClient({
-					host: 'm.wixpress.com',
-					port: 2003,
-					prefix: 'wix-bi-tube.root=events_catalog.src=72',
-					callback: () => {
-						resolve();
-						metric.close();
-					}
-				});
-				metric.put(command(params.appName, params.bundleName), stats.size || 0);
-			})
-			.catch(err => {
-				resolve();
-			});
-	});
+  return new Promise(resolve => {
+    return fsStatP(path.resolve(process.cwd(), params.bundleName))
+      .then(stats => {
+        const sql = 'INSERT INTO ?? (name, bundle_name, bundle_size) VALUES (?, ?, ?)';
+        const values = [
+          process.env.FEDOPS_BUILD_REPORT_SQL_TABLE,
+          params.appName,
+          path.relative(path.join(process.cwd(), 'dist/'), params.bundleName),
+          stats.size || 0
+        ];
+        const handleQueryResult = err => {
+          if (err) {
+            console.warn(`Error code ${err.code}. Failed to write bundle size to the database.` +
+							`App: ${params.appName}. Bundle: ${params.bundleName}.bundle.min.js`);
+          }
+
+          resolve();
+				};
+        database.getConnection().query(sql, values, handleQueryResult);
+      })
+      .catch(err => {
+        console.warn(
+          `Error code ${err.code}. Failed to find size of file ${params.bundleName}.bundle.min.js.`
+        );
+        resolve();
+      });
+  });
 };
 
 const reportBundleForApp = bundleName => fedopsJson => {
-	const appName = fedopsJson.app_name || fedopsJson.appName;
-	const params = {
-		appName,
-		bundleName
-	};
+  const appName = fedopsJson.app_name || fedopsJson.appName;
+  const params = {
+    appName,
+    bundleName
+  };
 
-	if (!appName) {
-		return Promise.resolve();
-	}
+  if (!appName) {
+    return Promise.resolve();
+  }
 
-	return reportBundleSize(params);
+  return reportBundleSize(params);
 };
 
 const sendStream = config => bundleName => {
-	const promises = [].concat(config).map(reportBundleForApp(bundleName));
-	return Promise.all(promises);
+  const promises = [].concat(config).map(reportBundleForApp(bundleName));
+  return Promise.all(promises);
 };
 
 module.exports = function fedopsBundleSize(fedopsJson, done) {
-	return getBundleNames()
-		.then((bundleNames) => {
-			return Promise.all(bundleNames.map(sendStream(fedopsJson))).then(() => {
+  return getBundleNames()
+    .then((bundleNames) => {
+			return Promise.all(bundleNames.map(sendStream(fedopsJson)))
+			.then(() => database.end())
+			.then(() =>{
 				done();
 			});
-		})
-		.catch(() => {
-			done();
-		});
+    })
+    .catch(() => {
+      done();
+    });
 };
