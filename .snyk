@@ -1,0 +1,58 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.7.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - karma-simple-reporter > karma > connect > connect-timeout > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - grunt-contrib-connect > connect > express-session > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma-simple-reporter > karma > connect > finalhandler > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - grunt-contrib-connect > connect > morgan > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma-simple-reporter > karma > connect > morgan > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - grunt-contrib-connect > connect > serve-index > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma-simple-reporter > karma > connect > serve-index > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma-simple-reporter > karma > connect > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - grunt-contrib-connect > connect > body-parser > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma-simple-reporter > karma > connect > body-parser > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - grunt-contrib-connect > connect > compression > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma-simple-reporter > karma > connect > compression > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - grunt-contrib-connect > connect > connect-timeout > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma-simple-reporter > karma > connect > express-session > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - grunt-contrib-connect > connect > serve-static > send > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma-simple-reporter > karma > connect > serve-static > send > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma > socket.io > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma > socket.io > engine.io > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma > socket.io > socket.io-adapter > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma > socket.io > socket.io-client > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma > socket.io > socket.io-client > engine.io-client > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - phantomjs-prebuilt > extract-zip > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma-phantomjs-launcher > phantomjs-prebuilt > extract-zip > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma > socket.io > socket.io-parser > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma > socket.io > socket.io-adapter > socket.io-parser > debug:
+        patched: '2017-10-02T07:23:30.713Z'
+    - karma > socket.io > socket.io-client > socket.io-parser > debug:
+        patched: '2017-10-02T07:23:30.713Z'
