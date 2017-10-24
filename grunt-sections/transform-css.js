@@ -36,7 +36,7 @@ module.exports = function (grunt, options) {
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: 'app/images',
         javascriptsDir: 'app/scripts',
-        fontsDir: 'app/fonts',
+        fontsDir: options.fontsDir || 'app/fonts',
         importPath: ['app/bower_components', '.tmp/styles/'],
         httpImagesPath: '../images',
         httpGeneratedImagesPath: '../images/generated',
