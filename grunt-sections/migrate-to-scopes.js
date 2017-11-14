@@ -8,6 +8,11 @@ module.exports = function register(grunt) {
   function noop() {}
 
   function migrateToScopes() {
+
+    if (!packageExists('update-scopes')) {
+      return;
+    }
+
     const path = require('path');
     const { update } = require('update-scopes');
 
@@ -15,6 +20,15 @@ module.exports = function register(grunt) {
 
     let done = this.async();
     update(packageJson).then(() => done()).catch(() => done());
+  }
+
+  function packageExists(name) {
+    try {
+      require(name);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
 };
