@@ -63,7 +63,7 @@
     "grunt-svgmin": "^2.0.0",
     "grunt-text-replace": "^0.4.0",
     "grunt-ts": "^5.3.0",
-    "grunt-tslint": "^3.0.0",
+    "grunt-tslint": "^5.0.1",
     "grunt-usemin": "^2.6.2",
     "grunt-velocity-debug": "^0.1.0",
     "grunt-velocity-parser": "sarunas/grunt-velocity",
@@ -99,7 +99,7 @@
     "terminate": "^1.0.6",
     "time-grunt": "^1.0.0",
     "tiny-lr": "^0.1.6",
-    "tslint": "^3.1.1",
+    "tslint": "^5.7.0",
     "typescript": "~2.3.0"
   },
   "optionalDependencies": {
