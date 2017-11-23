@@ -9,6 +9,10 @@ module.exports = function register(grunt) {
 
   function migrateToScopes() {
 
+    if (insideCi()) {
+      return;
+    }
+
     if (!packageExists('update-scopes')) {
       return;
     }
@@ -20,6 +24,10 @@ module.exports = function register(grunt) {
 
     let done = this.async();
     update(packageJson).then(() => done()).catch(() => done());
+  }
+
+  function insideCi() {
+    return process.env.BUILD_NUMBER || process.env.TEAMCITY_VERSION;
   }
 
   function packageExists(name) {
