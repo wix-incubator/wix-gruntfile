@@ -73,6 +73,7 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('serve', [
+    'migrate-bower-artifactory',
     'verify-npm',
     'ignore-code-style-checks',
     'karma:unit',
@@ -118,10 +119,12 @@ module.exports = function (grunt, options) {
     'e2eIfEnabled:teamcity'
   ]);
 
+  require('../grunt-sections/migrate-bower-artifactory')(grunt);
   require('../grunt-sections/verify-npm')(grunt);
   require('../grunt-sections/fedops')(grunt);
 
   grunt.registerTask('build', [
+    'migrate-bower-artifactory',
     'verify-npm',
     'pre-build:clean',
     'karma:single',
