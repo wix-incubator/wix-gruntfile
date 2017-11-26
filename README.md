@@ -78,7 +78,7 @@ Here is a list of available options:
 
 Note: you can add your own connect plugins by passing function value in the proxy maps.
 
-##Modular file structure
+## Modular file structure
 The basic configuration assumes you are using a traditional file structure, where all the controllers are stored in the "controllers" directory, services are in "services" directory and so on.
 If you wish to use a modular file structure, storing each module's scripts, styles and views in the same folder, you can do so by passing 'useModulesStructure: true' to the configuration object.
 
@@ -156,7 +156,7 @@ try {
 To enable the wixStyle inline feature, `inline` property of the Gruntfile options should be `true`.
 
 Common use of the inline:
-####index.vm
+#### index.vm
 ```html
 <!-- process-tags prefix('${baseStaticUrl}') -->
 <!-- build:css({.tmp,app}) styles/main.css -->
