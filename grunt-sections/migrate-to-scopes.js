@@ -2,10 +2,7 @@
 
 module.exports = function register(grunt) {
 
-  grunt.registerTask('migrate-to-scopes',
-    process.env.MIGRATE_TO_SCOPED_PACKAGES === 'true' ? migrateToScopes : noop);
-
-  function noop() {}
+  grunt.registerTask('migrate-to-scopes', migrateToScopes);
 
   function migrateToScopes() {
 
