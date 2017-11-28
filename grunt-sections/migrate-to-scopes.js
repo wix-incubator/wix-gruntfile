@@ -17,12 +17,12 @@ module.exports = function register(grunt) {
       return;
     }
 
-    const path = require('path');
-    const { update } = require('update-scopes');
+    var path = require('path');
+    var update = require('update-scopes').update;
 
-    const packageJson = path.join(process.cwd(), 'package.json');
+    var packageJson = path.join(process.cwd(), 'package.json');
 
-    let done = this.async();
+    var done = this.async();
     update(packageJson).then(() => done()).catch(() => done());
   }
 
