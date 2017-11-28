@@ -73,6 +73,7 @@ module.exports = function (grunt, options) {
   ]);
 
   grunt.registerTask('serve', [
+    'migrate-to-scopes',
     'verify-npm',
     'ignore-code-style-checks',
     'karma:unit',
@@ -118,10 +119,12 @@ module.exports = function (grunt, options) {
     'e2eIfEnabled:teamcity'
   ]);
 
+  require('../grunt-sections/migrate-to-scopes')(grunt);
   require('../grunt-sections/verify-npm')(grunt);
   require('../grunt-sections/fedops')(grunt);
 
   grunt.registerTask('build', [
+    'migrate-to-scopes',
     'verify-npm',
     'pre-build:clean',
     'karma:single',
