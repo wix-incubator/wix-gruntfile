@@ -113,7 +113,8 @@
     "wix-cdn-data": "^0.1.0",
     "wix-eyes-env": "^1.0.0",
     "wix-statics-parent": "*",
-    "wnpm-ci": "*"
+    "wnpm-ci": "*",
+    "update-scopes": "^1.0.8"
   },
   "peerDependencies": {
     "bower": "^1.3.1",
