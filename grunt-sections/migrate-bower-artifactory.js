@@ -1,7 +1,10 @@
 'use strict';
 
 module.exports = function register(grunt) {
-  grunt.registerTask('migrate-bower-artifactory', migrateBowerArtifactory);
+  grunt.registerTask('migrate-bower-artifactory',
+    process.env.MIGRATE_BOWER_ARTIFACTORY_TOOL ? migrateBowerArtifactory : noop);
+
+  function noop() {}
 
   function migrateBowerArtifactory() {
     if (packageExists('migrate-bower-artifactory')) {
