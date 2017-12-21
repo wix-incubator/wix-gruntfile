@@ -10,10 +10,6 @@ module.exports = function register(grunt) {
       return;
     }
 
-    if (!packageExists('update-scopes')) {
-      return;
-    }
-
     var path = require('path');
     var update = require('update-scopes').update;
 
@@ -24,16 +20,7 @@ module.exports = function register(grunt) {
   }
 
   function insideCi() {
-    return process.env.BUILD_NUMBER || process.env.TEAMCITY_VERSION;
-  }
-
-  function packageExists(name) {
-    try {
-      require(name);
-      return true;
-    } catch (error) {
-      return false;
-    }
+    return process.env.BUILD_NUMBER || process.env.TEAMCITY_VERSION || process.env.CI;
   }
 
 };
