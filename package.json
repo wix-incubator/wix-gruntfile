@@ -58,7 +58,7 @@
     "grunt-ng-annotate": "^1.0.0",
     "grunt-process-tags": "^1.0.2",
     "grunt-release": "^0.12.0",
-    "grunt-sass": "^1.1.0",
+    "grunt-sass": "^2.0.0",
     "grunt-scss-lint": "^0.3.3",
     "grunt-svgmin": "^2.0.0",
     "grunt-text-replace": "^0.4.0",
