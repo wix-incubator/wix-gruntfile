@@ -59,7 +59,7 @@ module.exports = function (grunt, options) {
   }
 
   function findCrossOriginAttribute(block) {
-    var rgx = /<[\s\S]*crossdomain=["](anonymouse)["][\s\S]*>/;
+    var rgx = /<[\s\S]*crossdomain=["'](anonymouse)["'][\s\S]*>/;
     var foundMatch = block.raw.some(function(entry) {
       return rgx.test(entry);
     });
