@@ -10,8 +10,8 @@ module.exports = function (grunt, options) {
 
   }
 
-  function makeScriptTag(defer, async, src) {
-    return '<script ' + defer + async + 'src="' + src + '"><\/script>';
+  function makeScriptTag(defer, async, crossOrigin, src) {
+    return '<script ' + defer + async + 'src="' + src + '" ' + crossOrigin + '><\/script>';
   }
 
   function makeStyleTag(media, src) {
@@ -49,12 +49,21 @@ module.exports = function (grunt, options) {
   function originalScriptOnDebug(block) {
     var defer = block.defer ? 'defer ' : '';
     var async = block.async ? 'async ' : '';
-    return originalTagsOnDebug(block, ['scripts', 'modules'], makeScriptTag.bind(undefined, defer, async));
+    var crossOrigin = findCrossOriginAttribute(block);
+    return originalTagsOnDebug(block, ['scripts', 'modules'], makeScriptTag.bind(undefined, defer, async, crossOrigin));
   }
 
   function originalCssOnDebug(block) {
     var media = block.media ? ' media="' + block.media + '"' : '';
     return originalTagsOnDebug(block, ['styles', 'modules'], makeStyleTag.bind(undefined, media));
+  }
+
+  function findCrossOriginAttribute(block) {
+    var rgx = /<[\s\S]*crossdomain=["](anonymouse)["][\s\S]*>/;
+    var foundMatch = block.raw.some(function(entry) {
+      return rgx.test(entry);
+    });
+    return foundMatch ? 'crossdomain="anonymouse"' : '';
   }
 
   grunt.registerTask('styleInlineDistIfEnabled', function () {
