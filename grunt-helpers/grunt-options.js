@@ -45,7 +45,9 @@ module.exports = function (grunt, options) {
       set : function (karmaConf) {
         options.karmaConf = {
           files : karmaConf.files.filter(function (value) {
-            return typeof value !== 'string' || value.indexOf('bower_component') !== -1;
+            return typeof value !== 'string' || 
+                   value.indexOf('bower_component') !== -1 ||
+                   value.indexOf('node_modules') !== -1;
           }),
           proxies : karmaConf.proxies
         };
