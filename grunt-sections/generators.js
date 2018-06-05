@@ -28,6 +28,7 @@ module.exports = function (grunt, options) {
   return {
     petriExperiments: {
       all: [
+        'petri-specs/*.json',
         'app/petri-experiments/*.json',
         'app/bower_components/*/dist/petri-experiments.json'
       ],
