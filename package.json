@@ -19,7 +19,7 @@
   "main": "wix-gruntfile.js",
   "dependencies": {
     "adm-zip": "0.4.9",
-    "babel": "^5.0.0",
+    "babel": "^6.0.0",
     "babel-preset-es2015": "^6.9.0",
     "bower": "^1.3.1",
     "chalk": "^1.1.1",
@@ -58,9 +58,9 @@
     "grunt-newer": "^1.1.0",
     "grunt-ng-annotate": "^1.0.0",
     "grunt-process-tags": "^1.0.2",
-    "grunt-release": "^0.12.0",
+    "grunt-release": "^0.13.0",
     "grunt-sass": "^1.1.0",
-    "grunt-scss-lint": "^0.3.3",
+    "grunt-scss-lint": "^0.5.0",
     "grunt-svgmin": "^2.0.0",
     "grunt-text-replace": "^0.4.0",
     "grunt-ts": "^5.3.0",
@@ -69,13 +69,13 @@
     "grunt-velocity-debug": "^0.1.0",
     "grunt-velocity-parser": "sarunas/grunt-velocity",
     "grunt-webfont": "borislit/grunt-webfont#winston-version-bump",
-    "inquirer": "^0.11.1",
+    "inquirer": "^0.12.0",
     "istanbul": "^0.4.2",
     "jasmine-core": "^2.3.0",
     "jasmine-reporters": "^2.1.1",
     "jshint-stylish": "^1.0.0",
     "jsonminify": "^0.2.3",
-    "karma": "^0.13.22",
+    "karma": "^2.0.0",
     "karma-chrome-launcher": "^0.1.0",
     "karma-coverage": "^0.5.3",
     "karma-growl-reporter": "^0.1.1",
@@ -89,7 +89,7 @@
     "lodash": "^4.3.0",
     "node-sass-asset-functions": "0.0.9",
     "phantomjs-prebuilt": "^2.1.7",
-    "protractor": "^3.0.0",
+    "protractor": "^4.0.0",
     "protractor-browser-logs": "^1.0.0",
     "proxy-middleware": "^0.11.0",
     "q": "^1.4.1",
@@ -102,7 +102,8 @@
     "tiny-lr": "^0.1.6",
     "tslint": "^3.1.1",
     "typescript": "~2.3.0",
-    "update-scopes": "^1.1.1"
+    "update-scopes": "^1.1.1",
+    "snyk": "^1.88.2"
   },
   "optionalDependencies": {
     "grunt-extract-styles": "^1.1.0",
@@ -133,6 +134,9 @@
   },
   "scripts": {
     "build": ":",
-    "release": "wnpm-release --no-shrinkwrap"
-  }
+    "release": "wnpm-release --no-shrinkwrap",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
