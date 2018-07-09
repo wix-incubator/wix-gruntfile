@@ -1,0 +1,44 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.12.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:lodash:20180130':
+    - babel > babel-core > babel-plugin-proto-to-assign > lodash:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-jscs > jscs > lodash:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-jscs > jscs > jscs-jsdoc > jsdoctypeparser > lodash:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-jscs > jscs > xmlbuilder > lodash:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-jscs > jscs > babel-jscs > babel-core > babel-plugin-proto-to-assign > lodash:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-jscs > jscs > babel-jscs > babel-core > lodash:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-ts > csproj2ts > lodash:
+        patched: '2018-07-09T05:33:13.991Z'
+    - karma-simple-reporter > karma > lodash:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-scss-lint > xmlbuilder > lodash:
+        patched: '2018-07-09T05:33:13.991Z'
+  'npm:mime:20170907':
+    - grunt-contrib-connect > connect > serve-static > send > mime:
+        patched: '2018-07-09T05:33:13.991Z'
+    - karma-simple-reporter > karma > connect > serve-static > send > mime:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-release > superagent > mime:
+        patched: '2018-07-09T05:33:13.991Z'
+  'npm:tunnel-agent:20170305':
+    - grunt-contrib-imagemin > imagemin > imagemin-gifsicle > gifsicle > bin-build > download > caw > tunnel-agent:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-contrib-imagemin > imagemin > imagemin-gifsicle > gifsicle > bin-wrapper > download > caw > tunnel-agent:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-contrib-imagemin > imagemin > imagemin-jpegtran > jpegtran-bin > bin-build > download > caw > tunnel-agent:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-contrib-imagemin > imagemin > imagemin-jpegtran > jpegtran-bin > bin-wrapper > download > caw > tunnel-agent:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-contrib-imagemin > imagemin > imagemin-optipng > optipng-bin > bin-build > download > caw > tunnel-agent:
+        patched: '2018-07-09T05:33:13.991Z'
+    - grunt-contrib-imagemin > imagemin > imagemin-optipng > optipng-bin > bin-wrapper > download > caw > tunnel-agent:
+        patched: '2018-07-09T05:33:13.991Z'
