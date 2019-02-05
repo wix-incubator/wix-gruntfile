@@ -7,7 +7,7 @@ var protractorDir = require.resolve('protractor/bin/elementexplorer.js').replace
 
 module.exports = {
   updateWebdriver: function (done) {
-    var p = spawn('node', [protractorDir + '/webdriver-manager', 'update', '--versions.chrome', '2.28']);
+    var p = spawn('node', [protractorDir + '/webdriver-manager', 'update', '--versions.chrome', '2.45']);
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);
     p.on('exit', function (code) {
