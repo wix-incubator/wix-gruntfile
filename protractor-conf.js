@@ -23,7 +23,7 @@ try {
 }
 
 //temporary, needs to be removed when we upgrade to protractor 4.0
-//config.chromeDriver = require.resolve('chromedriver/bin/chromedriver');
+config.chromeDriver = require.resolve('chromedriver/bin/chromedriver');
 
 config.allScriptsTimeout = 120000;
 
