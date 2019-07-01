@@ -2,6 +2,10 @@
 
 var shell = require('shelljs');
 
+var shouldRunTests = process.env.SKIP_TESTS_IN_BUILD !== 'true';
+
+console.warn('TESTS ARE SKIPPED SINCE "SKIP_TESTS_IN_BUILD" is defined as "true"');
+
 module.exports = function (grunt, options) {
   grunt.registerTask('wix-install', function () {
     shell.exec('npm install; bower install; bundle install', { silent: true });
@@ -116,9 +120,9 @@ module.exports = function (grunt, options) {
     grunt.task.run('protractor:normal');
   });
 
-  grunt.registerTask('test:ci', [
+  grunt.registerTask('test:ci', shouldRunTests ? [
     'e2eIfEnabled:teamcity'
-  ]);
+  ] : []);
 
   require('../grunt-sections/migrate-bower-artifactory')(grunt);
   require('../grunt-sections/migrate-to-scopes')(grunt);
@@ -130,14 +134,14 @@ module.exports = function (grunt, options) {
     'migrate-bower-artifactory',
     'verify-npm',
     'pre-build:clean',
-    'karma:single',
+    shouldRunTests ? 'karma:single' : 'noop',
     'package',
-    'e2eIfEnabled:normal'
+    shouldRunTests ? 'e2eIfEnabled:normal' : 'noop'
   ]);
 
   grunt.registerTask('build:ci', [
     'pre-build:clean',
-    'karma:teamcity',
+    shouldRunTests ? 'karma:teamcity' : 'noop',
     'package',
     'copy:sadignore',
     'fedops-registration'
@@ -151,6 +155,10 @@ module.exports = function (grunt, options) {
 
   grunt.registerTask('default', function () {
     grunt.task.run(['build']);
+  });
+
+  grunt.registerTask('noop', function () {
+    console.log('step is skipped');
   });
 
   grunt.registerTask('runKarma', function () {
