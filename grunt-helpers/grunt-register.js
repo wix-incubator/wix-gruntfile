@@ -3,6 +3,7 @@
 var shell = require('shelljs');
 
 var shouldRunTests = process.env.SKIP_TESTS_IN_BUILD !== 'true';
+var shouldRunFedops = process.env.SKIP_FEDOPS_IN_BUILD !== 'true';
 
 console.warn('TESTS ARE SKIPPED SINCE "SKIP_TESTS_IN_BUILD" is defined as "true"');
 
@@ -144,7 +145,7 @@ module.exports = function (grunt, options) {
     shouldRunTests ? 'karma:teamcity' : 'noop',
     'package',
     'copy:sadignore',
-    'fedops-registration'
+    shouldRunFedops ? 'fedops-registration' : 'noop'
   ]);
 
   grunt.registerTask('publish', [
