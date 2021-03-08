@@ -3,7 +3,7 @@
 module.exports = function register(grunt) {
   grunt.registerTask('fedops-registration', function () {
     const done = this.async();
-    const fedops = require('fedops-grafana-api');
+    const fedops = require('@wix/fedops-grafana-api');
     try {
       const fedopsJson = grunt.file.readJSON('fedops.json');
       fedops.sync(fedopsJson)

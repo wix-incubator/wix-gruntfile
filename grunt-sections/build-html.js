@@ -5,7 +5,7 @@ module.exports = function (grunt, options) {
   var cdnData;
 
   try {
-    cdnData = require('wix-cdn-data')[options.cdnify]();
+    cdnData = require('@wix/wix-cdn-data')[options.cdnify]();
   } catch (e) {
 
   }
