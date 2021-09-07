@@ -11,13 +11,13 @@ try {
 
 }
 try {
-  require('wix-eyes-env');
+  require('@wix/wix-eyes-env');
 } catch (e) {
 
 }
 
 try {
-  require('screenshot-reporter-env');
+  require('@wix/screenshot-reporter-env');
 } catch (e) {
 
 }

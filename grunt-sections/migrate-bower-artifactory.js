@@ -5,7 +5,7 @@ module.exports = function register(grunt) {
 
   function migrateBowerArtifactory() {
     if (packageExists('migrate-bower-artifactory')) {
-      const migrate = require('migrate-bower-artifactory').migrate;
+      const migrate = require('@wix/migrate-bower-artifactory').migrate;
       migrate();
     }
   }
