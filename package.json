@@ -54,7 +54,7 @@
     "grunt-haml2html-shahata": "^0.3.0",
     "grunt-jscs": "^2.1.0",
     "grunt-json-angular-translate": "^0.1.0",
-    "grunt-karma": "^0.11.0",
+    "grunt-karma": "^3.0.0",
     "grunt-newer": "^1.1.0",
     "grunt-ng-annotate": "^1.0.0",
     "grunt-process-tags": "^1.0.2",
